@@ -1,0 +1,68 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amsthm,amsfonts}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage[mathscr]{eucal}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{titlesec}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[OT1]{fontenc}
+\usepackage{physics}
+\usepackage{xpatch}
+
+\usetikzlibrary{graphs}
+\usetikzlibrary{graphs.standard}
+
+\setlength\parindent{0pt}
+
+\newtheoremstyle{dotless}{}{.5\topsep}{\itshape}{}{\bfseries}{}{ }{}
+
+\newtheoremstyle{dotles}{}{}{\upshape}{}{\bfseries}{}{ }{}
+
+\theoremstyle{definition}
+\newtheorem*{defin}{DEF}
+
+\theoremstyle{dotles}
+\newtheorem{innercustomex}{EX}
+\newenvironment{exercise}[1]
+  {\renewcommand\theinnercustomex{#1}\innercustomex}
+  {\endinnercustomex}
+
+\theoremstyle{dotless}
+\newtheorem{proposition}{PROP}[section]
+
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+\newtheorem{example}{Example}
+
+\usepackage{hyperref}
+\hypersetup{colorlinks=false}
+
+\titleformat{\section}
+{\normalfont\Large\bfseries}{\S\thesection.}{1em}{}
+
+\begin{document}
+
+path, homotopy, composition (product path), fundamental group, simply connected
+
+\begin{proposition}
+The relation of homotopy on paths with fixed endpoints in any space is an equivalence relation.
+\end{proposition}
+
+\begin{proposition}
+$\pi_(X,x_0)$ is a group with operation $[f][g]=[f\dot g]$.
+\end{proposition}
+
+\begin{proposition}
+If there is a path $h$ from $x_0$ to $x_1$, then the change-of-basepoint map $\beta_h:\pi_1(X,x_0)\to\pi_1(X,x_1)$ is an isomorphism.
+\end{proposition}
+
+\begin{proposition}
+$\pi_(S^1)=\mathbf{Z}$ with generator the homotopy class of loop $w(s)=(\cos2\pi s,\sin2\pi s)$ with basepoint (1,0).
+\end{proposition}
+
+\end{document}
