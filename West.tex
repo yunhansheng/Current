@@ -76,15 +76,33 @@ The complete graph $K_n$ can be expressed as the union of $k$ bipartite graphs i
 A graph is Eulerian if and only if all vertices are even and it has at most one nontrivial component.
 \end{proposition}
 
+\begin{proposition}
+The minimum number of trails decomposing a connected nontrivial graph with exactly $2k$ odd vertices is $\max\{k,1\}$.
+\end{proposition}
+
+\begin{proposition}[Degree-Sum Formula]
+\[\sum_{v\in V(G)}d(v)=2e(G).\]
+\end{proposition}
+
+\begin{proposition}
+For a simple graph with vertices $v_1,v_2,\cdots,v_n$ and $n\geq3$, $(n-2)e(G)=\sum_ie(G-v_i)$ and $e(G)=(n-2)(d(v_i)+e(G-v_i))$.
+\end{proposition}
+
+\begin{proposition}[Mantel [{1907]}]
+$K_3$-free simple graph of order 3 has at most $\left\lfloor n^2/4\right\rfloor$ edges.
+\end{proposition}
+
+
+
 \newpage\appendix
 \section*{Definition Page}
-A \textbf{graph} $G$ is a triple $(V(G),E(G),f)$ where $V(G)$ is the vertex set, $E(G)$ is the edge set, and $f$ associates two vertices with each edge. A \textbf{subgraph} $H$ of $G$ is a graph such that $V(H)\subseteq V(G)$, $E(H)\subseteq E(G)$, and $f_H=f$. A \textbf{decomposition} of a graph is a list of subgraphs such that each edge appears exactly once in each subgraph.\medbreak
-Endpoints are \textbf{adjacent} if they are endpoints of a same edge. A \textbf{clique} in a graph is a set of pairwise adjacent vertices. An \textbf{independent set} in a graph is a set of pairwise non-adjacent vertices. A graph $G$ is \textbf{$k$-partite} if $V(G)$ can be expressed as the union of $k$ independent sets (\textbf{partite sets}). An \textbf{$X,Y$-bigraph} is a 2-partite graph with partite sets $X$ and $Y$. The \textbf{chromatic number} $\chi(G)$ of $G$ is the minimum number of colors needed to label the vertices so that adjacent vertices receive different colors. Vertex $v$ and edge $e$ are \textbf{incident} if $v$ is the endpoint of $e$. The \textbf{degree} of $v$ is the number of incident edges. \textbf{Isolated vertex} has vertex degree 0. A graph is \textbf{even} or \textbf{odd} if all vertices are even or odd.\medbreak
-A graph is \textbf{simple} if it has no loops or multiple edges (edges having the same pair of endpoints). The \textbf{complement} $\overline{G}$ of simple graph $G$ is the simple graph with vertex set $V(G)$ and $uv\in E(\overline{G})$ if and only if $uv\not\in E(G)$. A \textbf{complete} graph $K_n$ is a simple graph with $n$ pairwise adjacent vertices. A \textbf{biclique} $K_{r,s}$ is a simple bipartite graph such that two vertices are adjacent if and only if they are in different partite sets, with $r$ and $s$ vertices in each partite set.\medbreak
+A \textbf{graph} $G$ is a triple $(V(G),E(G),f)$ where $V(G)$ is the vertex set, $E(G)$ is the edge set, and $f$ associates two vertices with each edge. $n(G)=\abs{V(G)}$ is the \textbf{order} of $G$, and $e(G)=\abs{E(G)}$ is the \textbf{size} of $G$. A \textbf{subgraph} $H$ of $G$ is a graph such that $V(H)\subseteq V(G)$, $E(H)\subseteq E(G)$, and $f_H=f$. A \textbf{decomposition} of a graph is a list of subgraphs such that each edge appears exactly once in each subgraph. A \textbf{disjoint union} of graphs is the union of graphs with distinct vertex sets.\medbreak
+Endpoints are \textbf{adjacent} if they are endpoints of a same edge. A \textbf{clique} in a graph is a set of pairwise adjacent vertices. An \textbf{independent set} in a graph is a set of pairwise non-adjacent vertices. A graph $G$ is \textbf{$k$-partite} if $V(G)$ can be expressed as the union of $k$ independent sets (\textbf{partite sets}). An \textbf{$X,Y$-bigraph} is a 2-partite graph with partite sets $X$ and $Y$. The \textbf{chromatic number} $\chi(G)$ of $G$ is the minimum number of colors needed to label the vertices so that adjacent vertices receive different colors. Vertex $v$ and edge $e$ are \textbf{incident} if $v$ is the endpoint of $e$. The \textbf{degree} $d(v)$ of $v$ is the number of incident edges. \textbf{Isolated vertex} has vertex degree 0. A graph is \textbf{even} or \textbf{odd} if all vertices are even or odd. A graph is \textbf{$k$-regular} if $\Delta(G)=\delta(G)=k$ where $\Delta(G)$ and $\delta(G)$ are maximum and minimum degrees of $G$.\medbreak
+A graph is \textbf{simple} if it has no loops or edges having the same pair of endpoints. The \textbf{complement} $\overline{G}$ of simple graph $G$ is the simple graph with vertex set $V(G)$ and $uv\in E(\overline{G})$ if and only if $uv\not\in E(G)$. A \textbf{complete} graph $K_n$ is a simple graph with $n$ pairwise adjacent vertices. A \textbf{biclique} $K_{r,s}$ is a simple bipartite graph such that two vertices are adjacent if and only if they are in different partite sets of orders $r$ and $s$.\medbreak
 Let $G$ be a loopless graph, $V(G)=\{v_1,v_2\cdots,v_n\}$, and $E(G)=\{e_1,e_2\cdots,e_m\}$. The \textbf{adjacency matrix} $A(G)$ of $G$ is the $n$-by-$n$ matrix in which $a_{ij}$ is the number of edges in $G$ with endpoints $\{v_i,v_j\}$. The \textbf{incidence matrix} $M(G)$ is the $n$-by-$m$ matrix in which $m_{ij}$ is 1 if $v_i$ is an endpoint of $e_j$ and 0 otherwise.\medbreak
-Label the vertices and the edges. A \textbf{$v_0,v_k$-walk} is a the list $v_0,e_1,v_1,\cdots,e_k,v_k$ such that edge $e_i$ has endpoints $v_{i-1}$ and $v_i$ for all $1\leq i\leq k$. A \textbf{$u,v$-trail} is a $u,v$-walk with no repeated edge. A closed trail is a \textbf{circuit}. A walk or trail is \textbf{closed} if its endpoints are the same. A \textbf{$u,v$-path} $P_n$ of length (edge number) $n$ is the simple graph whose vertices are adjacent if and only if they are consecutive in the list that begins with $u$ and ends with $v$. An \textbf{n-cycle} $C_n$ is the graph with $n$ vertices and edges whose vertices are adjacent if and only if they are adjacent in the circle formed by the list. The \textbf{girth} of a graph with a cycle is the length of its shortest cycle. A walk $W$ \textbf{contains} a cycle or path if vertices and edges of the cycle or path occur in order as a sublist of vertices and edges in $W$. A graph is \textbf{Eulerian} if it has a closed trail containing all edges.\medbreak
+Label the vertices and the edges. A \textbf{$v_0,v_k$-walk} is a the list $v_0,e_1,v_1,\cdots,e_k,v_k$ such that edge $e_i$ has endpoints $v_{i-1}$ and $v_i$ for all $1\leq i\leq k$. A \textbf{$u,v$-trail} is a $u,v$-walk with no repeated edge. A closed trail is a \textbf{circuit}. A walk or trail is \textbf{closed} if its endpoints are the same. A \textbf{$u,v$-path} $P_n$ is the simple graph of size $n$ whose vertices are adjacent if and only if they are consecutive in the list that begins with $u$ and ends with $v$. An \textbf{n-cycle} $C_n$ is the graph of size and order $n$ whose vertices are adjacent if and only if they are adjacent in the circle formed by the list. The \textbf{girth} of a graph with a cycle is the length of its shortest cycle. A walk $W$ \textbf{contains} a cycle or path if vertices and edges of the cycle or path occur in order as a sublist of vertices and edges in $W$. A graph is \textbf{Eulerian} if it has a closed trail containing all edges.\medbreak
 Simple graphs $G$ and $H$ are \textbf{isomorphic}, or $G\cong H$, if there is a bijection $f:V(G)\to V(H)$ such that $uv\in E(G)$ if and only if $f(u)f(v)\in E(H)$. A graph is \textbf{self-complementary} if it is isomorphic to its complement. A graph $G$ is \textbf{vertex-transitive} if for every $u,v\in V(G)$ there is an automorphism mapping $u$ to $v$.\medbreak
-A graph $G$ is \textbf{connected} if there exists a $u,v$-path for any $u,v\in V(G)$, in which case $u$ is \textbf{connected to} $v$. The \textbf{components} of $G$ are the maximal connected subgraphs. If an edge or a vertex increases the number of components when deleted, then it is called a \textbf{cut-edge} or \textbf{cut-vertex}. Let $T\subseteq V(G)$ and $\overline{T}=V(G)-T$, the subgraph $G[T]=G-\overline{T}$ of $G$ \textbf{induced} by $T$ consists of $T$ and all edges whose endpoints are contained in $T$.
+A graph $G$ is \textbf{connected} if there exists a $u,v$-path for any $u,v\in V(G)$, in which case $u$ is \textbf{connected to} $v$. The \textbf{components} of $G$ are the maximal connected subgraphs. If an edge or a vertex increases the number of components when deleted, then it is called a \textbf{cut-edge} or \textbf{cut-vertex}. Let $T\subseteq V(G)$ and $\overline{T}=V(G)-T$, the subgraph $G[T]=G-\overline{T}$ of $G$ \textbf{induced} by $T$ consists of $T$ and all edges whose endpoints are contained in $T$.A graph $G$ is \textbf{$H$-free} if no induced subgraph is isomorphic to $H$.
 
 \newpage\section*{Example Page}
 \begin{example}
@@ -121,7 +139,26 @@ The \textbf{Petersen graph} is the simple graph with 10 vertices and 15 edges wh
 \node(v10) at (162:1) {$13$};
 \draw(v1)--(v2)(v2)--(v3)(v3)--(v4)(v4)--(v5)(v5)--(v1)(v1)--(v6)(v2)--(v7)(v3)--(v8)(v4)--(v9)(v5)--(v10)(v6)--(v8)(v6)--(v9)(v7)--(v9)(v7)--(v10)(v8)--(v10);
 \end{tikzpicture}\]
-Petersen graph has girth 5.
+Petersen graph has girth 5 and ten $6$-cycles.
 \end{example}
+
+\begin{example}
+The \textbf{$k$-dimensional cube} $Q_k$ is the simple graph whose vertices are $k$-tuples drawn from $\{0,1\}$ and whose edges pair $k$-tuples that differ in exactly one entry.
+\end{example}
+\[\begin{tikzpicture}
+\tikzstyle{every node}=[draw,circle,scale=0.85];
+\node(v1) at (-3,1) {$100$};
+\node(v2) at (-1,1) {$110$};
+\node(v3) at (-3,-1) {$000$};
+\node(v4) at (-1,-1) {$100$};
+\node(v5) at (1,2) {$011$};
+\node(v6) at (1,0) {$001$};
+\node(v7) at (3,0) {$101$};
+\node(v8) at (3,2) {$111$};
+\draw(v1)--(v2)(v2)--(v4)(v4)--(v3)(v3)--(v1)(v1)--(v5)(v2)--(v8)(v3)--(v6)(v4)--(v7)(v5)--(v8)(v8)--(v7)(v7)--(v6)(v6)--(v5);
+\end{tikzpicture}\]
+$Q_k$ is $k$-regular bipartite graph. Hence it has same number of vertices in each partite sets.
+
+
 
 \end{document}

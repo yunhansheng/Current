@@ -8,61 +8,295 @@
 \usepackage{graphicx}
 \usepackage{listings}
 \usepackage{titlesec}
+\usepackage{tikz-cd}
+\usepackage[shortlabels]{enumitem}
 \usepackage{tikz}
 \usepackage{xcolor}
 \usepackage[OT1]{fontenc}
 \usepackage{physics}
 \usepackage{xpatch}
-
-\usetikzlibrary{graphs}
-\usetikzlibrary{graphs.standard}
+\usepackage{hyperref}
 
 \setlength\parindent{0pt}
-
-\newtheoremstyle{dotless}{}{.5\topsep}{\itshape}{}{\bfseries}{}{ }{}
-
-\newtheoremstyle{dotles}{}{}{\upshape}{}{\bfseries}{}{ }{}
+\newcommand{\forceindent}{\leavevmode{\parindent=1.5em\indent}}
 
 \theoremstyle{definition}
-\newtheorem*{defin}{DEF}
+\newtheorem*{defin}{Definition}
+\newtheorem*{example}{Example}
 
-\theoremstyle{dotles}
-\newtheorem{innercustomex}{EX}
-\newenvironment{exercise}[1]
-  {\renewcommand\theinnercustomex{#1}\innercustomex}
-  {\endinnercustomex}
-
-\theoremstyle{dotless}
-\newtheorem{proposition}{PROP}[section]
+\theoremstyle{plain}
+\newtheorem*{corollary}{Corollary}
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem*{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
 
 \theoremstyle{remark}
-\newtheorem{remark}{Remark}
-\newtheorem{example}{Example}
+\newtheorem*{remark}{Remark}
 
-\usepackage{hyperref}
-\hypersetup{colorlinks=false}
+\renewcommand{\thesection}{\Roman{section}}
 
-\titleformat{\section}
-{\normalfont\Large\bfseries}{\S\thesection.}{1em}{}
+\setcounter{section}{-0}
+
+\newcommand{\id}{\textrm{id}}
+\newcommand{\R}{\mathbf{R}}
+\newcommand{\Z}{\mathbf{Z}}
+\newcommand{\C}{\mathbf{C}}
+\newcommand{\D}{\mathbf{D}}
 
 \begin{document}
 
-path, homotopy, composition (product path), fundamental group, simply connected
+\textbf{\Large{Content}}\bigbreak
 
-\begin{proposition}
-The relation of homotopy on paths with fixed endpoints in any space is an equivalence relation.
-\end{proposition}
+\hyperref[1]{\textbf{I The Fundamental Group}}\newline
+\forceindent\hyperref[2]{I.1 Basic constructions}\quad\hyperref[3]{I.2 Fundamental groups}\quad\hyperref[4]{I.3 $\pi_1\mathbf{S}^1\cong\Z$ and its consequences}\newline
+\forceindent\hyperref[6]{I.4 Induced homomorphisms}\quad\hyperref[7]{I.5 Van Kampen's theorem}\quad\hyperref[8]{I.6 Covering spaces}
 
-\begin{proposition}
-$\pi_(X,x_0)$ is a group with operation $[f][g]=[f\dot g]$.
-\end{proposition}
+\newpage
+\section{The Fundamental Group}\label{1}
 
-\begin{proposition}
-If there is a path $h$ from $x_0$ to $x_1$, then the change-of-basepoint map $\beta_h:\pi_1(X,x_0)\to\pi_1(X,x_1)$ is an isomorphism.
-\end{proposition}
+\subsection{Basic constructions}\label{2}
 
-\begin{proposition}
-$\pi_(S^1)=\mathbf{Z}$ with generator the homotopy class of loop $w(s)=(\cos2\pi s,\sin2\pi s)$ with basepoint (1,0).
-\end{proposition}
+Convention: all spaces are topological, and all maps are continuous.\medbreak
+
+A \textbf{homotopy} is a family of maps $\{f_t:X\to Y\}_{0\leq t\leq1}$ such that $F:X\times[0,1]\to Y$ by $(x,t)\mapsto f_t(x)$ is continuous. Maps $f_0$ and $f_1$ are \textbf{homotopic} relative to $A\subseteq X$, denoted by $f_0\simeq f_1$, if the homotopy $f_t|_A$ is independent of $t$.\medbreak
+
+A \textbf{retraction} is a map $r:X\to X$ such that $r^2=r$. A \textbf{deformation retraction} is a homotopy from the identity map to the retraction, i.e., $\{f_t:X\to X\}$ such that $f_0=\id_X$, $f_1=r$, and $f_t|_{r(X)}=\id_{r(X)}$. $r(X)$ is called the \textbf{deformation retract} of $X$.\medbreak
+
+Every continuous map $f$ factors as an inclusion to the \textbf{mapping cylinder} $M_f$ followed by a retraction $\pi:M_f\to Y$.
+\[\begin{tikzcd}
+X\arrow[hookrightarrow]{dr}{i}\arrow{rr}{f}&&Y\\
+&M_f\arrow[swap]{ur}{\pi}
+\end{tikzcd}\]\medbreak
+
+A \textbf{homotopy equivalence} is a bijective map $f:X\to Y$ with inverse $g$ such that $fg\simeq\id_Y$ and $gf\simeq\id_X$. If such $f$ exists, then $X$ and $Y$ are \textbf{homotopic}, denoted by $X\simeq Y$. $X$ is \textbf{contractible} if it is homotopic to a point.\medbreak
+
+An \textbf{$n$-cell} is a topological space homeomorphic to $\R^n$, and a \textbf{$n$-skeleton} is the union of cells of dimension less then or equal to $n$.\medbreak
+
+A \textbf{cell complex} $X$ of dimension $k$ is built up inductively as follows:\begin{enumerate}
+    \item Start with a $0$-skeleton consisting of $0$-cells.
+    \item Given $(k-1)$-skeleton $X^{k-1}$, attach $k$-cells $e^k_\alpha$ to $X^{k-1}$ through $\phi_\alpha:\partial\D^k\to X^{k-1}$. Define $k$-skeleton $X^k=X^{k-1}\sqcup\{e^k_\alpha\}_\alpha$.
+    \item Then assign $X=\cup_kX^k$ with weak topology, namely, $A\subseteq X$ is open if and only if $A\cap X^k$ is open for each $k$.
+\end{enumerate}
+\begin{example}
+Identification space of $\mathbf{T}^2$: the point is a $0$-cell, and edges $a,b,c,d$ are $1$-cells encircling the middle $2$-cell.
+\end{example} 
+
+\subsection{Fundamental groups}\label{3}
+
+A \textbf{path} on space $X$ is a map $f:[0,1]\to X$. Two paths $f$ and $g$ are \textbf{path homotopic}, denoted by $f\simeq_pg$, if they are homotopic relative to the endpoints.\medbreak
+
+$f\phi$ is a \textbf{reparametrization} of $f$ if the map $\phi:[0,1]\to[0,1]$ satisfies $\phi(0)=0$ and $\phi(1)=1$. Then $f\simeq_p f\phi$ by $f_t(s)=f((1-t)s+t\phi(s))$. In fact, convex combinations make any two paths with same endpoints in a convex Euclidean space homotopic.\medbreak
+
+A \textbf{constant path} is $f_{x_0}(s)=x_0$ for all $s\in[0,1]$. An \textbf{inverse path} $\overline{f}$ of $f$ is $\overline{f}(s)=f(1-s)$. The \textbf{concatenation} (not composition!) $f\cdot g$ of $f$ and $g$ is
+\[f\cdot g(s)=\begin{cases}
+f(2s),&s\in[0,1/2]\\g(2s-1),&s\in[1/2,1]
+\end{cases}.\]\medbreak
+
+Then Path homotopy is an equivalence relation. The set of path homotopy equivalence classes of paths with endpoints $x_0\in X$ forms a group with concatenation as operation, constant path as identity element, and inverse path as inverse. Such group is called the \textbf{fundamental group} of $X$ at basepoint $x_0$, denoted by $\pi_1(X,x_0)$.\medbreak
+
+A path $h$ in $X$ going from $x_0$ to $x_1$ induces a group isomorphism $\beta_h:\pi_1(X,x_1)\to\pi_1(X,x_0)$ by $[f]\mapsto[h\cdot f\cdot\overline{h}]$. Hence in a path-connected space we write $\pi_1X$ instead of $\pi_1(X,x_0)$.
+\medbreak
+
+A space is \textbf{simply connected} if it is path-connected and has trivial fundamental group. A space is simply connected if any two paths with same endpoints are homotopic. Examples include convex Euclidean space.
+
+\begin{theorem}
+If $X$ and $Y$ are path-connected, then $\pi_1(X\times Y)=\pi_1(X)\times \pi_1(Y).$
+\end{theorem}
+\begin{proof}
+Continuity is preserved in product topology.
+\end{proof}
+
+\subsection{$\pi_1\mathbf{S}^1\cong\Z$ and its consequences}\label{4}
+
+Let's for now assume that $\pi_1\mathbf{S}^1\cong\Z$ and look at its consequences. We will prove it in \hyperref[8]{I.6 Covering spaces}.
+
+\begin{corollary}[Fundamental Theorem of Algebra]
+Every $p(z)\in\C[z]$ that is not a constant has a root in $\C$.
+\end{corollary}
+
+\begin{corollary}[Brouwer fixed-point, 2d]
+Every continuous map $f:\D^2\to\D^2$ has a fixed point.
+\end{corollary}
+
+The next theorem tells us that there exists a pair of antipodal points on earth with exact same temperature and humidity and any instance:
+
+\begin{corollary}[Borsuk-Ulam, 2d]
+For every continuous map $f:\mathbf{S}^1\to\R^2$ there exists a pair of antipodal points $x,-x\in\mathbf{S}^1$ such that $f(x)=f(-x)$.
+\end{corollary}
+
+\subsection{Induced homomorphisms}\label{6}
+
+A map $\phi:X\to Y$ induces a map $\phi_\ast:\pi_1(X,x_0)\to\pi_1(Y,\phi(x_0))$ by $[f]\mapsto[\phi\circ f]$. This map is well-defined, as if $f_t$ is a path homotopy connecting loops $f_0$ and $f_1$, then $\phi\circ f_t$ is a homotopy connecting $\phi\circ f_0$ and $\phi\circ f_1$. Furthermore, $\phi_\ast$ is a group homomorphism, as $\phi\circ([f]\cdot[g])=(\phi\circ[f])\cdot(\phi\circ[g])$ both maps $s$ to $\phi(f(2s))$ when $s\in[0,1/2]$ and $\phi(g(2s-1))$ when $s\in(1/2,1]$.\medbreak
+
+Moreover, notice that $(\psi\circ\phi)_\ast=\psi_\ast\circ\phi_\ast$, and that $(\id_{(X,x_0)})_\ast=\id_{\pi_1(X,x_0)}$. Hence the fundamental group $\pi_1$ is a functor from the category of based topological spaces to the category of groups.
+
+\begin{example}
+$\pi\mathbf{S}^n=0$ for $n\geq2$.
+\begin{proof}
+Let $f:[0,1]\to\mathbf{S}^n$ be a based loop. If there exists a point $x\in\mathbf{S}^n\setminus f([0,1])$, then $\mathbf{S}^n\setminus\{x\}$ is contractible and $f$ is trivial. Since $f$ is chosen arbitrarily, this proves that $\pi\mathbf{S}^n=0$.\medbreak
+
+Let $f$ be based at $x_0$. Choose $x_1$ and an $n$-dimensional ball $B_{x_1}$ centered at $x_1$ with $x_0\not\in B_{x_1}$. $f^{-1}(B_{x_1})$ is covered by a union (possibly infinite) of intervals, but since $f^{-1}(x_1)$ is compact, $f^{-1}(x_1)\subseteq(a_1,b_1)\cup\cdots\cup(a_n,b_n)$ where $f(a_i),f(b_i)\in\partial B_{x_1}$ for all $i$. Since $n\geq2$, $B_{x_1}\setminus\{x_1\}$ is path-connected. Hence any path $f_i$ in $B_{x_1}$ that goes from $f(a_i)$ to $f(b_i)$ is homotopic to $f'_i$ in $B_{x_1}\setminus\{x_1\}$ with the same endpoints. With this modification, $x_1\in\mathbf{S}^n\setminus f([0,1])$, and the argument follows.
+\end{proof}
+\end{example}
+
+
+\begin{example}
+$\R^2$ is not homeomorphic to $\R^n$ for $n\neq2$. (This is not trivial, since there exists continuous space-filling curves $\R^2\to\R^n$, $n>2$ that are surjective.)
+\end{example}
+
+\begin{proof}
+Connectedness is preserved by homeomorphisms. Removing a point disconnects $\R$ but not $\R^2$. Hence $\R^2$ is not homeomorphic to $\R$.\medbreak
+
+For $n>2$, if $\R^2$ is homeomorphic to $\R^n$, then $\pi_1\R^2\cong\pi_1\R^n$, then $\pi_1(\R^2\setminus\{0\})=\pi_1(\R^n\setminus\{0\})$. By polar decomposition $\R^n\setminus\{0\}$ is homeomorphic to $\mathbf{S}^{n-1}\times\R$. Hence $\pi_1(\R^n\setminus\{0\})$ is trivial. But $\pi_1(\R^2\setminus\{0\})=\Z$. Hence $\R^2$ is not homeomorphic to $\R^n$.
+\end{proof}
+
+In the proof above we deduce $\pi_1\R^2\cong\pi_1\R^n$ from $\R^2$ being homeomorphic to $\R^n$. In fact, the same can be deduced from the weaker condition $\R^2\simeq\R^n$:
+
+\begin{theorem}
+Let $X\simeq Y$ via homotopy $\phi_t:X\to Y$. Let $h:[0,1]\to Y$ by $t\mapsto\phi_t(x_0)$ be a path and $\beta_h:[f]\mapsto[h\cdot f\cdot\overline{h}]$ an isomorphism. Then the following diagram commutes:
+\[\begin{tikzcd}
+\pi_1(X,x_0)\arrow[swap]{dr}{(\phi_0)_\ast}\arrow{r}{(\phi_1)_\ast}&\pi_1(Y,\phi_1(x_0))\arrow{d}{\beta_h}\\
+&\pi_1(Y,\phi_0(x_0)).
+\end{tikzcd}\]
+Hence a homotopic equivalence $X\stackrel{\text{$\phi$}}{\simeq}Y$ induces a group isomorphism $\pi_1(X,x_0)\stackrel{\text{$\phi_\ast$}}{\cong}\pi_1(Y,\phi(x_0))$.
+\end{theorem}
+\begin{proof}
+We want to show that $(\phi_0)_\ast\circ f\simeq_p\beta_h\circ((\phi_1)_\ast\circ f)$ for $[f]\in\pi_1(X,x_0)$. Consider $h_s:[0,1]\to Y$ by $t\mapsto h(st)$, a reparametrization of $h|_{[0,s]}$. Then the homotopy $h_s\cdot((\phi_s)_\ast\circ f)\cdot\overline{h_s}$ does the job. Indeed, it gives $(\phi_0)_\ast\circ f$ when $s=0$ and $\beta_h\circ((\phi_1)_\ast\circ f)$ when $s=1$.\medbreak
+
+It remains to check that $\phi_\ast$ is bijective. Since $\phi^{-1}\circ\phi=\id_X$, $(\phi^{-1}\circ\phi)_\ast=(\phi^{-1})_\ast\circ(\phi_\ast)=\id_{\pi_1(X,x_0)}$ is bijective. Hence $(\phi^{-1})_\ast$ is surjective and $\phi_\ast$ is injective. A mirror argument concludes the proof.
+\end{proof}
+
+\subsection{Van Kampen's theorem}\label{7}
+
+Recall the property of free product of groups: for homomorphisms $\phi_1:G_1\to H$ and $\phi_2:G_2\to H$ there exists a unique extension $\Phi:G_1\ast G_2\to H$ by $g_1\cdots g_n\mapsto\phi_{l(1)}(g_1)\cdots\phi_{l(n)}(g_n)$ where $l(i)=1$ if $g_i\in G_1$ and $l(i)=2$ if $g_i\in G_2$.
+\[\begin{tikzcd}
+G_1\arrow[bend left=15]{drr}{\phi_1}\arrow[swap]{dr}{i_1}\\
+&G_1\ast G_2\arrow{r}{\Phi}&H\\
+G_2\arrow{ur}{i_2}\arrow[swap,bend right=15]{urr}{\phi_2}
+\end{tikzcd}\]\medbreak
+
+Van Kampen's theorem asserts that a pushout in the category of sets induces a \textbf{pushout} in the category of groups.
+\[\begin{tikzcd}
+A\cap B\arrow{r}{i_1}\arrow[swap]{d}{i_2}&A\arrow{d}{j_1}\\
+B\arrow{r}{j_2}&X
+\end{tikzcd}\Longrightarrow
+\begin{tikzcd}
+\pi_1(A\cap B,x_0)\arrow{r}{(i_1)_\ast}\arrow[swap]{d}{(i_2)_\ast}&\pi_1(A,x_0)\arrow{d}{(j_1)_\ast}\\
+\pi_1(B,x_0)\arrow{r}{(j_2)_\ast}&\pi_1(X,x_0)
+\end{tikzcd}\]
+
+\begin{theorem}[van Kampen]
+Let $\{A_\alpha\}$ be an open cover of $X$ such that each $A_\alpha$ is path-connected and contains a common $x_0\in X$. Let $j_\alpha:A_\alpha\hookrightarrow X$ and $i_{\alpha\beta}:A_\alpha\cap A_\beta\hookrightarrow A_\alpha$ be inclusions, and $\Phi:\ast_\alpha\pi_1(A_\alpha,x_0)\to\pi_1(X,x_0)$ be the unique extension of $(j_\alpha)_\ast$. Then\begin{enumerate}[(i)]
+    \item if $A_\alpha\cap A_\beta$ is path-connected, then $\Phi$ is surjective;
+    \item if $A_\alpha\cap A_\beta\cap A_\gamma$ is path-connected, then $\ker\Phi$ is the smallest normal subgroup $N$ containing $(i_{\alpha\beta})_\ast[f](i_{\beta\alpha})_\ast^{-1}[f]$ where $[f]\in\pi_1(A_\alpha\cap A_\beta)$.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+\textit{Proof of (i).} Given a loop $f$ in $X$ based at $x_0$, choose a partition (invoking the compactness argument) $0=t_0<t_1<\cdots<t_n=1$ such that $f([t_{i-1},t_i])\in A_\alpha$ for some $\alpha$. We shall subsequently call such $A_\alpha$ as $A_i$, and $f_i=f|_{[t_{i-1},t_i]}$. For each $i$ pick a path $g_i$ in $A_i\cap A_{i+1}$ from $x_0$ to $f(t_i)$. Then $f\simeq_p(f_1\cdot\overline{g}_1)\cdot(g_1\cdot f_2\cdot\overline{g}_2)\cdot\cdots\cdot(g_{n-1}\cdot f_n)$. Since each term on the right is contained in a single $A_\alpha$, its image under $\Phi$ is precisely $f$.\medbreak
+
+\textit{Proof of (ii).} We call $(f_1\cdot\overline{g}_1)\cdot(g_1\cdot f_2\cdot\overline{g}_2)\cdot\cdots\cdot(g_{n-1}\cdot f_n)$ a factorization of $f$, and define two factorization to be equivalent if one can be obtained from another by finite combinations of the following operations:\begin{enumerate}[(i)]
+    \item word reduction, i.e., combine $[f_i][f_{i+1}]=[f_i\cdot f_{i+1}]$ if $[f_i],[f_{i+1}]\in\pi_1A_\alpha$;
+    \item if $[f_i]\in\pi_1A_\alpha$ is the image of $\pi_1(A_\alpha\cap A_\beta)$ under $(i_\alpha)_\ast$, then $[f_i]\in\pi_1A_\beta$.
+\end{enumerate}
+Note that (ii) does not change the class of elements in $Q=\ast_\alpha\pi_1(A_\alpha,x_0)/N$. If we can show that any two factorization of $f$ are equivalent, then the induced $\phi':Q\to\pi_1(X,x_0)$ is injective, and $\ker\Phi=N$.\medbreak
+
+ewf
+\end{proof}
+
+\begin{example}
+Van Kampen's theorem provides a quick proof of $\pi_1\mathbf{S}^n=0$ for $n\geq2$. Just take the northern and southern hemisphere with a little overlap to form an open cover of $\mathbf{S}^1$, and each is nullhomotopic. Hence $\pi_1\mathbf{S}^n=0\ast0=0$.
+\end{example}
+
+\begin{example}
+A surface with genus $n$ has fundamental group $n$ has . For example $\pi_1(\mathbf{T}^2)\cong\langle a,b:aba^{-1}b^{-1}\rangle=F^{ab}(a,b)$
+\end{example}
+
+\begin{example}
+cell attaching
+\end{example}
+
+\subsection{Covering spaces}\label{8}
+
+Suppose $p:\widetilde{X}\to X$ and open $U\subseteq X$. $U$ is \textbf{evenly covered} if $p^{-1}(U)=\sqcup_\alpha V_\alpha$ where each $V_\alpha$ (called \textbf{slice}) is an open subset of $\widetilde{X}$ restricted to which $p$ maps homeomorphically to $U$. If there exists an open cover of $X$ such that each member is evenly covered, then $(\widetilde{X},p)$ \textbf{evenly covers} $X$.\medbreak
+
+A \textbf{lift} of a map $f:Y\to X$ is a map $\widetilde{f}:Y\to\widetilde{X}$ such that $p\widetilde{f}=f$. $\Phi:\pi_1(X,x_0)\to p^{-1}(x_0)$ by $[f]\mapsto\widetilde{f}(1)$ is called the \textbf{lifting correspondence}. The fact that $\Phi$ is well-defined is due to the uniqueness in homotopy-lifting property:
+
+\begin{theorem}
+Given a covering map $p:\widetilde{X}\to X$, a homotopy $f_t:Y\to X$, and a lift $\widetilde{f}_0:Y\to\widetilde{X}$ of $f_0$, there exists a unique lift $\widetilde{f}:Y\to\widetilde{X}$ extending $\widetilde{f}_0$.
+\[\begin{tikzcd}
+Y\times\{0\}\arrow{r}{\widetilde{f}_0}\arrow[hookrightarrow]{d}&\widetilde{X}\arrow{d}{p}\\
+Y\times[0,1]\arrow{r}{F}\arrow[dashed]{ur}{!\widetilde{F}}&X
+\end{tikzcd}\]
+\end{theorem}
+\begin{proof}
+We first prove that there is an extension $\widetilde{F}:N(y_0)\times[0,1]\to\R$ where $N(y_0)$ is a neighborhood of $y_0\in Y$. Then we will prove the uniqueness determined by such extension.\medbreak
+
+By continuity of $F$, for each $(y_0,t)\in Y\times[0,1]$ there exists a product neighborhood $N(y_0)\times(a,b)$ such that $F(N(y_0)\times(a,b))\subseteq U_\alpha$ where $\{U_\alpha\}$ is an open cover of $\mathbf{S}^1$. By compactness, $\{y_0\}\times[0,1]$ can be covered by finitely many sets. Hence choose a partition $0=t_0<t_1<\cdots<t_m=1$ such that $F(N(y_0)\times[t_{i-1},t_i])\subseteq U_i$.\medbreak
+
+Assume inductively that $\widetilde{F}$ has been defined on $N(y_0)\times[0,t_{i-1}]$, then $\widetilde{F}(y_0,t_{i-1})\in\widetilde{U}_i$ where $\widetilde{U}_i$ is some path-connected component of $p^{-1}(U_i)$. Shrink $N(y_0)$ so that $\widetilde{F}(N(y_0)\times\{t_{i-1}\})\subseteq\widetilde{U}_i$, and define $\widetilde{F}$ on $N(y_0)\times[t_{i-1},t_i]$ by $p^{-1}F$, which is possible since $p:\widetilde{U}_\alpha\to U_\alpha$ is a homeomorphism, given that $\widetilde{U}_\alpha$ is a connected component of $p^{-1}(U_\alpha)$. Continue this process and induction gives an extension $\widetilde{F}:N(y_0)\times[0,1]\to\R$.\medbreak
+
+Suppose for $F:[0,1]\to\mathbf{S}^1$ there exists two lifts $\widetilde{F},\widetilde{F}':[0,1]\to\R$ such that $\widetilde{F}(0)=\widetilde{F}'(0)$. Choose partition $0<t_0<t_1<\cdots<t_m=1$ such that $F([t_i,t_{i+1}])\subseteq U_i$ and assume inductively that $\widetilde{F}=\widetilde{F}'$ on $[t_{i-1},t_i]$. Then $\widetilde{F}([t_i,t_{i+1}])$ and $\widetilde{F}'([t_i,t_{i+1}])$ are in the same path-connected component $\widetilde{U}_i$ since $\widetilde{F}(t_i)=\widetilde{F}'(t_i)$. Since $p:\widetilde{U}_i\to U_i$ is injective, $p\widetilde{F}=p\widetilde{F}'$ gives $\widetilde{F}=\widetilde{F}'$ on $[t_i,t_{i+1}]$. Now by induction $\widetilde{F}=\widetilde{F}'$ on $[0,1]$.\medbreak
+
+Now for an open cover $\{Y_\alpha\}$ of $Y$, construct $\widetilde{F}$ on each $Y_\alpha\times[0,1]$. If $y\times[0,1]$ is in both $Y_\alpha\times[0,1]$ and $Y_\beta\times[0,1]$, then $\widetilde{F}$ and $\widetilde{F}'$ coincide since $\widetilde{F}(y,0)=\widetilde{F}'(y,0)$ is fixed.
+\end{proof}
+
+\begin{example}
+Now we are finally ready to prove that $\pi_1\mathbf{S}^1\cong\Z$.
+\begin{proof}
+Let $p:\R\to\mathbf{S}^1$ by $s\mapsto(\cos2\pi s,\sin2\pi s)$ be the projection and $\widetilde{\omega}_n(s)=ns$ be a path in $\R$ going from $0$ to $n$. Then $\omega_n=p\widetilde{\omega}_n$ by $s\mapsto(\cos2\pi ns,\sin2\pi ns)$ gives loops on $\mathbf{S}^1$ based at $(1,0)$. Let $\Phi:\Z\to\pi_1(\mathbf{S}^1,(1,0))$ by $n\mapsto[\omega_n]$. We will show that $\Phi$ is a group isomorphism.\medbreak
+
+\textit{Group homomorphism.} Let $\tau_m:\R\to\R$ by $s\mapsto s+m$, then $\widetilde{\omega}_m\cdot\tau_m\widetilde{\omega}_n$ is a path going from $0$ to $m+n$. Hence $\Phi(m+n)=[\omega_{m+n}]=[p(\widetilde{\omega}_m\cdot\tau_m\widetilde{\omega}_n)]=[p\widetilde{\omega}_m\cdot p\tau_m\widetilde{\omega}_n]=[\omega_m\cdot\omega_n]$.\medbreak
+
+\textit{Surjection.} For any $[f]\in\pi_1(\mathbf{S}^1,(1,0))$ and $f':\{0\}\to\R$ by $f'(0)=0=p^{-1}(1,0)$, apply lemma to $Y$ being a point gives a unique lift $\widetilde{f}:[0,1]\to\R$ of $f$ extending $f'$ such that $\widetilde{f}(0)=0$. Since $p(\widetilde{f}(1))=f(1)=(0,1)$, we have $\widetilde{f}(1)\in p^{-1}(1,0)$. But $p^{-1}(1,0)=\Z$, hence there exists $n\in\Z$ such that $\widetilde{f}=\widetilde{\omega}_n$ and subsequently $\Phi(n)=[\omega_n]=[p\widetilde{\omega}_n]=[f]$.\medbreak
+
+\textit{Injection. }Let $\Phi(m)=\Phi(n)$, then suppose $\omega_m\simeq_p\omega_n$ by path homotopy $f_t:[0,1]\to\mathbf{S}^1$ such that $f_0=\omega_m$ and $f_1=\omega_n$. Apply lemma to Y being $[0,1]$ gives a unique lift of path homotopy $\widetilde{f}_t:[0,1]\to\R$ such that $\widetilde{f}_t(0)=0=p^{-1}(1,0)$. Hence $m=\widetilde{f}_0(1)=\widetilde{f}_1(1)=n$.
+\end{proof}
+\end{example}
+
+\begin{corollary}
+Let $p:(\widetilde{X},\widetilde{x}_0)\to(X,x_0)$ be a covering map, then\begin{enumerate}[(i)]
+    \item $p_\ast(\pi_1(\widetilde{X},\widetilde{x}_0))$ is a subgroup of $\pi_1(X,x_0)$;
+    \item $p_\ast(\pi_1(\widetilde{X},\widetilde{x}_0))$ consists of the homotopy classes of loops in $(X,x_0)$ that lifts to loops in $(\widetilde{X},\widetilde{x}_0)$;
+    \item the number of sheets $|p^{-1}(x_0)|$ is equal to the number of cosets $|\pi_1(X,x_0)/p_\ast(\pi_1(\widetilde{X},\widetilde{x}_0))|$.
+\end{enumerate}
+\end{corollary}
+
+Note that we did not put any group structure on $p_\ast(\pi_1(\widetilde{X},x_0))/\pi_1(X,x_0)$, as $\pi_1(X,x_0)$ may not be a normal subgroup.\medbreak
+
+A covering space $(\widetilde{X},p)$ of $X$ is \textbf{universal} if $\widetilde{X}$ is simply connected.
+
+\begin{example}
+Consider the real projective space $\R\mathbf{P}^n$ consisting of all lines in $\R^{n+1}$ passing through the origin. Alternatively $\R\mathbf{P}^n$ can be constructed by identifying antipodal points on $\mathbf{S}^n$. The natural map $p:\mathbf{S}^n\to\R\mathbf{P}^n$ is a covering map with $\abs{p^{-1}(x_0)}=2$, and since $\mathbf{S}^n$ is simply connected, $\abs{\pi_1(\R\mathbf{P}^n)}=2$ which implies that $\pi_1(\R\mathbf{P}^n)\cong\Z/2\Z$.
+\end{example}
+
+locally path-connected
+lifting criterion
+
+\begin{theorem}
+Let $f:(Y,y_0)\to(X,x_0)$ where $Y$ is path-connected and locally path-connected. Let $p:(\widetilde{X},\widetilde{x}_0)\to(X,x_0)$ be a covering map. Then there exists a lift $\widetilde{f}$ of $f$ if and only if $f_\ast(\pi_1(Y,y_0))\subseteq p_\ast(\pi(\widetilde{X},\widetilde{x}_0))$.
+\end{theorem}
+\begin{proof}
+If a lift $\widetilde{f}$ exists, then trivially $f(\pi_1(Y,y_0))=p\circ\widetilde{f}(\pi_1(Y,y_0))\subseteq p(\pi_1(\widetilde{X},\widetilde{x}_0))$.\medbreak
+
+Conversely, for any $y\in Y$ since $Y$ is path-connected, choose a path $g_y$ in $Y$ from $y_0$ to $y$. Since $f\circ g_y$ is a path in $(X,x_0)$, lift $f\circ g_y$ and define $\widetilde{f}(y)=\widetilde{f\circ g_y}(1)$. Note that the definition is independent of the choice of $g_y$, for if there is another such path $g_y'$, then let $h_0=f\circ(g_y'\cdot\overline{g_y})=(f\circ g_y')\cdot(\overline{f\cdot g_y})$ be a loop in $(X,x_0)$. Since $[h_0]\in f_\ast(\pi_1(Y,y_0))\subseteq p_\ast(\pi_1(\widetilde{X},\widetilde{x}_0))$, $h_0\simeq_pp\circ k$ for some loop $K$ in $(\widetilde{X},\widetilde{x}_0)$. By uniqueness of path-lifting property $\widetilde{h_0}\simeq_pk$, and hence $\widetilde{f}(y)=\widetilde{f\circ g'_y}(1)=\widetilde{\overline{f\circ g_y}}(0)=\widetilde{f\circ g_y}(1)=\widetilde{f}(y)$.\medbreak
+
+few
+\end{proof}
+
+$X$ is \textbf{semi-locally simply connected} if for every $x\in X$ there exists a neighborhood $U$ such that $i_\ast(\pi_1U)$ is trivial in $X$ where $i:U\hookrightarrow X$ is the inclusion. Examples include Hawaiian earrings. If $X$ has a universal cover, then $X$ is semi-locally simply connected.
+
+\begin{theorem}
+If $X$ is path-connected, locally path-connected, and semi-locally simply connected, then $X$ has a universal cover.
+\end{theorem}
+\begin{proof}
+Observe that if such universal cover $\widetilde{X}$ exists, then there is a one-to-one correspondence between points in $\widetilde{X}$ and path homotopy classes of paths in $\widetilde{X}$ starting at some fixed $\widetilde{x}_0\in\widetilde{X}$, and thus by $p$, the path homotopy classes of paths in $X$ starting at some $x\in X$. This prompts us to construct $\widetilde{X}$ using fundamental groupoid $\mathcal{P}(X)$.\medbreak
+
+Let $\widetilde{X}=\{[f]\in\mathcal{P}(X):f(0)=x_0\}$ and $p:\widetilde{X}\to X$ by $[f]\mapsto f(1)$. We now construct a topology on $\widetilde{X}$ so that $p$ is a covering map and $\widetilde{X}$ is simply connected.\medbreak
+
+Let $\mathcal{B}_x=\{U\subseteq X:U\textrm{ is path-connected and }i_\ast(\pi_1U)\textrm{ is trivial in }\pi_1X\}$, then $X=\cup_{U\in\mathcal{B}_x}U$, and if $U_1,U_2\in\mathcal{B}_x$ and $x\in U_1\cap U_2$ then there exists an open and path-connected $V\subseteq U_1\cap U_2$ such that $(ij)_\ast(\pi_1V)=i_\ast(j_\ast(\pi_1V))\subseteq i_\ast(\pi_1U_1)$. Hence $V\in\mathcal{B}_x$, and $\mathcal{B}_x$ is a basis for the topology on $X$.
+\end{proof}
+
+\subsection*{wef}
+
 
 \end{document}

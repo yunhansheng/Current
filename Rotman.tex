@@ -1,0 +1,183 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amsthm,amsfonts}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage[mathscr]{eucal}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage[shortlabels]{enumitem}
+\usepackage{titlesec}
+\usepackage{tikz-cd}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[OT1]{fontenc}
+\usepackage{physics}
+\usepackage{xpatch}
+\usepackage{hyperref}
+
+\setlength\parindent{0pt}
+
+\theoremstyle{definition}
+\newtheorem*{defin}{Definition}
+
+\theoremstyle{plain}
+\newtheorem*{corollary}{Corollary}
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem*{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+
+\theoremstyle{remark}
+\newtheorem*{example}{Example}
+
+\setcounter{section}{+1}
+
+\newcommand{\id}{\textup{id}}
+\newcommand{\R}{\mathbf{R}}
+\newcommand{\Z}{\mathbf{Z}}
+\newcommand{\Frac}{\textup{Frac}}
+\newcommand{\N}{\mathbf{N}}
+\newcommand{\C}{\mathbf{C}}
+\newcommand{\F}{\mathbf{F}}
+\newcommand{\Hom}{\textup{Hom}}
+\newcommand{\im}{\textup{im}}
+\newcommand{\Q}{\mathbf{Q}}
+\newcommand{\Ring}{\mathbf{Ring}}
+
+\begin{document}
+
+\subsection*{Commutative Rings}
+
+\begin{defin}
+A \textbf{ring} $(R,+,\times)$ satisfies\begin{enumerate}[(i)]
+    \item $(R,+)$ is an Abelian group;
+    \item identity and associativity with respect to $\times$;
+    \item distributivity: $a(b+c)=ab+ac$ and $(b+c)a=ba+ca$ for every $a,b,c\in R$.
+\end{enumerate}
+A \textbf{subring} $S$ is a subset of a ring that satisfies\begin{enumerate}[(i)]
+    \item $1\in S$;
+    \item if $a,b\in S$, then $a-b\in S$;
+    \item closed under multiplication.
+\end{enumerate}
+A subring is a ring.
+\end{defin}
+
+\begin{example}
+$\Z[\zeta_n]=\{a_0+a_1\zeta_n+\cdots+a_{n-1}\zeta_n^{n-1}:a_i\in\Z\}$ is a subring of $\C$ where $\zeta_n=e^{2\pi i/n}$. $(2^X,\bigtriangleup,\cap)$ is a commutative ring where $X$ is a set. $L^1(\R)$ is a rng. If $R$ is a commutative ring, then the set $R[[x]]$ of all formal power series over $R$ is a commutative ring containing $R[x]$ as subring.
+\end{example}
+
+\begin{defin}
+An \textbf{integral domain} $I$ is a nonzero commutative ring such that\begin{enumerate}[(i)]
+    \item $ca=cb$ and $c\neq0$ imply $a=b$ for any $a,b,c\in I$.
+\end{enumerate}
+Nonzero $a,b\in R$ are \textbf{zero divisors} if $ab=0$. Hence equivalent statements of (i) include\begin{enumerate}
+    \item [(i$'$)] $I$ does not contain zero divisors.
+    \item [(i$''$)] Product of two nonzero elements in $I$ is nonzero.
+\end{enumerate}
+\end{defin}
+
+\begin{example}
+$\Z_m$ is an integral domain if and only if $m$ is a prime. $C(\R)$ is not an integral domain. $R[x]$ is an integral domain if $R$ is an integral domain.
+\end{example}
+
+\begin{defin}
+Let $R$ be a commutative ring, $u\in R$ is a \textbf{unit} if $u\mid1$ in $R$. The set of all units of $R$ is denoted by $U(R)$. A \textbf{field} is a nonzero commutative ring such that every nonzero element is a unit. A \textbf{subfield} of a field $F$ is a subring of $F$ that is also a field.
+\end{defin}
+
+\begin{theorem}
+Every integral domain $R$ is a subring of a field $\Frac(R)$ (called \textbf{fraction field}) such that for any $f\in\Frac(R)$ there exists $a,b\in R$ with $b\neq0$ and $f=ab^{-1}$. Moreover, $\Frac(R)$ is the smallest field containing $R$.
+\end{theorem}
+\begin{proof}
+Define $\sim$ on $R\times(R\setminus\{0\})$ by $(a,b)\sim(c,d)$ if $ad=cb$. Verify that $\sim$ is an equivalence relation and let $\Frac(R)=R\times(R\setminus\{0\})/_\sim$. Equip $+$ and $\times$ in $\Frac(R)$ as if $(a,b)$ is the fraction $a/b$. Finally check that such $+$ and $\times$ are well-defined and make $\Frac(R)$ a field.\medbreak
+
+smallest?
+\end{proof}
+
+\begin{example}
+$a\in\Z_m$ is a unit if and only if $\gcd(a,m)=1$. $\Z_m$ is a field if and only if $m$ is prime. Every integral domain is a field. $\Frac(\Z)=\Q$. The \textbf{field of rational functions} is $k(x)=\Frac(k[x])$ where $k$ is a field. If $p$ is prime, then $\F_p(x)$ is infinite and contains $\F_p$ as subfield.
+\end{example}
+
+\begin{defin}
+A ring \textbf{homomorphism} $\phi\in\Hom(R,S)$ preserves multiplicative identity, addition, and multiplication. An \textbf{isomorphism} is a bijective homomorphism.
+\end{defin}
+
+\begin{theorem}
+Let $R$ and $S$ be commutative rings and $\phi\in\Hom(R,S)$. For $s_1,\cdots,s_n\in S$ there exists a unique $\Phi\in\Hom(R[x_1,\cdots,x_n],S)$ with $\Phi(x_i)=s_i$ and $\Phi(r)=\phi(r)$ for all $i$ and $r\in R$.
+\end{theorem}
+\begin{proof}
+If $n=1$, then let $\Phi:R[x]\to S$ by $r_0+r_1x+\cdots+r_nx^n\mapsto\phi(x_0)+\phi(r_1)s+\cdots+\phi(r_n)s^n$. Check that $\Phi$ is a unique ring homomorphism. For $n\geq1$ proceed by induction and note that $R[x_1,\cdots,x_n]=R[x_1,\cdots,x_{n-1}][x_n]$.
+\end{proof}
+
+\begin{defin}
+An \textbf{ideal} $I\subseteq R$ of a commutative ring $R$ satisfies\begin{enumerate}[(i)]
+    \item $0\in I$;
+    \item closed under $+$;
+    \item if $a\in I$ and $r\in R$, then $ra\in I$.
+\end{enumerate}
+The ideal generated by $a_1,\cdots,a_n\in R$ is $(a_1,\cdots,a_n)=\{r_1b_1+\cdots+r_nb_n:r_i\in R\textrm{ for all }i\}$. The \textbf{principle ideal} $Rb=(b)$ is the ideal generated by $b\in R$. $a,b\in R$ are \textbf{associates} if there exists a unit $u\in R$ such that $b=ua$.
+\end{defin}
+
+\begin{example}
+If $\phi\in\Hom_{\Ring}(A,R)$, then $\ker\phi$ is an ideal (roper if $A$ and $R$ are nonzero) in $A$. $\phi$ is injective if and only if $\ker\phi=\{0\}$. $\{0\}$ and $R$ are the only ideals of $R$ if and only if $R$ is a field.
+\end{example}
+
+\begin{theorem}
+Every ideal in $\Z$ or $k[x]$ is principal for $k$ a field.
+\end{theorem}
+
+\begin{defin}
+Let $I$ be an ideal in a commutative ring $R$, then for $a\in R$, the \textbf{coset} $a+I=\{a+i:i\in I\}$. Denote $R/I=\{a+I:a\in R\}$. $\sqcup_{a\in R}(a+I)=R$.
+\end{defin}
+
+\begin{theorem}
+Addition $+:(a+I,b+I)\mapsto a+b+I$ and multiplication $\times:(a+I,b+I)\mapsto ab+I$ in $R/I$ is well defined, and $(R/I,+,\times)$ is a commutative ring (called \textbf{quotient ring}).
+\end{theorem}
+
+\begin{theorem}[1st isomorphism theorem]
+Let $A$ and $R$ be commutative rings and $\phi\in\Hom(A,R)$, then $R/\ker\phi\cong\im\phi$ as follows:
+\[\begin{tikzcd}
+R\arrow[dr,twoheadrightarrow,"\pi",swap]\arrow[rr,"\phi"]&&\im\phi\\
+&R/\ker\phi\arrow[ur,dashrightarrow,"\sim","\exists\widetilde{\phi}"']
+\end{tikzcd}.\]
+\end{theorem}
+\begin{proof}
+Define $\Tilde{\phi}(r+I)=\phi(r)$.
+\end{proof}
+
+\begin{example}
+$\Z_m=\Z/(m)$. By Theorem 2, there exists $\phi\in\Hom_{\Ring}(\R[x],\C)$ by $f(x)\mapsto f(i)$. By Theorem ? we claim that $\ker\phi=(x^2+1)$, and hence $\R[x]/(x^2+1)\cong\C$ gives a construction of $\C$.
+\end{example}
+
+\begin{defin}
+Let $k$ be a field, for $X\subseteq k$ denote $\langle X\rangle$ the subfield generated by $X$. The \textbf{prime field} $\langle1\rangle$ is the smallest of such. A field has \textbf{characteristic} $p$ if its prime field is isomorphic to $\F_p$ for some prime $p$, $0$ if isomorphic to $\Q$.
+\end{defin}
+
+\begin{theorem}
+Let $k$ be a field with unit $l$ and $\chi:\Z\to k$ by $n\mapsto nl$ a homomorphism. Then $\im\chi\cong\Z$ or $\im\chi\cong\F_p$ for some prime $p$, and the prime field of $k$ has characteristic $0$ or $p$.
+\end{theorem}
+\begin{proof}
+Since every ideal in $\Z$ is principle, $\ker\chi=(m)$ for some $m\in\N$. If $m=0$ then $\im\chi\cong\Z$ and $\Q\cong\Frac(\Z)\subseteq k$ is the prime field of $k$. If $m\neq0$ then $\im\chi\cong\Z_m$, but since $\im\chi$ is an integral domain, $m$ is prime. Hence $\im\chi\cong\F_p$ and it is also the prime field of $k$.
+\end{proof}
+
+\begin{example}
+The prime field of $\C$ is $\Q$. Fields $\Q,\R,\C,\C(x)$ have characteristic $0$. Every finite field has characteristic $p$ for some prime $p$. $\F_p(x)$ is an infinite field with characteristic $p$.
+\end{example}
+
+\begin{theorem}
+If $k$ is a finite field, then $\#k=p^n$ for some prime $p$ and $n\geq1$.
+\end{theorem}
+\begin{proof}
+$k$ is a vector space over $\F_p$.
+\end{proof}
+
+\begin{theorem}
+Let $k$ be a field, then for $f(x),g(x)\in k[x]$ with $f\neq0$ there exists unique polynomials $q(x),r(x)\in k[x]$ such that $g=qf+r$ where $\deg(r)<\deg(f)$.
+\end{theorem}
+\begin{proof}
+For existence prove by induction on $\deg(g)$, and for uniqueness note that $k[x]$ is a domain.
+\end{proof}
+
+
+
+\end{document}
