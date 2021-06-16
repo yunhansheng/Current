@@ -28,7 +28,7 @@
 \newtheorem*{corollary}{Corollary}
 \newtheorem{proposition}{Proposition}[section]
 \newtheorem*{lemma}{Lemma}
-\newtheorem{theorem}{Theorem}
+\newtheorem{theorem}{Theorem}[section]
 
 \theoremstyle{remark}
 \newtheorem*{remark}{Remark}
@@ -38,6 +38,7 @@
 \setcounter{section}{-0}
 
 \newcommand{\id}{\textrm{id}}
+\newcommand{\im}{\textup{im}\,}
 \newcommand{\R}{\mathbf{R}}
 \newcommand{\Z}{\mathbf{Z}}
 \newcommand{\C}{\mathbf{C}}
@@ -49,7 +50,11 @@
 
 \hyperref[1]{\textbf{I The Fundamental Group}}\newline
 \forceindent\hyperref[2]{I.1 Basic constructions}\quad\hyperref[3]{I.2 Fundamental groups}\quad\hyperref[4]{I.3 $\pi_1\mathbf{S}^1\cong\Z$ and its consequences}\newline
-\forceindent\hyperref[6]{I.4 Induced homomorphisms}\quad\hyperref[7]{I.5 Van Kampen's theorem}\quad\hyperref[8]{I.6 Covering spaces}
+\forceindent\hyperref[6]{I.4 Induced homomorphisms}\quad\hyperref[7]{I.5 Van Kampen's theorem}\quad\hyperref[8]{I.6 Covering spaces}\newline
+\forceindent\hyperref[9]{I.7 Transformations and actions}\medbreak
+
+\hyperref[10]{\textbf{II Homology}}\newline
+\forceindent\hyperref[11]{II.1 Simplicial homology and Singular homology}\quad\hyperref[12]{II. 2 Calculation methods}
 
 \newpage
 \section{The Fundamental Group}\label{1}
@@ -255,7 +260,7 @@ Let $p:\R\to\mathbf{S}^1$ by $s\mapsto(\cos2\pi s,\sin2\pi s)$ be the projection
 
 \begin{corollary}
 Let $p:(\widetilde{X},\widetilde{x}_0)\to(X,x_0)$ be a covering map, then\begin{enumerate}[(i)]
-    \item $p_\ast(\pi_1(\widetilde{X},\widetilde{x}_0))$ is a subgroup of $\pi_1(X,x_0)$;
+    \item $p_\ast$ is injective and $p_\ast(\pi_1(\widetilde{X},\widetilde{x}_0))$ is a subgroup of $\pi_1(X,x_0)$;
     \item $p_\ast(\pi_1(\widetilde{X},\widetilde{x}_0))$ consists of the homotopy classes of loops in $(X,x_0)$ that lifts to loops in $(\widetilde{X},\widetilde{x}_0)$;
     \item the number of sheets $|p^{-1}(x_0)|$ is equal to the number of cosets $|\pi_1(X,x_0)/p_\ast(\pi_1(\widetilde{X},\widetilde{x}_0))|$.
 \end{enumerate}
@@ -293,10 +298,119 @@ Observe that if such universal cover $\widetilde{X}$ exists, then there is a one
 
 Let $\widetilde{X}=\{[f]\in\mathcal{P}(X):f(0)=x_0\}$ and $p:\widetilde{X}\to X$ by $[f]\mapsto f(1)$. We now construct a topology on $\widetilde{X}$ so that $p$ is a covering map and $\widetilde{X}$ is simply connected.\medbreak
 
-Let $\mathcal{B}_x=\{U\subseteq X:U\textrm{ is path-connected and }i_\ast(\pi_1U)\textrm{ is trivial in }\pi_1X\}$, then $X=\cup_{U\in\mathcal{B}_x}U$, and if $U_1,U_2\in\mathcal{B}_x$ and $x\in U_1\cap U_2$ then there exists an open and path-connected $V\subseteq U_1\cap U_2$ such that $(ij)_\ast(\pi_1V)=i_\ast(j_\ast(\pi_1V))\subseteq i_\ast(\pi_1U_1)$. Hence $V\in\mathcal{B}_x$, and $\mathcal{B}_x$ is a basis for the topology on $X$.
+Let $\mathcal{B}_x=\{U\subseteq X:U\textrm{ is path-connected and }i_\ast(\pi_1U)\textrm{ is trivial in }\pi_1X\}$, then $X=\cup_{U\in\mathcal{B}_x}U$, and if $U_1,U_2\in\mathcal{B}_x$ and $x\in U_1\cap U_2$ then there exists an open and path-connected $V\subseteq U_1\cap U_2$ such that $(ij)_\ast(\pi_1V)=i_\ast(j_\ast(\pi_1V))\subseteq i_\ast(\pi_1U_1)$. Hence $V\in\mathcal{B}_x$, and $\mathcal{B}_x$ is a basis for the topology on $X$.\medbreak
+
+Given $U_\alpha\in\mathcal{B}_x$, then $p^{-1}(U_\alpha)=\sqcup_{x\in U_\alpha}\{[f]\in\mathcal{P}(X):f(0)=x_0\textrm{ and }f(1)=x\}$. Define equivalence relation $[f_1]\sim_{U_\alpha}[f_2]$ if there exists a path $g$ in $U_\alpha$ such that $g\cdot f_1=f_2$, then $\sim_{U_\alpha}$ breaks $p^{-1}(U_\alpha)=\sqcup_\beta V_{\alpha\beta}$ where $V_{\alpha\beta}=\{[f\cdot g]\in\mathcal{P}(X):g\textrm{ in }U_\alpha\textrm{ and }g(0)=f(1),f\textrm{ fixed}\}$.\medbreak
+
+Observe that $p:V_{\alpha\beta}\to U_\alpha$ is surjective on $V_{\alpha\beta}$ since $U_\alpha$ is path-connected, and it is injective by semi-locally simply connectedness of $X$. Now let $\mathcal{B}_{\widetilde{x}}=\{V_{\alpha\beta}\}$, then $\widetilde{X}=\cup_{\alpha,\beta}V_{\alpha\beta}$. Moreover for $y\in\widetilde{X}$ and $y\in V_{\alpha\beta}\cap V_{\alpha'\beta'}$, there exists $U\in\mathcal{B}_x$ such that $p(y)\in U\subseteq U_\alpha\cap U_\beta=p(V_{\alpha\beta})\cap p(V_{\alpha'\beta'})$. Now let $V=p^{-1}(U)$, then $y\in V$ and $V\subseteq V_{\alpha\beta}\cap V_{\alpha'\beta'}$. Hence $\mathcal{B}_{\widetilde{x}}$ is a basis, and $p:\widetilde{X}\to X$ is a covering map.\medbreak
+
+Finally, let's check that $\widetilde{X}$ is simply connected. Let $[f]\in p_\ast(\pi_1(\widetilde{X},\widetilde{x}_0))$, then $\widetilde{f}:[0,1]\to\widetilde{X}$ by $t\mapsto[f_t]$ is a lift of $f$, where $f_t=f|_{[0,t]}$. From a previous corollary $\widetilde{f}$ is a loop, hence $[f]=\widetilde{f}(1)=\widetilde{x}_0$ is the class of constant loops. Since $p_\ast$ is injective, $\pi_1(\widetilde{X},\widetilde{x}_0)$ has to be trivial.
 \end{proof}
 
-\subsection*{wef}
+\begin{corollary}
+If $X$ is path-connected, locally path-connected, and semi-locally simply connected, then for every subgroup $H\subseteq\pi_1(X,x_0)$ there is a covering space $((\widetilde{X}_H,\widetilde{x}_0),p)$ such that $p_\ast(\widetilde{X}_H,\widetilde{x}_0)=H$.
+\end{corollary}
+\begin{proof}
+
+\end{proof}
+
+\subsection{Transformations and actions}\label{9}
+
+
+\newpage
+\section{Homology}\label{10}
+
+\subsection{Simplicial homology and singular homology}\label{11}
+
+$\Delta$-complex structure $\Rightarrow$ simplicial homology; singular simplices $\Rightarrow$ singular homology.\medbreak
+
+Calculation example of simplicial homology: torus $\mathbf{T}^2$ has $\Delta$-complex structure
+\[\begin{tikzcd}
+v\arrow{r}{b}&v\\
+v\arrow{u}{a}\arrow[swap]{r}{b}\arrow[ur,"U","L"']&v\arrow[swap]{u}{a}
+\end{tikzcd}\Longrightarrow\begin{cases}
+\textrm{2-simplices: }\sigma_U,\sigma_L\\
+\textrm{1-simplices: }\sigma_a,\sigma_b,\sigma_c\\
+\textrm{0-simplices: }\sigma_v
+\end{cases}.\]
+Thus the chain complex obtained is as follows:
+\[\begin{tikzcd}[row sep=small]
+0\arrow{r}{\partial_3}&\Delta_2(\mathbf{T}^2)\arrow[dash]{d}{\cong}\arrow{r}{\partial_2}&\Delta_1(\mathbf{T}^2)\arrow[dash]{d}{\cong}\arrow{r}{\partial_1}&\Delta_0(\mathbf{T}^2)\arrow{r}{\partial_0}\arrow[dash]{d}{\cong}&0\\
+&\Z^2&\Z^3&\Z
+\end{tikzcd}.\]
+Observe that since $\partial_2\sigma_U=\partial_2\sigma_L=b+a-c$, $\ker\partial_2=\im\partial_2\cong\Z$, and hence
+$H_2^\Delta(\mathbf{T}^2)=\ker\partial_2\cong\Z$. Since $\partial_1\sigma_a=\partial_1\sigma_b=\partial_1\sigma_c=0$, $\ker\partial_1=\Delta_1(\mathbf{T}^2)\cong\Z^3$, and $H_1^\Delta(\mathbf{T}^2)=\ker\partial_1/\im\partial_2\cong\Z^3/\Z=\Z^2$. Finally, it's easy to see that $H_n^\Delta(\mathbf{T}^2)=0$ for $n\in\{0,3\}$.
+
+\begin{lemma}
+If $X_\alpha$ are path-connected components of $X$, then $H_n(X)\cong\oplus_\alpha H_n(X_\alpha)$.
+\end{lemma}
+
+\textbf{Reduced homology groups} $\widetilde{H}_n(X)$ strip a copy of $\Z$ off $H_0(X)$:
+\[\begin{tikzcd}
+\cdots\arrow{r}&C_1(X)\arrow{r}{\partial_1}&C_0(X)\arrow{r}{\epsilon}&\Z\arrow[r]&0
+\end{tikzcd}.\]
+
+\begin{lemma}
+If $X$ is path-connected, then $H_0(X)\cong\Z$.
+\end{lemma}
+\begin{proof}
+wrew
+\end{proof}
+
+Given $f:X\to Y$, we obtain $f_\#:(C.(X),\partial.)\to(C.(Y),\partial.)$ by $\sigma\mapsto f\circ\sigma$ and noticing that $f_\#\partial(\sigma)=\partial f_\#(\sigma)$. Then we obtain for each $n$ the induced $f_\ast:H_n(X)\to H_n(Y)$ (sometimes denoted by $H_n(f)$) such that $\partial_n^Bh_n=h_{n-1}\partial_n^A$. Notice that since $(f\circ g)_\ast=f_\ast\circ g_\ast$ and $(\id_X)_\ast=\id_{H.(X)}$, $H_n$ acts as a functor from the category of chain complexes to the category of abelian groups.
+\[\begin{tikzcd}
+\Delta^n\arrow{dr}{\sigma}\arrow{rr}{f_\#\sigma}&&Y\\
+&X\arrow{ur}{f}
+\end{tikzcd}\quad\quad\quad\begin{tikzcd}
+\cdots\arrow{r}&C_n(A)\arrow{d}{h_n}\arrow{r}{\partial_n^A}&C_{n-1}(A)\arrow{d}{h_{n-1}}\arrow{r}&\cdots\\
+\cdots\arrow{r}&C_n(B)\arrow{r}{\partial_n^B}&C_{n-1}(B)\arrow{r}&\cdots
+\end{tikzcd}\]
+
+That a homeomorphism $f:X\to Y$ induces an isomorphism $H_n(f):H_n(X)\to H_n(Y)$ is immediate from definition. But we also expect, like before, that homotopy equivalence is enough.\medbreak
+
+\begin{theorem}
+If $f,g:X\to Y$ and $f\simeq g$, then $f_\ast=g_\ast$.
+\end{theorem}
+\begin{proof}
+blah
+\end{proof}
+
+Now since $(f\circ g)_\ast=f_\ast\circ g_\ast$ and $\id_\ast=\id$, we have the following:
+
+\begin{corollary}
+If $X\simeq Y$ by $f$, then $H_n(X)\cong H_n(Y)$ by $H_n(f)$. In particular,     $\widetilde{H}_n(X)=0$ for all $n$ if $X$ is contractible.
+\end{corollary}
+
+\subsection{Calculation methods}\label{12}
+
+Relativ homology
+
+\begin{corollary}
+If $A$ is a closed subspace of $X$ that has a neighborhood deformation retracting to $X$, then there exists an exact sequence
+\[\begin{tikzcd}[row sep=tiny, column sep=small]
+\cdots\arrow{r}&\widetilde{H}_{n+1}(X/A)\arrow{r}{\partial}&\widetilde{H}_n(A)\arrow{r}{i_\ast}&\widetilde{H}_n(X)\arrow{r}{j_\ast}&\widetilde{H}_n(X/A)\\
+&\quad\quad\quad\arrow{r}{\partial}&\widetilde{H}_{n-1}(A)\arrow{r}{i_\ast}&\cdots\arrow{r}{j_\ast}&\widetilde{H}_0(X/A)\arrow{r}&0
+\end{tikzcd}\]
+where $i:A\hookrightarrow X$ and $j:X\twoheadrightarrow X/A$.
+\end{corollary}
+
+Computation of $H_n(\mathbf{S}^m)$: notice that $\mathbf{D}^m/\mathbf{S}^{m-1}=\mathbf{S}^m$ where $\widetilde{H}_n(\mathbf{D}^m)=0$ since it is contractible. Since $(\mathbf{D}^n,\mathbf{S}^{n-1})$ satisfies the corresponding conditions, we obtain an exact sequence.
+\[\begin{tikzcd}
+0\arrow{r}{j_\ast}&\widetilde{H}_n(\mathbf{S}^m)\arrow{r}{\partial}&\widetilde{H}_{n-1}(\mathbf{S}^{m-1})\arrow{r}{i_\ast}&0
+\end{tikzcd}.\]
+Hence $\partial$ is bijective, and $\widetilde{H}_n(\mathbf{S}^m)\cong\widetilde{H}_{n-1}(\mathbf{S}^{m-1})$. Now since $\widetilde{H}_0(\mathbf{S}^0)=\Z$ and $\widetilde{H}_n(\mathbf{S}^1)=0$ for $n>0$, we have that $\widetilde{H}_n(\mathbf{S}^n)=\Z$ and $\widetilde{H}_n(\mathbf{S}^m)=0$ for $m\neq n$.
+
+\begin{corollary}[Brouwer fixed-point theorem]
+Every map $f:\mathbf{D}^n\to\mathbf{D}^n$ has a fixed point.
+\end{corollary}
+\[\begin{tikzcd}
+\partial\mathbf{D}^n\arrow[swap]{dr}{\id}\arrow{r}{i}&\mathbf{D}^n\arrow{d}{r}\\
+&\partial\mathbf{D}^n
+\end{tikzcd}\Longrightarrow\begin{tikzcd}
+\widetilde{H}_{n-1}(\mathbf{S}^{n-1})\cong\Z\arrow[swap]{dr}{\id}\arrow{r}{i_\ast}&\widetilde{H}_{n-1}(\mathbf{D}^n)\cong0\arrow{d}{r_\ast}\\
+&\Z
+\end{tikzcd}\]
+
 
 
 \end{document}
