@@ -37,6 +37,10 @@
 
 \setcounter{section}{-0}
 
+\newenvironment{rcases}
+  {\left.\begin{aligned}}
+  {\end{aligned}\right\rbrace}
+
 \newcommand{\id}{\textrm{id}}
 \newcommand{\im}{\textup{im}\,}
 \newcommand{\R}{\mathbf{R}}
@@ -54,7 +58,7 @@
 \forceindent\hyperref[9]{I.7 Transformations and actions}\medbreak
 
 \hyperref[10]{\textbf{II Homology}}\newline
-\forceindent\hyperref[11]{II.1 Simplicial homology and Singular homology}\quad\hyperref[12]{II. 2 Calculation methods}
+\forceindent\hyperref[11]{II.1 Simplicial homology and Singular homology}\quad\hyperref[12]{II. 2 The zig-zag lemma}
 
 \newpage
 \section{The Fundamental Group}\label{1}
@@ -325,9 +329,9 @@ If $X$ is path-connected, locally path-connected, and semi-locally simply connec
 $\Delta$-complex structure $\Rightarrow$ simplicial homology; singular simplices $\Rightarrow$ singular homology.\medbreak
 
 Calculation example of simplicial homology: torus $\mathbf{T}^2$ has $\Delta$-complex structure
-\[\begin{tikzcd}
+\[\begin{tikzcd}[column sep=huge,row sep=huge]
 v\arrow{r}{b}&v\\
-v\arrow{u}{a}\arrow[swap]{r}{b}\arrow[ur,"U","L"']&v\arrow[swap]{u}{a}
+v\arrow{u}{a}\arrow[swap]{r}{b}\arrow[ur,"U" near end,"L"' near start,"c"]&v\arrow[swap]{u}{a}
 \end{tikzcd}\Longrightarrow\begin{cases}
 \textrm{2-simplices: }\sigma_U,\sigma_L\\
 \textrm{1-simplices: }\sigma_a,\sigma_b,\sigma_c\\
@@ -381,12 +385,53 @@ Now since $(f\circ g)_\ast=f_\ast\circ g_\ast$ and $\id_\ast=\id$, we have the f
 If $X\simeq Y$ by $f$, then $H_n(X)\cong H_n(Y)$ by $H_n(f)$. In particular,     $\widetilde{H}_n(X)=0$ for all $n$ if $X$ is contractible.
 \end{corollary}
 
-\subsection{Calculation methods}\label{12}
+\subsection{The zig-zag lemma}\label{12}
 
-Relativ homology
+\begin{theorem}[zig-zag lemma]\label{zig-zag lemma}
+A short exact sequence of chain complexes
+\[\begin{tikzcd}[column sep=small]
+&\vdots\arrow{d}&\vdots\arrow{d}&\vdots\arrow{d}\\
+0\arrow{r}&C_n(A)\arrow{d}{\partial}\arrow{r}{i}&C_n(B)\arrow{d}{\partial}\arrow{r}{j}&C_n(C)\arrow{d}{\partial}\arrow{r}&0\\
+0\arrow{r}&C_{n-1}(A)\arrow{d}\arrow{r}{i}&C_{n-1}(B)\arrow{d}\arrow{r}{j}&C_{n-1}(C)\arrow{d}\arrow{r}&0\\
+&\vdots&\vdots&\vdots
+\end{tikzcd}\]
+induces a long exact sequence of homology groups
+\[\begin{tikzcd}[column sep=scriptsize]
+\cdots\arrow{r}&H_{n+1}(C)\arrow{r}{\partial}&H_n(A)\arrow{r}{i_\ast}&H_n(B)\arrow{r}{j_\ast}&H_n(C)\arrow{r}{\partial}&H_{n-1}(A)\arrow{r}&\cdots
+\end{tikzcd}.\]
+\end{theorem}
+\begin{proof}
+We only need to construct the \textbf{connecting homomorphism} $\partial:H_{n+1}(C.)\to H_n(A.)$. Let $[c]\in H_{n+1}(C.)$, then $c\in C_{n+1}$ and $\partial c=0$. Since $j$ is surjective, there exists $b\in B_{n+1}$ such that $j(b)=c$ and $j(\partial b)=\partial j(b)=0$ by commutativity. Now since $\partial b\in\ker j\cong\im i$, there exists $a\in A_n$ such that $i(a)=\partial b$. Finally, $i(\partial a)=\partial i(a)=\partial\partial b=0$, and since $i$ is injective, $\partial a=0$. Hence $\partial[c]=[a]\in H_n(A.)$, after checking that the choices of $[c]$ and $b$ does not affect the result.
+\[\begin{tikzcd}
+&&B_{n+1}\arrow{d}{\partial}\arrow{r}{j}&C_{n+1}\arrow{d}{\partial}\arrow{r}&0\\
+&A_n\arrow{d}{\partial}\arrow{r}{i}&B_n\arrow{d}{\partial}\arrow{r}{j}&C_n\\
+0\arrow{r}&A_{n-1}\arrow{r}{i}&B_{n-1}
+\end{tikzcd}.\]
+Finally, check that the sequence of homology groups obtained is indeed exact. This method of proving is referred to as diagram chasing.
+\end{proof}
+
+Let $A\subseteq X$, then $(C.(A),\partial)$ is a subcomplex of $(C.(X),\partial)$. Let $C_n(X,A)=C_n(X)/C_n(A)$ be the \textbf{relative} chain group, and the inherited $\partial:C_n(A)\to C_{n-1}(A)$ makes $C.(X,A)$ a chain complex. Elements of the \textbf{relative} homology group $H_n(X,A)$ are \textbf{relative} cycles $\alpha\in C_n(X)$ such that $\partial\alpha\in C_{n-1}(A)$. $\alpha$ is trivial in $H_n(X,A)$ when $\alpha=\gamma+\partial\beta$ where $\beta\in C_{n+1}(X)$ and $\gamma\in C_n(A)$.\medbreak
+
+Apply the \hyperref[zig-zag lemma]{zig-zag lemma} on the exact sequence $\begin{tikzcd}[column sep=scriptsize]
+0\arrow{r}&C.(A)\arrow[hookrightarrow]{r}{i}&C.(X)\arrow[twoheadrightarrow]{r}{j}&C.(X,A)\arrow{r}&0
+\end{tikzcd}$:
+\[\begin{tikzcd}[column sep=scriptsize]
+\cdots\arrow{r}&H_{n+1}(X,A)\arrow{r}{\partial}&H_n(A)\arrow{r}{i_\ast}&H_n(X)\arrow{r}{j_\ast}&H_n(X,A)\arrow{r}{\partial}&H_{n-1}(A)\arrow{r}&\cdots
+\end{tikzcd}.\]
+where the connecting homomorphism $\partial:H_{n+1}(X,A)\to H_n(A)$ corresponds with the boundary map since $\partial[\alpha]=[\partial\alpha]$.
+
+Notice that $\widetilde{H}_n(X,A)\cong H_n(X,A)$ for all $n$, since
+\[\begin{rcases}\begin{tikzcd}[column sep=small, row sep=small]
+\cdots\arrow{r}&C_1(A)\arrow{r}&C_0(A)\arrow[r]&\Z\arrow[r]&0\\
+\cdots\arrow{r}&C_1(X)\arrow{r}&C_0(X)\arrow[r]&\Z\arrow[r]&0
+\end{tikzcd}\end{rcases}\Longrightarrow\begin{tikzcd}[column sep=small, row sep=small]
+\cdots\arrow{r}&C_1(X,A)\arrow{r}&C_0(X,A)\arrow[r]&0\arrow[r]&0
+\end{tikzcd}\]
+
+One special case is when
 
 \begin{corollary}
-If $A$ is a closed subspace of $X$ that has a neighborhood deformation retracting to $X$, then there exists an exact sequence
+If $A$ is a closed subspace of $X$ that has a neighborhood deformation retracting to $X$, then there exists an exact sequence:
 \[\begin{tikzcd}[row sep=tiny, column sep=small]
 \cdots\arrow{r}&\widetilde{H}_{n+1}(X/A)\arrow{r}{\partial}&\widetilde{H}_n(A)\arrow{r}{i_\ast}&\widetilde{H}_n(X)\arrow{r}{j_\ast}&\widetilde{H}_n(X/A)\\
 &\quad\quad\quad\arrow{r}{\partial}&\widetilde{H}_{n-1}(A)\arrow{r}{i_\ast}&\cdots\arrow{r}{j_\ast}&\widetilde{H}_0(X/A)\arrow{r}&0
@@ -411,6 +456,13 @@ Every map $f:\mathbf{D}^n\to\mathbf{D}^n$ has a fixed point.
 &\Z
 \end{tikzcd}\]
 
+reduced homology
+
+thm 1 for pair
+
+triples
+
+Excision tells us that the relative homology $H_n.(X,A)$ does not detect the interior of $A$.
 
 
 \end{document}
