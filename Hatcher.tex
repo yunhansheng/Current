@@ -41,11 +41,14 @@
   {\left.\begin{aligned}}
   {\end{aligned}\right\rbrace}
 
-\newcommand{\id}{\textrm{id}}
-\newcommand{\im}{\textup{im}\,}
+\newcommand{\id}{\textup{id}}
+\newcommand{\im}{\textup{Im}\,}
 \newcommand{\R}{\mathbf{R}}
 \newcommand{\Z}{\mathbf{Z}}
+\newcommand{\Q}{\mathbf{Q}}
+\newcommand{\N}{\mathbf{N}}
 \newcommand{\C}{\mathbf{C}}
+\newcommand{\cone}{\textup{cone}}
 \newcommand{\D}{\mathbf{D}}
 
 \begin{document}
@@ -58,7 +61,7 @@
 \forceindent\hyperref[9]{I.7 Transformations and actions}\medbreak
 
 \hyperref[10]{\textbf{II Homology}}\newline
-\forceindent\hyperref[11]{II.1 Simplicial homology and Singular homology}\quad\hyperref[12]{II. 2 The zig-zag lemma}
+\forceindent\hyperref[11]{II.1 Simplicial homology and Singular homology}\quad\hyperref[12]{II. 2 Zig-zag lemma and excision}
 
 \newpage
 \section{The Fundamental Group}\label{1}
@@ -361,7 +364,7 @@ If $X$ is path-connected, then $H_0(X)\cong\Z$.
 wrew
 \end{proof}
 
-Given $f:X\to Y$, we obtain $f_\#:(C.(X),\partial.)\to(C.(Y),\partial.)$ by $\sigma\mapsto f\circ\sigma$ and noticing that $f_\#\partial(\sigma)=\partial f_\#(\sigma)$. Then we obtain for each $n$ the induced $f_\ast:H_n(X)\to H_n(Y)$ (sometimes denoted by $H_n(f)$) such that $\partial_n^Bh_n=h_{n-1}\partial_n^A$. Notice that since $(f\circ g)_\ast=f_\ast\circ g_\ast$ and $(\id_X)_\ast=\id_{H.(X)}$, $H_n$ acts as a functor from the category of chain complexes to the category of abelian groups.
+Given $f:X\to Y$, we obtain $f_\#:(C.(X),\partial.)\to(C.(Y),\partial.)$ by $\sigma\mapsto f\circ\sigma$ and noticing that $f_\#(\partial\sigma)=\partial f_\#(\sigma)$. Then we obtain for each $n$ the induced $f_\ast:H_n(X)\to H_n(Y)$ (sometimes denoted by $H_n(f)$) such that $\partial_n^Bh_n=h_{n-1}\partial_n^A$. Notice that since $(f\circ g)_\ast=f_\ast\circ g_\ast$ and $(\id_X)_\ast=\id_{H.(X)}$, $H_n$ acts as a functor from the category of chain complexes to the category of abelian groups.
 \[\begin{tikzcd}
 \Delta^n\arrow{dr}{\sigma}\arrow{rr}{f_\#\sigma}&&Y\\
 &X\arrow{ur}{f}
@@ -385,7 +388,7 @@ Now since $(f\circ g)_\ast=f_\ast\circ g_\ast$ and $\id_\ast=\id$, we have the f
 If $X\simeq Y$ by $f$, then $H_n(X)\cong H_n(Y)$ by $H_n(f)$. In particular,     $\widetilde{H}_n(X)=0$ for all $n$ if $X$ is contractible.
 \end{corollary}
 
-\subsection{The zig-zag lemma}\label{12}
+\subsection{Zig-zag lemma and Excision}\label{12}
 
 \begin{theorem}[zig-zag lemma]\label{zig-zag lemma}
 A short exact sequence of chain complexes
@@ -428,22 +431,16 @@ Notice that $\widetilde{H}_n(X,A)\cong H_n(X,A)$ for all $n$, since
 \cdots\arrow{r}&C_1(X,A)\arrow{r}&C_0(X,A)\arrow[r]&0\arrow[r]&0
 \end{tikzcd}\]
 
-One special case is when
-
-\begin{corollary}
-If $A$ is a closed subspace of $X$ that has a neighborhood deformation retracting to $X$, then there exists an exact sequence:
-\[\begin{tikzcd}[row sep=tiny, column sep=small]
-\cdots\arrow{r}&\widetilde{H}_{n+1}(X/A)\arrow{r}{\partial}&\widetilde{H}_n(A)\arrow{r}{i_\ast}&\widetilde{H}_n(X)\arrow{r}{j_\ast}&\widetilde{H}_n(X/A)\\
-&\quad\quad\quad\arrow{r}{\partial}&\widetilde{H}_{n-1}(A)\arrow{r}{i_\ast}&\cdots\arrow{r}{j_\ast}&\widetilde{H}_0(X/A)\arrow{r}&0
+Computation of $\widetilde{H}_n(\mathbf{S}^m)$: noticing that $\mathbf{D}^m/\partial\mathbf{D}^m\cong\mathbf{D}^m$ and $\widetilde{H}_n(\mathbf{D}^m)=0$ since it is contractible,
+\[\begin{tikzcd}[column sep=scriptsize]
+0\arrow[r]&C.(\partial\mathbf{D}^m)\arrow{r}{i}&C.(\mathbf{D}^m)\arrow{r}{j}&C.(\mathbf{D}^m/\partial\mathbf{D}^m)\arrow[r]&0
 \end{tikzcd}\]
-where $i:A\hookrightarrow X$ and $j:X\twoheadrightarrow X/A$.
-\end{corollary}
-
-Computation of $H_n(\mathbf{S}^m)$: notice that $\mathbf{D}^m/\mathbf{S}^{m-1}=\mathbf{S}^m$ where $\widetilde{H}_n(\mathbf{D}^m)=0$ since it is contractible. Since $(\mathbf{D}^n,\mathbf{S}^{n-1})$ satisfies the corresponding conditions, we obtain an exact sequence.
-\[\begin{tikzcd}
+\[\textrm{induces }\begin{tikzcd}
 0\arrow{r}{j_\ast}&\widetilde{H}_n(\mathbf{S}^m)\arrow{r}{\partial}&\widetilde{H}_{n-1}(\mathbf{S}^{m-1})\arrow{r}{i_\ast}&0
-\end{tikzcd}.\]
-Hence $\partial$ is bijective, and $\widetilde{H}_n(\mathbf{S}^m)\cong\widetilde{H}_{n-1}(\mathbf{S}^{m-1})$. Now since $\widetilde{H}_0(\mathbf{S}^0)=\Z$ and $\widetilde{H}_n(\mathbf{S}^1)=0$ for $n>0$, we have that $\widetilde{H}_n(\mathbf{S}^n)=\Z$ and $\widetilde{H}_n(\mathbf{S}^m)=0$ for $m\neq n$.
+\end{tikzcd}\]
+where $\partial$ is bijective. Hence $\widetilde{H}_n(\mathbf{S}^m)\cong\widetilde{H}_{n-1}(\mathbf{S}^{m-1})$. Now since $\widetilde{H}_0(\mathbf{S}^0)=\Z$ and $\widetilde{H}_n(\mathbf{S}^1)=0$ for $n>0$, we have that $\widetilde{H}_n(\mathbf{S}^n)=\Z$ and $\widetilde{H}_n(\mathbf{S}^m)=0$ for $m\neq n$. In place of $C.(\mathbf{D}^m/\partial\mathbf{D}^m)$ write $C.(\mathbf{D}^m,\partial\mathbf{D}^m)$, we also obtain $\widetilde{H}_n(\mathbf{D}^m,\partial\mathbf{D}^m)\cong\mathbf{H}_{n-1}(\mathbf{S}^{m-1})$.\medbreak
+
+Hence $\R^m$ is not homeomorphic to $\R^n$.
 
 \begin{corollary}[Brouwer fixed-point theorem]
 Every map $f:\mathbf{D}^n\to\mathbf{D}^n$ has a fixed point.
@@ -456,13 +453,177 @@ Every map $f:\mathbf{D}^n\to\mathbf{D}^n$ has a fixed point.
 &\Z
 \end{tikzcd}\]
 
-reduced homology
+If $X$ has a $\Delta$-complex structure such that $A,X\setminus Z,A\setminus Z$ are $\Delta$-subcomplexes, then
+\[\begin{tikzcd}
+\Delta_n(X\setminus Z)\arrow[bend right=25]{rr}{\varphi}\arrow{r}&\Delta_n(X)\arrow[r]&\Delta_n(X,A)
+\end{tikzcd}.\]
+$\varphi$ is surjective since a basis of $\Delta_n(X,A)$ is given by subcomplexes of $X\setminus A\subseteq X\setminus Z$. Hence $\varphi$ induces an isomorphism $\Delta_n(X,A)\cong\Delta_n(X\setminus Z)/\ker\varphi=\Delta_n(X\setminus Z)/\Delta_n(A\setminus Z)=\Delta_n(X\setminus Z,A\setminus Z)$.
 
-thm 1 for pair
+\begin{theorem}[excision theorem]
+If $\overline{Z}\subseteq A^\circ$, then $H_n(X,A)\cong H_n(X\setminus Z,A\setminus Z)$ for all $n$.
+\end{theorem}
+\begin{proof}
+Let $\mathcal{U}=\{U_\alpha\}_{\alpha\in A}$ be an open cover of $X$. Define $C_n^\mathcal{U}(X)\subseteq C_n(X)$ to be the subcomplex generated by $n$-simplices of $X$ such that $\sigma(\Delta^n)\subseteq U_\alpha$ for some $\alpha$. The boundary map inherited from $\partial:C_n(X)\to C_{n-1}(X)$ makes $(C.^\mathcal{U}(X),\partial)$ into a chain complex.\medbreak
 
-triples
+By so-called barycentric subdivision $S:C.(X)\to C.(X)$ one can divide simplices so that each small simplex lies inside some $U_\alpha$, and by showing that $S$ is chain homotopic to the identity map, make sense of $H_n(C.^\mathcal{U}(X))\cong H_n(C.(X))$ for all $n$.\medbreak
 
-Excision tells us that the relative homology $H_n.(X,A)$ does not detect the interior of $A$.
+Now let $Y=X\setminus Z$ and $\mathcal{U}=\{Y,A\}$. We have $C_n(X\setminus Z)/C_n(A\setminus Z)=C_n(Y)/C_n(Y\cap A)$, which is generated by the simplices that lie in $X\setminus A$. Hence $C_n(Y)/C_n(Y\cap A)\cong C_n^\mathcal{U}(X)/C_n(A)$. Now we have the exact sequences of homology by the zig-zag lemma:
+\[\begin{tikzcd}[column sep=scriptsize]
+H_n(C.(A))\arrow{d}{\cong}\arrow[r]&H_n(C.^\mathcal{U}(X))\arrow{d}{\cong}\arrow[r]&H_n(C.^\mathcal{U}(X)/C.(A))\arrow[d,dashed]\arrow[r]&H_{n-1}(C.(A))\arrow{d}{\cong}\arrow[r]&H_{n-1}(C.^\mathcal{U}(X))\arrow{d}{\cong}\\
+H_n(C.(A))\arrow[r]&H_n(C.(X))\arrow[r]&H_n(C.(X)/C.(A))\arrow[r]&H_{n-1}(C.(A))\arrow[r]&H_{n-1}(C.(X))
+\end{tikzcd}.\]
+By the five lemma $H_n(C.^\mathcal{U}(X)/C.(A))\cong H_n(C.(X)/C.(A))$. Hence $H_n(X\setminus Z,A\setminus Z)\cong H_n(X,A)$.
+\end{proof}
+
+Equivalently, if $X=A^\circ\cup B^\circ$, then $(B,A\cap B)\hookrightarrow(X,A)$ induces $H_n(B,A\cap B)\cong H_n(X,A)$ for all $n$. To see this let $Z=X\setminus B$ and $B=X\setminus Z$ for the converse.\medbreak
+
+For a good pair, $\widetilde{H}_n(X,A)\cong\widetilde{H}_n(X/A)$; for arbitrary pairs, $\widetilde{H}_n(X,A)\cong\widetilde{H}_n(X\cup\cone_A)$.\medbreak
+
+Now immediately from this, we have [hatcher corollary 2.25]
+
+\begin{lemma}
+$H_n(\Delta^n,\partial\Delta^n)\cong\Z$ is generated by identity maps $\id:\Delta^n\to\Delta^n$.
+\end{lemma}
+\begin{proof}
+When $n=0$ the statement is trivial. Proceed by induction on $n$.\medbreak
+
+Let $\Lambda^n$ be $\partial\Delta^n$ setminus the last fact (in the case of a triangle $\Delta^2$, $\Lambda^2$ looks exactly like a triangle without the bottom side) and consider the exact sequence of the triple $(\Delta^{n+1},\partial\Delta^{n+1},\Lambda^{n+1})$
+\[\begin{tikzcd}[column sep=small]
+H_{n+1}(\Delta^{n+1},\Lambda^{n+1})\arrow{d}{\cong}\arrow[r]&H_{n+1}(\Delta^{n+1},\partial\Delta^{n+1})\arrow{r}{\partial}&H_n(\partial\Delta^{n+1},\Lambda^{n+1})\arrow{d}{\cong}\arrow[r]&H_n(\Delta^{n+1},\Lambda^{n+1})\arrow{d}{\cong}\\
+0&&H_n(\Delta^n,\partial\Delta^n)&0
+\end{tikzcd}\]
+where $H_{n+1}(\Delta^{n+1},\Lambda^{n+1})\cong0$ because $\Delta^{n+1}$ deform retracts to $\Lambda^{n+1}$, and $H_n(\Delta^{n+1},\Lambda^{n+1})\cong0$ because $H_n(\Delta^{n+1})=0$. Hence $\partial$ is an isomorphism. Let $\id_{n+1}\in H_{n+1}(\Delta^{n+1},\partial\Delta^{n+1})$, then
+\begin{align*}
+\partial \id_{n+1}=\sum(-1)^k\id_{n+1}|_{k^{\textrm{th}}\textrm{ face}}=\pm\id_n\quad\quad\quad\textrm{(the last face)}
+\end{align*}
+which is a generator of $H_n(\Delta^n,\partial\Delta^n)$ by induction hypothesis. Since $\partial$ is an isomorphism, $\id_{n+1}$ is a generator of $H_{n+1}(\Delta^{n+1},\partial\Delta^{n+1})$.
+\end{proof}
+
+\begin{theorem}
+Let $X$ be equipped with a $\Delta$-complex structure, then the inclusion $\Delta.(X)\hookrightarrow C.(X)$ of chain complexes induces an isomorphism $H_n^\Delta(X)\cong H_n(X)$ for all $n$.
+\end{theorem}
+\begin{proof}
+First assume that $X$ is finite-dimensional.
+\end{proof}
+
+\bigbreak
+
+2.1 basic concepts: simplicial homology, singular homology, cellular homology, relative homology, chain homotopy, reduced homology
+
+example: torus, path-connected=direct sum, path-connected H0, etc
+
+theorem 1 (homotopy)
+theorem 2 (equivalence)
+theorem 3 (cellular)
+
+example:
+
+2.2 tools
+
+theorem 1 zig zag lemma
+theorem 2 excision theorem
+theorem 3 5 lemma
+theorem 4 m-v theorem
+
+example;
+
+2.3 applications
+
+brouwer fixed-point, degree, hairy ball, borsuk-ulam
+
+
+2.4 axiomatic homology
+
+\subsection{manifold recap}
+
+An \textbf{n-dimensional manifold} is a second countable Hausdorff space that is locally homeomorphic to $\R^n$.\medbreak
+
+Let $p\in U\subseteq M$ such that $U$ is homeomorphic to $\R^n$, then $H_k(U,U\setminus\{p\})\cong\widetilde{H}_k(\R^n,\R^n\setminus\{p\})$. Considering the pair $(\R^n,\R^n\setminus\{p\})$ we have $\widetilde{H}_k(\R^n,\R^n\setminus\{p\})\cong \widetilde{H}_k(\R^n\setminus\{p\})\cong\widetilde{H}_k(\mathbf{S}^{n-1})$. Finally by excision, $H_k(M,M\setminus\{p\})\cong H_k(U,U\setminus\{p\})$. Together we have 
+\[\widetilde{H}_k(M,M\setminus\{p\})\cong\widetilde{H}_k(\mathbf{S}^{n-1})\cong\begin{cases}
+\Z,&k=n\\
+0,&\textrm{otherwise}
+\end{cases}.\]
+Hence if two manifolds $M$ and $N$ are homeomorphic, then $\dim M=\dim N$.\medbreak
+
+The \textbf{local orientation} $\mu_p$ of a manifold $M$ at $p\in M$ is a choice of generator $\{\pm1\}$ of $H_n(M,M\setminus\{p\})\cong\Z$. Two orientations are \textbf{consistent} if. \textbf{global orientation}
+
+\newpage
+\subsection{cellular homology}
+
+The cellular homology of $X$ helps the computation when $X$ is a CW-complex.\medbreak
+
+We make the following observations when $X$ is a CW-complex:
+\begin{enumerate}[(i)]
+\item $H_n(X^k,X^{k-1})\cong\begin{cases}\bigoplus\Z\ (\textrm{one for each }n\textrm{-cell of }X),&n=k\\0,&\textrm{otherwise}
+\end{cases}$.
+
+\item $i_\ast:H_k(X^k)\to H_k(X)$ induced by $i:X^k\hookrightarrow X$ is surjective.
+
+\item $H_n(X^k)\cong\begin{cases}H_n(X)\ (\textrm{induced by }i:X^k\hookrightarrow X),&n<k\\0,&n>k
+\end{cases}$.
+\end{enumerate}
+(i) follows from $H_n(X^k,X^{k-1})\cong\widetilde{H}_n(X^k/X^{k-1})\cong\widetilde{H}_n(\vee_i\mathbf{S}^k)$ since $(X^k,X^{k-1})$ is a good pair. (ii) and (iii) when $X$ is finite-dimensional follows from considering the exact sequence of $(X^k,X^{k-1})$ and induction on $H_k(X^0)=0$ when $k>0$. When $X$ is infinite-dimensional recall that
+\begin{align*}
+\textrm{\textcolor{red}{a singular chain in $X$ has compact image, hence meets only finitely many cells of $X$.}}
+\end{align*}
+
+Define $C_n^{CW}(X)=H_n(X^n,X^{n-1})=F^{ab}(n\textrm{-cells of }X)$ to be the \textbf{cellular chain group}, and with $d_n=j_{n-1}\partial_n$ we obtain a \textbf{cellular chain complex} ($d^2=0$):
+\[\begin{tikzcd}[column sep=small]
+&&0\arrow[d]&&&&&&\\
+&&H_n(X^n)\arrow[rrd, "j_n"]\arrow[rr]&&H_n(X^{n+1})\cong H_n(X)\arrow[rr]&&0&&\\
+\cdots\arrow[rr]&&{H_{n+1}(X^{n+1},X^n)}\arrow[u,"\partial_{n+1}"]\arrow[rr,"d_{n+1}"]&& {H_n(X^n,X^{n-1})}\arrow[rr, "d_n"] \arrow[d, "\partial_n"] &  & {H_{n-1}(X^{n-1},X^{n-2})} \arrow[rr]&&\cdots\\
+&&&&H_{n-1}(X^{n-1})\arrow[rru,"j_{n-1}"']&&&&\\
+&&&&0\arrow[u]&&&&       
+\end{tikzcd}.\]
+The corresponding homology groups are the \textbf{cellular homology groups} $H_n^{CW}(X)$.
+
+\begin{theorem}
+The inclusion $C.^{CW}(x)\hookrightarrow C.(X)$ induces an isomorphism
+$H_.^{CW}(X)\cong H.(X)$.
+\end{theorem}
+\begin{proof}
+Since $j_n$ is injective, $\im\partial_{n+1}=\im d_{n+1}$ and $H_n(X^n)=\im j_n$. By exactness $\im j_n=\ker\partial_n$, and since $j_{n-1}$ is injective, $\ker\partial_n=\ker d_n$. Together we have $H_n^{CW}(X)\cong H_n(X^n)/\im\partial_{n+1}$, which by exactness is precisely $H_n(X)$.
+\end{proof}
+
+Observe that $d_{n+1}:H_{n+1}(X^{n+1},X^n)\to H_n(X^n,X^{n-1})$ sends $e_\alpha^{n+1}\mapsto\sum d_{\alpha\beta}e^n_\beta$. The claim is that $d_{\alpha\beta}=\deg f_{\alpha\beta}$ where $f_{\alpha\beta}=q_\beta\circ\varphi_\alpha$, with $\varphi_\alpha:\partial\mathbf{D}^n\to X$ the attaching map and $q_\beta:X\to\mathbf{S}^n_\beta$ collapsing all of $X$ except for $e_\beta^n$.
+
+\[\begin{tikzcd}
+\widetilde{H}_{n+1}(\mathbf{D}_\alpha^{n+1},\partial\mathbf{D}^{n+1}_\alpha)\arrow{d}{\Phi_{\alpha\ast}}\arrow{r}{\partial}&\widetilde{H}_n(\partial\mathbf{D}_\alpha^{n+1})\arrow{d}{\varphi_{\alpha\ast}}\arrow{r}{f_{\alpha\beta\ast}}&\widetilde{H}_n(\mathbf{S}_\beta^n)\\
+\widetilde{H}_{n+1}(X^{n+1},X^n)\arrow[swap]{drr}{d_{n+1}}\arrow{r}{\partial}&\widetilde{H}_n(X^n)\arrow{ur}{q_{\beta\ast}}\arrow{r}{q_{\beta_1\ast}}&\widetilde{H}_n(X^n/X^{n-1})\arrow[swap]{u}{q_{\beta_2\ast}}\\
+&&\widetilde{H}_n(X^n,X^{n-1})\arrow[equal]{u}
+\end{tikzcd}\]
+
+Take a generator $[\mathbf{D}^{n+1}]\in\widetilde{H}_{n+1}(\mathbf{D}_\alpha^{n+1},\partial\mathbf{D}^{n+1}_\alpha)$, $\partial$ sends it to a generator in $\widetilde{H}_n(\partial\mathbf{D}_\alpha^{n+1})$ which has the image $\deg f_{\alpha\beta}$ under $f_{\alpha\beta\ast}$. On the other hand, the characteristic map (extension of attaching map) $\Phi_{\alpha\ast}$ sends $[\mathbf{D}^{n+1}]$ to $[e_\alpha^{n+1}]$, and $d_{n+1}$ further sends it to $\sum d_{\alpha\beta}e_\beta^n$, which projects to the $\beta^{\mathrm{th}}$ factor $d_{\alpha\beta}$ by $q_{\beta_2\ast}$. Since the diagram commutes, $d_{\alpha\beta}=\deg f_{\alpha\beta}$.\medbreak
+
+Now we no longer have to subdivide spaces to obtain a $\Delta$-complex structure like we did when computing simplicial homology of $\mathbf{T}^2$ and $\mathbf{RP}^2$.\medbreak
+
+For $\mathbf{M}_g$, blah\medbreak
+
+For $\mathbf{RP}^n$, blah\medbreak
+
+For $\mathbf{CP}^n$: recall that $\mathbf{CP}^n=\mathbf{S}^{2n+1}/\sim$ where $v\sim\lambda v$ when $\abs{\lambda}=1$. The ``upper hemisphere'' of $\mathbf{CP}^n$ consists of points $(\omega,(1-\abs{\omega}^2)^{1/2})$ where $\omega\in\mathbf{C}^n\cong\mathbf{D}^{2n}$, the boundary of which corresponds to $(\omega,0)$ with the identification of $\mathbf{CP}^{n-1}$. Hence inductively $\mathbf{CP}^n$ is obtained from $\mathbf{CP}^{n-1}$ by attaching a $2n$-cell: $\mathbf{CP}^n=e_0\cup e_2\cup\cdots\cup e_{2n}$. Hence the cellular chain complex is an alternation between $0$ and $\Z$ with trivial boundary maps.
+\[H_k(\mathbf{CP}^n)\cong\begin{cases}
+\Z,&k=0,2,\cdots,2n\\0,&\textrm{otherwise}
+\end{cases}.\]
+
+\begin{lemma}
+If $0\xrightarrow{ }A\xrightarrow{\alpha}B\xrightarrow{\beta}C\xrightarrow{ }0$ is exact, then so is $0\xrightarrow{ }A\otimes\Q\xrightarrow{\alpha\otimes\id}B\otimes\Q\xrightarrow{\beta\otimes\id}C\otimes\Q\xrightarrow{ }0$, given that $A,B,C$ are abelian groups, i.e., $\Q$ is flat over $\Z$.
+\end{lemma}
+\begin{proof}
+If $(\alpha\otimes\id)(a\otimes q)=\alpha(a)\otimes q=0$, then there exists $n\in\N$ such that $n\alpha(a)=\alpha(na)=0$. Since $\alpha$ is injective, $na=0$ and thus $a\otimes q=0$, proving that $\ker(\alpha\otimes\id)=0$. Since $\beta\circ\alpha=0$, $(\beta\otimes\id)\circ(\alpha\otimes\id)=(\beta\circ\alpha)\otimes\id=0$, and $\im(\alpha\otimes\id)\subseteq\ker(\beta\otimes\id)$. Check the other direction. The surjectivity of $\beta\otimes\id$ inherits from the surjectivity of $\beta$.
+\end{proof}
+
+Euler Char: alternating sum of rank
+
+theorem: number of k-cells,
+
+proof: flatness of q, split exact sequence.
+
+eg. $\chi(\mathbf{M}_g)=2-2g$, $\chi(\mathbf{S}^n)=\begin{cases}0,&n\textrm{ odd}\\2,&\textrm{otherwise}
+\end{cases},\chi(\mathbf{RP}^n)=\begin{cases}0,&n\textrm{ odd}\\1,&\textrm{otherwise}
+\end{cases}$,$\chi(\mathbf{CP}^n)=2n$
+
+
 
 
 \end{document}
