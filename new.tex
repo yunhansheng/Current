@@ -1,0 +1,261 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amsthm,amsfonts}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage[mathscr]{eucal}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{titlesec}
+\usepackage{tikz-cd}
+\usepackage[shortlabels]{enumitem}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[OT1]{fontenc}
+\usepackage{physics}
+\usepackage{xpatch}
+%\usepackage{hyperref}
+
+\setlength\parindent{0pt}
+
+\setcounter{section}{-0}
+\setcounter{secnumdepth}{2}
+
+\theoremstyle{definition}
+\newtheorem*{defin}{Definition}
+\newtheorem*{example}{Example}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+
+\newenvironment{rcases}
+  {\left.\begin{aligned}}
+  {\end{aligned}\right\rbrace}
+
+\newcommand{\id}{\textup{id}}
+\newcommand{\im}{\textup{Im}\,}
+\newcommand{\R}{\mathbf{R}}
+\newcommand{\Z}{\mathbf{Z}}
+\newcommand{\Q}{\mathbf{Q}}
+\newcommand{\N}{\mathbf{N}}
+\newcommand{\C}{\mathbf{C}}
+\newcommand{\cone}{\textup{cone}}
+\newcommand{\D}{\mathbf{D}}
+\newcommand{\s}{\mathbf{S}}
+
+\newcommand{\forceindent}{\leavevmode{\parindent=1.5em\indent}}
+
+\begin{document}
+
+\section*{Table of contents}
+
+\contentsline{section}{\numberline{1}Fundamental Groups}{1}
+\contentsline{subsection}{\numberline{1.1}Basic concepts}{1}
+\forceindent\forceindent\forceindent Some background, fundamental groups, induced homomorphisms
+\contentsline{subsection}{\numberline{1.2}Covering spaces}{3}
+\forceindent\forceindent\forceindent Homotopy-lifting property, lifting criterion, universal covers, deck transformations
+\contentsline{subsection}{\numberline{1.3}Calculation and application}{3}
+\forceindent\forceindent\forceindent $\pi_1(\s^1)\cong\Z$ and its consequences, van Kampen's theorem
+
+\contentsline{section}{\numberline{2}Homology}{5}
+\contentsline{subsection}{\numberline{2.1}Basic concepts}{5}
+\forceindent\forceindent\forceindent Simplicial homology, singular homology, cellular homology, axioms for homology
+\contentsline{subsection}{\numberline{2.2}Tools}{6}
+\forceindent\forceindent\forceindent Zig-zag lemma, five lemma, excision theorem, Mayer-Vietoris sequence
+\contentsline{subsection}{\numberline{2.3}Other topics}{8}
+\forceindent\forceindent\forceindent Manifold and the degree of a map, Euler characteristics and Betti number, $\pi_1$ and $H_1$,\newline
+\forceindent\forceindent\forceindent simplicial approximation
+
+\contentsline{section}{\numberline{3}Cohomology}{5}
+
+\newpage
+\section{Fundamental Groups}
+
+\subsection{Basic concepts}
+
+\paragraph{Some background}
+
+\paragraph{fundamental groups}
+
+\paragraph{induced homomorphisms}
+
+\subsection{Covering space}
+
+\paragraph{Homotopy-lifting property}
+
+\paragraph{Lifting criterion}
+
+\paragraph{Universal covers}
+
+\paragraph{Deck transformations}
+
+\subsection{Calculation and applications}
+
+\paragraph{$\pi_1(\s^1)\cong\Z$ and its consequences}
+
+\paragraph{Van Kampen's theorem}
+
+\newpage
+\section{Homology}
+
+Homology is a covariant functor from the category of topological spaces with continuous maps to the category of abelian groups with group homomorphisms, with chain complexes as an intermediate step. The central property of homology groups, like the fundamental groups, is the homotopy invariance. But homology groups are easier to compute than homotopy groups, in general.
+
+\subsection{Basic concepts}
+
+Simplicial homology is built from $\Delta$-complex structures and cellular homology is built upon CW complexes. These two homology theories are convenient in computation but require strict conditions on the space. Singular homology built from singular simplices is most used in proofs for its flexibility, but is less computable in general. 
+
+\paragraph{Simplicial homology}
+
+A $\Delta$-complex structure on space $X$ is a collection of maps $\sigma_n$ from the standard $n$-simplices $\Delta^n$ to $X$ that decomposes $X$ ``nicely'', with appropriate topology. The chain group is defined as $\Delta_n(X)=F^{ab}(\sigma_\alpha)$, and the boundary map is $\partial_n:\Delta_n(X)\to\Delta_{n-1}(X)$ by $\sigma_\alpha\mapsto\sum_i(-1)^i\sigma_\alpha|_{[v_0,\cdots,\hat{v}_i,\cdots,v_n]}$. Check that $\partial_n\partial_{n-1}=0$, and thus $\Delta_.(X)$ forms a chain complex. The corresponding homology groups $H_.^\Delta(X)$ are the simplicial homology groups.\medbreak
+
+To calculate simplicial homology we need to subdivide for a $\Delta$-complex structure.
+\[\mathbf{T}^2:\quad\quad\begin{tikzcd}[column sep=1.5cm,row sep=1.5cm]
+v\arrow{r}{b}&v\\
+v\arrow{u}{a}\arrow[swap]{r}{b}\arrow[ur,"U" near end,"L"' near start,"c"]&v\arrow[swap]{u}{a}
+\end{tikzcd}\Longrightarrow\begin{cases}
+\textrm{2-simplices: }\sigma_U,\sigma_L\\
+\textrm{1-simplices: }\sigma_a,\sigma_b,\sigma_c\\
+\textrm{0-simplices: }\sigma_v
+\end{cases}\]
+Thus we obtain the chain complex and the corresponding homology groups:
+\[\begin{tikzcd}[column sep=scriptsize,row sep=scriptsize]
+0\arrow{r}{\partial_3}&\Delta_2(\mathbf{T}^2)\arrow[equal]{d}\arrow{r}{\partial_2}&\Delta_1(\mathbf{T}^2)\arrow[equal]{d}\arrow{r}{\partial_1}&\Delta_0(\mathbf{T}^2)\arrow{r}{\partial_0}\arrow[equal]{d}&0\\
+&\Z^2&\Z^3&\Z
+\end{tikzcd}\Rightarrow\begin{cases}H_2^\Delta(\mathbf{T}^2)=\ker\partial_2\cong\Z\\
+H_1^\Delta(\mathbf{T}^2)\cong\Z^3/\Z\cong\Z^2\\
+H_0^\Delta(\mathbf{T}^2)=H_3^\Delta(\mathbf{T}^2)=0
+\end{cases}.\]
+Similarly, we can do this for $\mathbf{RP}^2$ and Klein bottle $K$.
+
+\paragraph{Singular homology}
+
+A singular $n$-simplex in $X$ is a map $\sigma:\Delta^n\to X$ that need not be ``nice''. The singular chain group $C_n(X)$ is the free abelian group generated by all singular $n$-simplices in $X$ with the same boundary map as before. Similarly $C_.(X)$ forms a chain complex with corresponding singular homology groups $H_.(X)$.\medbreak
+
+As examples, let's compute $H_0(X)$ for path-connected $X$ and $H_n(Y)$ for $Y$ a point.\medbreak
+
+But sometimes we use reduced homology instead, so\medbreak
+
+$C_n(X)$ is a much bigger group then $\Delta_n(X)$, but in terms of homology they are equivalent:
+
+\begin{theorem}
+Let $X$ be equipped with a $\Delta$-complex structure, then the inclusion $\Delta_.(X)\hookrightarrow C_.(X)$ of chain complexes induces an isomorphism $H_.^\Delta(X)\cong H_.(X)$.
+\end{theorem}
+
+Now we've reached the central property of homology: homotopy invariance. For $f:X\to Y$ there is a chain map $f_\#:C_.(X)\to C_.(Y)$ by $\sigma\mapsto f\sigma$, and since $f_\#(\partial\sigma)=\partial f_\#(\sigma)$, then chain ladder commutes. Two chain maps are homotopic if. Chain map induces 
+
+\[\begin{tikzcd}[column sep=scriptsize]
+\cdots\arrow{r}&C_n(A)\arrow{d}{h_n}\arrow{r}{\partial_n^A}&C_{n-1}(A)\arrow{d}{h_{n-1}}\arrow{r}&\cdots\\
+\cdots\arrow{r}&C_n(B)\arrow{r}{\partial_n^B}&C_{n-1}(B)\arrow{r}&\cdots
+\end{tikzcd}\quad\quad\quad blah\]
+
+\begin{theorem}
+Let $f,g:X\to Y$. If $f\simeq g$, then $f_\#\simeq g_\#$, and thus $f_\ast=g_\ast$.
+\end{theorem}
+
+Finally, relative homology is
+
+\paragraph{Cellular homology}
+
+CW structure is less strict then $\Delta$-complex structure. Define cellular chain group to be $C_n^{CW}(X)=H_n(X^n,X^{n-1})=F^{ab}(n\textrm{-cells of }X)$, and with boundary map $d_n=j_{n-1}\partial_n$ we obtain a cellular chain complex:
+\[\begin{tikzcd}[column sep=small]
+&&0\arrow[d]&&&&&&\\
+&&H_n(X^n)\arrow[rrd, "j_n"]\arrow[rr]&&H_n(X^{n+1})\cong H_n(X)\arrow[rr]&&0&&\\
+\cdots\arrow[rr]&&{H_{n+1}(X^{n+1},X^n)}\arrow[u,"\partial_{n+1}"]\arrow[rr,"d_{n+1}"]&& {H_n(X^n,X^{n-1})}\arrow[rr, "d_n"] \arrow[d, "\partial_n"] &  & {H_{n-1}(X^{n-1},X^{n-2})} \arrow[rr]&&\cdots\\
+&&&&H_{n-1}(X^{n-1})\arrow[rru,"j_{n-1}"']&&&&\\
+&&&&0\arrow[u]&&&&       
+\end{tikzcd}.\]
+The corresponding homology groups $H_.^{CW}(X)$ are the cellular homology groups.\medbreak
+
+Above we assumed the following observations when $X$ is a CW-complex:
+\begin{enumerate}[(i)]
+\item $H_n(X^k,X^{k-1})\cong\begin{cases}\bigoplus\Z\ (\textrm{one for each }n\textrm{-cell of }X),&n=k\\0,&\textrm{otherwise}
+\end{cases}$.
+
+\item $i_\ast:H_k(X^k)\to H_k(X)$ induced by $i:X^k\hookrightarrow X$ is surjective.
+
+\item $H_n(X^k)\cong\begin{cases}H_n(X)\ (\textrm{induced by }i:X^k\hookrightarrow X),&n<k\\0,&n>k
+\end{cases}$.
+\end{enumerate}
+(i) follows from $H_n(X^k,X^{k-1})\cong\widetilde{H}_n(X^k/X^{k-1})\cong\widetilde{H}_n(\vee_i\mathbf{S}^k)$ since $(X^k,X^{k-1})$ is a good pair. (ii) and (iii) when $X$ is finite-dimensional follows from considering the exact sequence of $(X^k,X^{k-1})$ and induction on $H_k(X^0)=0$ when $k>0$. When $X$ is infinite-dimensional recall that\medbreak
+
+Now we make explicit of the boundary maps $d_n$, with the help of mapping degree.\medbreak
+
+Observe that $d_{n+1}:H_{n+1}(X^{n+1},X^n)\to H_n(X^n,X^{n-1})$ sends $e_\alpha^{n+1}\mapsto\sum d_{\alpha\beta}e^n_\beta$. The claim is that $d_{\alpha\beta}=\deg f_{\alpha\beta}$ where $f_{\alpha\beta}=q_\beta\circ\varphi_\alpha$, with $\varphi_\alpha:\partial\mathbf{D}^n\to X$ the attaching map and $q_\beta:X\to\mathbf{S}^n_\beta$ collapsing all of $X$ except for $e_\beta^n$.
+
+\[\begin{tikzcd}
+\widetilde{H}_{n+1}(\mathbf{D}_\alpha^{n+1},\partial\mathbf{D}^{n+1}_\alpha)\arrow{d}{\Phi_{\alpha\ast}}\arrow{r}{\partial}&\widetilde{H}_n(\partial\mathbf{D}_\alpha^{n+1})\arrow{d}{\varphi_{\alpha\ast}}\arrow{r}{f_{\alpha\beta\ast}}&\widetilde{H}_n(\mathbf{S}_\beta^n)\\
+\widetilde{H}_{n+1}(X^{n+1},X^n)\arrow[swap]{drr}{d_{n+1}}\arrow{r}{\partial}&\widetilde{H}_n(X^n)\arrow{ur}{q_{\beta\ast}}\arrow{r}{q_{\beta_1\ast}}&\widetilde{H}_n(X^n/X^{n-1})\arrow[swap]{u}{q_{\beta_2\ast}}\\
+&&\widetilde{H}_n(X^n,X^{n-1})\arrow[equal]{u}
+\end{tikzcd}\]
+
+Take a generator $[\mathbf{D}^{n+1}]\in\widetilde{H}_{n+1}(\mathbf{D}_\alpha^{n+1},\partial\mathbf{D}^{n+1}_\alpha)$, $\partial$ sends it to a generator in $\widetilde{H}_n(\partial\mathbf{D}_\alpha^{n+1})$ which has the image $\deg f_{\alpha\beta}$ under $f_{\alpha\beta\ast}$. On the other hand, the characteristic map (extension of attaching map) $\Phi_{\alpha\ast}$ sends $[\mathbf{D}^{n+1}]$ to $[e_\alpha^{n+1}]$, and $d_{n+1}$ further sends it to $\sum d_{\alpha\beta}e_\beta^n$, which projects to the $\beta^{\mathrm{th}}$ factor $d_{\alpha\beta}$ by $q_{\beta_2\ast}$. Since the diagram commutes, $d_{\alpha\beta}=\deg f_{\alpha\beta}$.
+
+\begin{theorem}
+The inclusion $C.^{CW}(x)\hookrightarrow C.(X)$ induces an isomorphism
+$H_.^{CW}(X)\cong H.(X)$.
+\end{theorem}
+\begin{proof}
+Since $j_n$ is injective, $\im\partial_{n+1}=\im d_{n+1}$ and $H_n(X^n)=\im j_n$. By exactness $\im j_n=\ker\partial_n$, and since $j_{n-1}$ is injective, $\ker\partial_n=\ker d_n$. Together we have $H_n^{CW}(X)\cong H_n(X^n)/\im\partial_{n+1}$, which by exactness is precisely $H_n(X)$.
+\end{proof}
+
+Now we no longer have to subdivide for a $\Delta$-complex structure like we did when computing the simplicial homology of $\mathbf{T}^2$.\medbreak
+
+$\mathbf{M}_g$, $\mathbf{RP}^n$, for $\mathbf{CP}^n$: recall that $\mathbf{CP}^n=\mathbf{S}^{2n+1}/\sim$ where $v\sim\lambda v$ when $\abs{\lambda}=1$. The ``upper hemisphere'' of $\mathbf{CP}^n$ consists of points $(\omega,(1-\abs{\omega}^2)^{1/2})$ where $\omega\in\mathbf{C}^n\cong\mathbf{D}^{2n}$, the boundary of which corresponds to $(\omega,0)$ with the identification of $\mathbf{CP}^{n-1}$. Hence inductively $\mathbf{CP}^n$ is obtained from $\mathbf{CP}^{n-1}$ by attaching a $2n$-cell: $\mathbf{CP}^n=e_0\cup e_2\cup\cdots\cup e_{2n}$. Hence the cellular chain complex is an alternation between $0$ and $\Z$ with trivial boundary maps.
+\[H_k(\mathbf{CP}^n)\cong\begin{cases}
+\Z,&k=0,2,\cdots,2n\\0,&\textrm{otherwise}
+\end{cases}.\]
+
+\paragraph{Axioms for homology}
+
+In general a
+
+\subsection{Tools}
+
+\paragraph{Zig-zag lemma}
+
+The zig-zag lemma provides a method of.
+
+\begin{theorem}[zig-zag lemma]
+A short exact sequence of chain complexes
+\[\begin{tikzcd}[column sep=small]
+&\vdots\arrow{d}&\vdots\arrow{d}&\vdots\arrow{d}\\
+0\arrow{r}&C_n(A)\arrow{d}{\partial}\arrow{r}{i}&C_n(B)\arrow{d}{\partial}\arrow{r}{j}&C_n(C)\arrow{d}{\partial}\arrow{r}&0\\
+0\arrow{r}&C_{n-1}(A)\arrow{d}\arrow{r}{i}&C_{n-1}(B)\arrow{d}\arrow{r}{j}&C_{n-1}(C)\arrow{d}\arrow{r}&0\\
+&\vdots&\vdots&\vdots
+\end{tikzcd}\]
+induces a long exact sequence of homology groups
+\[\begin{tikzcd}[column sep=scriptsize]
+\cdots\arrow{r}&H_{n+1}(C)\arrow{r}{\partial}&H_n(A)\arrow{r}{i_\ast}&H_n(B)\arrow{r}{j_\ast}&H_n(C)\arrow{r}{\partial}&H_{n-1}(A)\arrow{r}&\cdots
+\end{tikzcd}.\]
+\end{theorem}
+\begin{proof}
+We only need to construct the \textbf{connecting homomorphism} $\partial:H_{n+1}(C.)\to H_n(A.)$. Let $[c]\in H_{n+1}(C.)$, then $c\in C_{n+1}$ and $\partial c=0$. Since $j$ is surjective, there exists $b\in B_{n+1}$ such that $j(b)=c$ and $j(\partial b)=\partial j(b)=0$ by commutativity. Now since $\partial b\in\ker j\cong\im i$, there exists $a\in A_n$ such that $i(a)=\partial b$. Finally, $i(\partial a)=\partial i(a)=\partial\partial b=0$, and since $i$ is injective, $\partial a=0$. Hence $\partial[c]=[a]\in H_n(A.)$, after checking that the choices of $[c]$ and $b$ does not affect the result.
+\[\begin{tikzcd}
+&&B_{n+1}\arrow{d}{\partial}\arrow{r}{j}&C_{n+1}\arrow{d}{\partial}\arrow{r}&0\\
+&A_n\arrow{d}{\partial}\arrow{r}{i}&B_n\arrow{d}{\partial}\arrow{r}{j}&C_n\\
+0\arrow{r}&A_{n-1}\arrow{r}{i}&B_{n-1}
+\end{tikzcd}.\]
+Finally, check that the sequence of homology groups obtained is indeed exact. This method of proving is referred to as diagram chasing.
+\end{proof}
+
+\paragraph{Five lemma}
+
+\paragraph{Excision theorem}
+
+\paragraph{Mayer-Vietoris sequence}
+
+\subsection{Other topics}
+
+\paragraph{Manifold and the degree of a map}
+
+\paragraph{Euler characteristics and Betti number}
+
+\paragraph{$\pi_1$ and $H_1$}
+
+\paragraph{Simplicial approximation}
+
+
+
+
+\end{document}
