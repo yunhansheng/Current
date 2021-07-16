@@ -233,11 +233,16 @@ Suppose $p:\widetilde{X}\to X$ and open $U\subseteq X$. $U$ is \textbf{evenly co
 
 A \textbf{lift} of a map $f:Y\to X$ is a map $\widetilde{f}:Y\to\widetilde{X}$ such that $p\widetilde{f}=f$. $\Phi:\pi_1(X,x_0)\to p^{-1}(x_0)$ by $[f]\mapsto\widetilde{f}(1)$ is called the \textbf{lifting correspondence}. The fact that $\Phi$ is well-defined is due to the uniqueness in homotopy-lifting property:
 
+\newpage
 \begin{theorem}
 Given a covering map $p:\widetilde{X}\to X$, a homotopy $f_t:Y\to X$, and a lift $\widetilde{f}_0:Y\to\widetilde{X}$ of $f_0$, there exists a unique lift $\widetilde{f}:Y\to\widetilde{X}$ extending $\widetilde{f}_0$.
 \[\begin{tikzcd}
+\{0\}\arrow{r}{\widetilde{f}_0}\arrow[hookrightarrow]{d}&\widetilde{X}\arrow{d}{p}\\
+I\arrow{r}{F}\arrow[dashed]{ur}{\widetilde{F}}&X
+\end{tikzcd}\quad\quad
+\begin{tikzcd}
 Y\times\{0\}\arrow{r}{\widetilde{f}_0}\arrow[hookrightarrow]{d}&\widetilde{X}\arrow{d}{p}\\
-Y\times[0,1]\arrow{r}{F}\arrow[dashed]{ur}{!\widetilde{F}}&X
+Y\times I\arrow{r}{F}\arrow[dashed]{ur}{\widetilde{F}}&X
 \end{tikzcd}\]
 \end{theorem}
 \begin{proof}

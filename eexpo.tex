@@ -1,0 +1,269 @@
+\documentclass[psamsfonts]{amsart}
+
+\usepackage{amssymb,amsfonts}
+\usepackage[all,arc]{xy}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{physics}
+\usepackage{tikz-cd}
+\usetikzlibrary{decorations.pathmorphing}
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem*{thm*}{Theorem}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{defns}[thm]{Definitions}
+\newtheorem{exmp}[thm]{Example}
+\newtheorem{exmps}[thm]{Examples}
+\newtheorem{notn}[thm]{Notation}
+\newtheorem{notns}[thm]{Notations}
+\newtheorem{addm}[thm]{Addendum}
+\newtheorem{exer}[thm]{Exercise}
+
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{rems}[thm]{Remarks}
+\newtheorem{warn}[thm]{Warning}
+
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\s}{\mathbf{S}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Ab}{\mathbf{Ab}}
+\newcommand{\Hom}{\textup{Hom}}
+\newcommand{\CDGA}{\mathbf{CDGA}}
+\newcommand{\simp}{\mathbf{\Delta}}
+\newcommand{\Ho}{\mathbf{Ho}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Top}{\mathbf{Top}}
+\newcommand{\Obj}{\textup{Obj}}
+\newcommand{\id}{\textup{id}}
+\newcommand{\sSet}{\mathbf{sSet}}
+
+\DeclareMathOperator{\coker}{coker}
+\DeclareMathOperator{\Sym}{Sym}
+\DeclareMathOperator{\Etr}{Etr}
+
+\makeatletter
+\let\c@equation\c@thm
+\makeatother
+\numberwithin{equation}{section}
+
+\bibliographystyle{plain}
+
+\title{The Realization of Rational and Polynomial Cohomology Rings}
+
+\author{Yunhan (Alex) Sheng}
+
+\begin{document}
+
+\begin{abstract}
+
+This expository paper written during the $\textrm{\smash{2020 REU}}$ program at the University of Chicago focuses on a realization problem: which commutative graded $R$-algebras can be realized as the cohomology ring $\smash{H^\ast(X;R)}$ of a space $X$ with coefficient in $R$? The case $R=\Q$ can be solved via Sullivan's approach to rational homotopy theory developed in \cite{Sullivan}. For polynomial algebras the question was resolved completely by Andersen-Grodal\cite{Andersen-Grodal}, and partially by many others. Surprisingly, for other cases, the problem remains open.
+
+\end{abstract}
+
+\maketitle
+
+\tableofcontents
+
+\section{Introduction}
+
+Historical information
+%Homotopy groups $\pi_n(X)$ of a $0$-connected space $X$ are abelian for $n\geq2$, as are its homology groups $H_n(X)$. Consider the corresponding torsion-free versions $\pi_n(X)\otimes\Q$ and $H_n(X;\Q)$. It turns out that a space $X$ has a rationalization $X_\Q$ satisfying $\pi_n(X_\Q)=\pi_n(X)\otimes\Q$, and two spaces $X$ and $Y$ are rationally homotopy equivalent (denoted $\smash{X\sim_\Q Y}$) if $X_\Q\sim Y_\Q$.
+
+\section{The Case $R=\Q$}
+
+They main goal of this section is to show, restricting to rational, $1$-connected objects of finite type, an equivalence between homotopy categories:
+\[\Ho(\Top_{\Q,1,f})\cong\Ho(\CDGA_{\Q,1,f}).\]
+
+We aim to do so by constructing Quillen adjunctions $S_\bullet$-$\abs{-}$ and $\mathcal{A}^\ast$-$\mathcal{K}_\bullet$ between
+\[\begin{tikzcd}
+\Top\arrow[r,shift left,rightsquigarrow,"S_\bullet"]&\sSet\arrow[l,shift left,rightsquigarrow,"\abs{-}"]\arrow[r,shift left,rightsquigarrow,"\mathcal{A}^\ast"]&\CDGA_\Q\arrow[l,shift left,rightsquigarrow,"\mathcal{K}_\bullet"]
+\end{tikzcd}.\]
+
+Therefore, any $1$-connected CDGA$_\Q$ of finite type can be realized as a cohomology ring $H^\ast(X;\Q)$ of some rational homotopy type.
+
+\newpage
+\subsection{Rational homotopy type and $\mathcal{Q}$-localization}
+
+We begin by recalling the classical theorems of Hurewicz and Whitehead, with proofs omitted.
+
+\begin{thm}[Hurewicz]
+If a pair $(X,A)$ is $(n-1)$-connected for $n>1$, then $h:\pi_i(X,A)\to H_i(X,A)$ by $[f]\mapsto f_\ast(\alpha)$ is an isomorphism for $i\leq n$ with $\alpha$ being a generator of $H_n(\mathbf{D}^n,\s^{n-1})=\Z$.
+\end{thm}
+
+\begin{thm}[Whitehead]
+For a map $f:X\to Y$ between $1$-connected spaces, the following are equivalent for $n\geq1$:\begin{enumerate}[(i)]
+    \item The induced $\pi_i(f):\pi_i(X)\to\pi_i(Y)$ is an isomorphism for $i<n$ and an epimorphism for $i=n$;
+    \item the induced $H_i(f):H_i(X)\to H_i(Y)$ is an isomorphism for $i<n$ and and epimorphism for $i=n$.
+\end{enumerate}
+\end{thm}
+
+Before we consider the rational version of these theorems, let us consider a more general formulation of Serre classes.
+
+\begin{defns}
+A class of abelian groups $\mathfrak{C}\subseteq\Ab$ is a \textbf{Serre class} if the following is true: given a short exact sequence of abelian groups
+\[0\to A\to B\to C\to0,\]
+the groups $B\in\mathfrak{C}$ if and only if $A\in\mathfrak{C}$ and $C\in\mathfrak{C}$.
+
+A homomorphism $f\in\Hom_{\Ab}(A,B)$ is a \textbf{$\mathfrak{C}$-monomorphism} if $\ker f\in\mathfrak{C}$, a \textbf{$\mathfrak{C}$-epimorphism} if $\coker f\in\mathfrak{C}$, and a \textbf{$\mathfrak{C}$-isomorphism} if both are satisfied.
+\end{defns}
+
+One can check that the Serre class has nice algebraic properties. For instance,
+
+Now for mod-$\mathfrak{C}$ versions of Hurewicz and Whitehead theorems, we need the following lemma.
+
+\begin{lem}
+Let $\mathfrak{C}$ be a Serre class and $X$ be $1$-connected. Then $\pi_i(X)\in\mathfrak{C}$ for all $i$ if and only if $H_i(X)\in\mathfrak{C}$ for all $i$.
+\end{lem}
+
+\begin{thm}[mod-$\mathfrak{C}$ Hurewicz]
+Let $\mathfrak{C}$ be a Serre class and $(X,A)$ be $1$-connected. If $\pi_i(X,A)\in\mathfrak{C}$ for $i<n$, then $H_i(X,A)\in\mathfrak{C}$ for $i<n$ and the Hurewicz map $h:\pi_i(X,A)\to H_i(X,A)$ is a $\mathfrak{C}$-isomorphism for $i\leq n$.
+\end{thm}
+
+\begin{thm}[mod-$\mathfrak{C}$ Whitehead]
+Let $\mathfrak{C}$ be a Serre class and $f:X\to Y$ be a map between $1$-connected spaces. The following are equivalent for $n\geq1$:\begin{enumerate}[(i)]
+    \item The induced $\pi_i(f):\pi_i(X)\to\pi_i(Y)$ is a $\mathfrak{C}$-isomorphism for $i<n$ and a $\mathfrak{C}$-epimorphism for $i=n$;
+    \item the induced $H_i(f):H_i(X)\to H_i(Y)$ is a $\mathfrak{C}$-isomorphism for $i<n$ and a $\mathfrak{C}$-epimorphism for $i=n$.
+\end{enumerate}
+\end{thm}
+
+The proofs of these mod-$\mathfrak{C}$ theorems utilizes Serre spectral sequences. For alternative proofs see Moerman\cite{Moerman} (which uses simplicial fibrations) or Klaus-Kreck\cite{Klaus-Kreck}.
+
+Now we take $\mathcal{C}\subseteq\Ab$ to be the Serre class of torsion groups. Then $\pi_i(X)\in\mathcal{C}$ is equivalent to $\pi_i(X)\otimes\Q=0$, and $H_i(X)\in\mathcal{C}$ is equivalent to $H_i(X;\Q)=0$. Also $f\in\Hom_{\Ab}(A,B)$ is a $\mathcal{C}$-isomorphism if and only if $f\otimes\Q$ is an isomorphism.
+
+\begin{defn}
+A map $f:X\to Y$ is a \textbf{rational homotopy equivalence} if $\pi_n(f)\otimes\Q$ is an isomorphism for all $n$. In this case write $X\sim_\Q Y$.
+\end{defn}
+
+\begin{defns}
+A $1$-connected space $X$ \textbf{rational} if $\pi_i(X)$ is uniquely divisible for all $i$. Let $X_\Q$ be a rational space, a map $r:X\to X_\Q$ is a \textbf{rationalization} if is a rational homotopy equivalence.
+\end{defns}
+
+There are a few different approaches to rationalization, with $\mathcal{Q}$-localization being a clean one. We begin by recalling basic notions of localization.
+
+\begin{defns}
+Let $\mathcal{C}$ be a category with $\mathcal{L}$ a subclass of morphisms in $\mathcal{C}$. An object $A\in\Obj(C)$ is \textbf{$\mathcal{L}$-local} if every $f\in\Hom_\mathcal{C}(X,Y)$ with $f\in\mathcal{L}$ induces a bijection $f^\ast:\Hom_\mathcal{C}(Y,A)\to\Hom_\mathcal{C}(X,A)$. Let $A_\mathcal{L}$ be $\mathcal{L}$-local, a map $\ell:A\to A_\mathcal{L}$ is a \textbf{$\mathcal{L}$-localization} if $\ell\in\mathcal{L}$.
+\end{defns}
+
+Note that blah
+
+One can already see the similarities between localization and rationalization. Let $\mathcal{Q}$ be the class of rational homotopy equivalences in the homotopy category of $1$-connected spaces $\Ho(\Top_1)$.
+
+\begin{lem}
+If an object $X$ of $\Ho(\Top_1)$ is rational, then it is $\mathcal{Q}$-local. Hence a rationalization is a $\mathcal{Q}$-localization.
+\end{lem}
+
+With this one-sided identification we can prove the key theorem of this section:
+
+\begin{thm}
+Every $1$-connected space $X$ admits a rationalization.
+\end{thm}
+
+Finally, with the following converse of Lemma 2.10, we complete the identification.
+
+\begin{lem}
+If an object $X$ of $\Ho(\Top_1)$ is $\mathcal{Q}$-local, then it is rational. Hence a $\mathcal{Q}$-rationalization is a rationalization.
+\end{lem}
+
+With this identification, we note blah.
+
+For a more visual construction of rationalization that starts with the rationalization of spheres $\s^n$ see Moerman\cite{Moerman}.
+
+\newpage
+\subsection{Quillen adjunction from $\sSet$ to $\Top$}
+
+Here we recall some useful facts regarding simplicial sets. For a more detailed treatment see
+
+Define singular complex functor $S_\bullet:\Top\rightsquigarrow\sSet$ by $S_n:T\mapsto\Hom_{\Top}(\Delta^n,T)$ where $\Delta^n$ is the standard topological $n$-simplex. For any $\varphi\in\Hom_{\simp}([m],[n])$ we have $\varphi_\ast:\Delta^m\to\Delta^n$ by $(t_0,\cdots,t_m)\mapsto(s_0,\cdots,c_n)$ where $\smash{s_i=\sum_{i\in\varphi^{-1}(i)}t_i}$. This induces a map $\smash{\phi^\ast:S_n(T)\to S_m(T)}$ by $\varphi^\ast(f)=f\phi$.
+
+\[\begin{tikzcd}[row sep=small]
+{[m]}\arrow[swap]{dd}{\varphi}\arrow{r}&\Delta^m\arrow[swap]{dd}{\varphi_\ast}\arrow{r}&S_m(T)=\Hom_{\Top}(\Delta^m,T)\\
+&\textrm{ }\arrow[r,dashrightarrow]&\textrm{ }\\
+{[n]}\arrow{r}&\Delta^n\arrow{r}&S_n(T)=\Hom_{\Top}(\Delta^n,T)\arrow[swap]{uu}{\varphi^\ast}
+\end{tikzcd}\]
+
+\newpage
+\subsection{Sullivan model and the $q$-model structure on $\CDGA_\Q$}
+
+The ``$q$'' in the naming refers to Quillen. Other choices of model structures include $h$-model and $m$-model.\medbreak
+
+We first describe the main algebraic object of our interest. In the following let $R$ be a commutative ring.
+
+\begin{defns}
+A \textbf{differential graded module} over $R$ (or DGM$_R$) $(M,d)$ is a $R$-module $M$ together with a differential $d$ of grading degree $1$ satisfying $d^2=0$. Let $N$ be a DGM$_R$, a map $f:M\to N$ is called a \textbf{chain map} if $d_Nf=fd_M$.
+\end{defns}
+
+The category $\mathbf{DGM}_R$ is a symmetric monoidal category with tensor product $M\otimes_RN$ preserving grading structure, and symmetry given by the Leibniz rule:
+\[\smash{d(a\otimes b)=da\otimes b+(-1)^{\abs{a}}\otimes db}.\]
+By the graded nature, DGM$_R$ is often referred to as cochain algebra.
+
+\begin{defn}
+A \textbf{commutative differential graded algebra} over $R$ (or CDGA$_R$) $(A,d)$ is a commutative monoid in $\mathbf{DGM}_R$.
+
+Equivalently, $(A,d)$ is an object of $\mathbf{DGM}_R$ together with a unit $\eta:R\to(A,d)$ and an associative, graded-commutative multiplication $\mu:(A,d)\otimes_R(A,d)\to(A,d)$ given by $a\otimes b\to a\cdot b$. The differential $d$ satisfies the Leibniz rule. 
+\end{defn}
+
+Let $A'$ be CDGA$_R$, a map $f:A\to A'$ satisfies $f\eta=\eta'$ and $f\mu=\mu'(f\otimes f)$, and respects the differential. This defines a category $\CDGA_R$.\medbreak
+
+Let $k$ be a field of characteristic $0$. We now obtain a model structure on $\CDGA_k$ from a model structure on $\mathbf{DGM}_k$.
+
+Consider the cochain algebra of $n$-disks $(D^n)^k$ and $n$-spheres $(S^n)^k$. Then the map $\smash{i_n:(S^{n+1})^\bullet\to(D^n)^\bullet}$ sends $a$ to $c$ where $a$ is the generator of $H^n(S^n)=k$ and $c$ is the generator of $H^{n+1}(D^n)$, and the map $\smash{j_n:0\to(D^n)^\bullet}$ is acyclic.
+
+Let weak equivalences be quasi-isomorphisms and fibrations be Serre fibrations, then $I=\{i_n:n\in\N\}$ generates cofibrations and $J=\{j_n:n\in\N\}$ generates acyclic cofibrations. This defines the $q$-model structure on $\mathbf{DGM}_k$.\medbreak
+
+Consider the pair $(\Lambda,U)$ of free-forgetful functors between $\mathbf{DGM}_k$ and $\CDGA_k$. Note that for a DGM$_k$ $M=M_0\oplus M_1$, its free extension $\Lambda M=\Sym(M_0)\otimes\Etr(M_1)$ where $M_0$ are even-degree spaces and $M_1$ are the odd-degree spaces, and $\Sym$ is the symmetric and $\Etr$ is the exterior algebra. By a careful analysis we see that $\Lambda D^n$ are acyclic, and $\Lambda(j_n)$ are quasi-isomorphisms.
+
+\begin{thm}[$q$-model structure on $\CDGA_k$]
+There is a cofibrantly generared model structure on $\CDGA_k$ with quasi-isomorphisms as weak equivalences, and $\Lambda(I)$ and $\Lambda(J)$ generating cofibrations and acyclic cofibrations respectively.
+\end{thm}
+\begin{proof}
+See [Moerman]
+\end{proof}
+
+By repeated use of Quillen's small object argument, the pair $(\Lambda,U)$ is a Quillen adjunction.
+
+We elaborate on the $q$-model structure on $\CDGA_k$. A fibration is just a degreewise surjection, while a cofibration is a relative Sullivan algebra (see [Berguland]).
+
+
+
+
+\newpage
+\section*{Acknowledgements}
+
+It is a pleasure to thank my mentor, Danny Xiaolin Shi, for blah. I also thank blah for helping 
+me understand blah.
+
+\newpage
+\begin{thebibliography}{2}
+
+\bibitem{Andersen-Grodal} d
+
+\bibitem{Klaus-Kreck}
+
+\bibitem{May}
+J. P. May.
+A Concise Course in Algebraic Topology.
+University of Chicago Press. 1999.
+
+\bibitem{Moerman} lah
+
+\bibitem{Quillen} lah
+
+\bibitem{Serre} lda
+
+\bibitem{Sullivan} ewf
+
+\end{thebibliography}
+
+\section*{Appendix}
+
+Postnikov system
+
+\end{document}
+

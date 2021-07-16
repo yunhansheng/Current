@@ -28,6 +28,7 @@
 
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}[section]
+\newtheorem*{lemma}{Lemma}
 
 \newenvironment{rcases}
   {\left.\begin{aligned}}
@@ -43,6 +44,7 @@
 \newcommand{\Hom}{\textup{Hom}}
 \newcommand{\Ext}{\textup{Ext}}
 \DeclareMathOperator{\coker}{coker}
+\DeclareMathOperator{\rel}{rel}
 \DeclareMathOperator{\Char}{char}
 \newcommand{\1}{\mathbf{1}}
 \newcommand{\C}{\mathbf{C}}
@@ -371,17 +373,6 @@ wedge sum
 
 \paragraph{Manifold and the degree of a map}
 
-An \textbf{n-dimensional manifold} is a second countable Hausdorff space that is locally homeomorphic to $\R^n$.\medbreak
-
-Let $p\in U\subseteq M$ such that $U$ is homeomorphic to $\R^n$, then $H_k(U,U\setminus\{p\})\cong\widetilde{H}_k(\R^n,\R^n\setminus\{p\})$. Considering the pair $(\R^n,\R^n\setminus\{p\})$ we have $\widetilde{H}_k(\R^n,\R^n\setminus\{p\})\cong \widetilde{H}_k(\R^n\setminus\{p\})\cong\widetilde{H}_k(\mathbf{S}^{n-1})$. Finally by excision, $H_k(M,M\setminus\{p\})\cong H_k(U,U\setminus\{p\})$. Together we have 
-\[\widetilde{H}_k(M,M\setminus\{p\})\cong\widetilde{H}_k(\mathbf{S}^{n-1})\cong\begin{cases}
-\Z,&k=n\\
-0,&\textrm{otherwise}
-\end{cases}.\]
-Hence if two manifolds $M$ and $N$ are homeomorphic, then $\dim M=\dim N$.\medbreak
-
-The \textbf{local orientation} $\mu_p$ of a manifold $M$ at $p\in M$ is a choice of generator $\{\pm1\}$ of $H_n(M,M\setminus\{p\})\cong\Z$. Two orientations are \textbf{consistent} if. \textbf{global orientation}
-
 \paragraph{Euler characteristics and Betti number}
 
 Euler Char: alternating sum of rank
@@ -403,20 +394,20 @@ eg. $\chi(\mathbf{M}_g)=2-2g$, $\chi(\mathbf{S}^n)=\begin{cases}0,&n\textrm{ odd
 
 \subsection{Basic constructions}
 
-We dualize the chain complex by $\Hom(-,G)$ where $G$ is an abelian group, so that $C^\ast_n=\Hom(C_n,G)$ and $\partial_n^\ast$, the dual object of $\partial_{n+1}$, sends $\varphi\in\Hom(C_n,G)$ to $\varphi\partial_{n+1}\in\Hom(C_{n+1},G)$.
-\begin{center}\begin{tikzcd}
-\cdots\arrow[r]&C_{n+1}\arrow{r}{\partial_{n+1}}&C_n\arrow[d,Rightarrow,"\textrm{dual}"']\arrow{r}{\partial_n}&C_{n-1}\arrow[r]&\cdots\\
+We dualize the chain complex by $\Hom(-,G)$ where $G$ is an abelian group, so that the cochain group $C^\ast_n=\Hom(C_n,G)$ together with the coboundary map $\partial_n^\ast:\varphi\mapsto\varphi\partial_{n+1}$ forms a chain complex:
+\begin{center}\begin{tikzcd}[row sep=small]
+\cdots\arrow[r]&C_{n+1}\arrow{r}{\partial_{n+1}}&C_n\arrow{r}{\partial_n}&C_{n-1}\arrow[r]&\cdots\\
 \cdots&C^\ast_{n+1}\arrow[l]&C^\ast_n\arrow[swap]{l}{\partial_n^\ast}&C^\ast_{n-1}\arrow[swap]{l}{\partial^\ast_{n-1}}&\cdots\arrow[l]
-\end{tikzcd}\end{center}
+\end{tikzcd}.\end{center}
 
 Construct $h:H^n(C;G)\to\Hom(H_n(C),G)$ by $\varphi\mapsto\overline{\varphi}_0$, where $\varphi_0=\varphi|_{\ker\partial_n}$ and $\overline{\varphi}_0:H_n(C)\to G$. This is appropriate since $\varphi$ vanishes on $\im\partial_{n+1}$. $h$ is surjective by the following argument.\medbreak
 
-The exact sequence $0\rightarrow\ker\partial_n\xrightarrow{i}C_n\xrightarrow{\partial_{n+1}}\im\partial_{n+1}\rightarrow0$ splits, since $\im\partial_{n+1}\subseteq C_n$ is free. Hence there exists $p:C_n\to\ker\partial_n$ such that $pi=\id_{\ker\partial_n}$. Then the extension $\varphi p:C_n\to G$ also vanishes on $\im\partial_{n+1}$, and $h':\Hom(H_n(C),G)\rightarrow\ker\partial^\ast_n\rightarrow H^n(C;G)$ makes $h$ surjective. Hence
+The short exact sequence $0\rightarrow\ker\partial_n\xrightarrow{i}C_n\rightarrow\im\partial_{n+1}\rightarrow0$ splits, since $\im\partial_{n+1}\subseteq C_n$ is free. Hence there exists $p:C_n\to\ker\partial_n$ such that $pi=\id_{\ker\partial_n}$. The extension $\varphi_0 p:C_n\to G$ also vanishes on $\im\partial_{n+1}$, and $\smash{h':\Hom(H_n(C),G)\xrightarrow{p}\ker\partial^\ast_n\rightarrow H^n(C;G)}$ makes $h$ surjective.
 \begin{center}\begin{tikzcd}[column sep=scriptsize]
 0\arrow[r]&\ker h\arrow[r]&H^n(C;G)\arrow{r}{h}&\Hom(H_n(C),G)\arrow[r]&0
 \end{tikzcd}.\end{center}
 
-Now we dualize by $\Hom(-,G)$ and apply the zig-zag lemma to the canonical decomposition of $C_n$
+Now apply the zig-zag lemma to the canonical decomposition of $C_n$ and dualize the result:
 \[\begin{tikzcd}[column sep=scriptsize]
 & \cdots \arrow[r]
 \arrow[d, phantom, ""{coordinate, name=X}]
@@ -462,8 +453,8 @@ to path={ -- ([xshift=2ex]\tikztostart.east)
 -- (\tikztotarget)}]\\
 \im\partial^\ast_{n+1} \arrow[r]
 & \cdots
-\end{tikzcd}\]
-and obtain with $\ker h=\coker i^\ast_{n-1}=\im\partial^\ast_n/\im i^\ast_{n-1}=\im\partial^\ast_n/\ker\partial^\ast_{n-1}$,
+\end{tikzcd}.\]
+We obtain with $\ker h=\coker i^\ast_{n-1}=\im\partial^\ast_n/\im i^\ast_{n-1}=\im\partial^\ast_n/\ker\partial^\ast_{n-1}$,
 \begin{center}\begin{tikzcd}[column sep=scriptsize]
 0\arrow[r]&\coker i^\ast_{n-1}\arrow[r]&H^n(C;G)\arrow{r}{h}&\ker i^\ast_n=\Hom(H_n(C),G)\arrow[r]&0
 \end{tikzcd}.\end{center}
@@ -471,23 +462,34 @@ and obtain with $\ker h=\coker i^\ast_{n-1}=\im\partial^\ast_n/\im i^\ast_{n-1}=
 Consider the dual of the free resolution $0\rightarrow\im\partial_n\rightarrow\ker\partial_{n-1}\rightarrow H_{n-1}(C)\rightarrow0$ of $H_{n-1}(C)$, it happens to be that $\Ext(H_{n-1}(C),G)=H^1(F;G)=\coker i^\ast_{n-1}$. Hence $\coker i^\ast_{n-1}$ only depends on $H_{n-1}(C)$ and $G$. And since the exact sequence splits, the cohomology $H^n(C;G)$ only depends on the homology $H_{n-1}(C)$ and $G$. To summarize:
 
 \begin{theorem}[universal coefficient theorem, cohomology]
-For a chain complex $C$ of free abelian groups and its homology groups $H_n(C)$, the cohomology groups $H^n(C;G)$ are determined by the split exact sequences
-\begin{equation}\begin{tikzcd}[column sep=scriptsize]
+The cohomology groups $H^n(C;G)$ of a chain complex $C$ of abelian groups are determined by the split exact sequences
+\[\begin{tikzcd}[column sep=scriptsize]
 0\arrow[r]&\Ext(H_{n-1}(C),G)\arrow[r]&H^n(C;G)\arrow{r}{h}&\Hom(H_n(C),G)\arrow[r]&0
-\end{tikzcd}.\end{equation}
+\end{tikzcd}.\]
 \end{theorem}
 
-To calculate the $\Ext$ term we have the following\begin{enumerate}[(i)]
+To calculate the $\Ext$ term we have the following tools:\begin{enumerate}[(i)]
     \item $\Ext(H\oplus H',G)=\Ext(H,G)\oplus\Ext(H',G)$
     \item $\Ext(H,G)=0$ if $H$ is free (free resolution $0\rightarrow H\rightarrow H\rightarrow0$)
     \item $\Ext(\Z/n\Z,G)=G/nG$ (dualizing $0\rightarrow\Z\xrightarrow{n}\Z\rightarrow\Z/n\Z\rightarrow0$)
+    \item If $H$ is finitely generated, then $\Ext(H,\Z)$ is the torsion of $H$ and $\Hom(H,\Z)$ is the free part.
 \end{enumerate}
-As a corollary, $\Hom(H,\Z)$ is the torsion subgroup of $H$ if $H$ is finitely generated.
 
-Calculation example of torus, M2, Klein bottle\bigbreak
+Calculation examples: torus $T$, $M_2$, Klein bottle $K$.\medbreak
 
-Hatcher Example 3.16 says that the exterior algebra $\Lambda_R[\alpha_1,\cdots,\alpha_n]$ is the graded tensor product over $R$ of $\Lambda_R[\alpha_i]$ where all $\alpha_i$ has odd degree/dimension. I want to make sure that the antisymmetry $\alpha_i\alpha_j=-\alpha_j\alpha_i$ in $\Lambda_R[\alpha_1,\cdots,\alpha_n]$ is guaranteed by the odd degree like this:
-\[\alpha_i\alpha_j=(\1_{\Lambda_R[\alpha_i]}\otimes\alpha_i)(\alpha_j\otimes\1_{\Lambda_R[\alpha_i]})=(-1)^{1\cdot1}\alpha_j\alpha_i\]
+Related concepts and axioms of homology are generalized to cohomology with little or no difference. We point out the the following discrepancies:\medbreak
+
+Firstly, for $X=\bigvee_\alpha X_\alpha$, we have an isomorphism $\smash{\prod_\alpha i_\alpha^\ast:\widetilde{H}^n(X)\to\prod_\alpha\widetilde{H}^n(X_\alpha)}$ induced by the inclusions $i_\alpha:X_\alpha\hookrightarrow X$. Since $\smash{\Hom(\bigoplus_\alpha A_\alpha;G)\cong\prod_\alpha\Hom(A_\alpha,G)}$, the direct sum in homology is replaced by direct product.\medbreak
+
+We also ask why is $h:H^n(C;G)\to\Hom(H_n(C),G)$ an isomorphism? By the universal coefficient theorem, when $n=0,1$, or if we take $R$ to be a field and consider the homology $H_n(X;F)$. But most importantly, we have the following remarkable result:
+
+\begin{theorem}
+$H^n(X^n,X^{n-1};G)\cong\Hom(H_n(X^n,X^{n-1},G))$.
+\end{theorem}
+
+\begin{proof}
+Universal coefficient theorem+diagram
+\end{proof}
 
 \newpage
 \subsection{The additional ring structure}
@@ -508,7 +510,7 @@ Since cup product is associative and distributive, the cohomology ring $H^\ast(X
 If $R$ is commutative, then $\alpha\smile\beta=(-1)^{mn}\beta\smile\alpha$, for $\abs{a}=m$ and $\abs{b}=n$.
 \end{theorem}
 
-Define a bilinear map $H^\ast(X;R)\times H^\ast(Y;R)\xrightarrow{\times}H^\ast(X\times Y;R)$ by $a\times b=p_1^\ast(a)\smile p_2^\ast(b)$ where $p_1$ and $p_2$ are projection from $X\times Y$ to $X$ and $Y$, respectively. This induces, for commutative ring $R$, $H^\ast(X;R)\otimes_RH^\ast(Y;R)\xrightarrow{\mu}H^\ast(X\times Y;R)$ a homomorphism of $R$-modules $a\otimes b\mapsto a\times b$. Define multiplication $(a\otimes b)(c\otimes d)=(-1)^{\abs{b}\abs{c}}ac\otimes bd$ in $H^\ast(X\times Y;R)$ so that commutativity (Theorem 3.3) is satisfied.
+Define a bilinear map $H^\ast(X;R)\times H^\ast(Y;R)\xrightarrow{\times}H^\ast(X\times Y;R)$ by $a\times b=p_1^\ast(a)\smile p_2^\ast(b)$ where $p_1$ and $p_2$ are projection from $X\times Y$ to $X$ and $Y$, respectively. This induces, for commutative ring $R$, $H^\ast(X;R)\otimes_RH^\ast(Y;R)\xrightarrow{\mu}H^\ast(X\times Y;R)$ a homomorphism of $R$-modules $a\otimes b\mapsto a\times b$. Define multiplication $(a\otimes b)(c\otimes d)=(-1)^{\abs{b}\abs{c}}ac\otimes bd$ in $H^\ast(X\times Y;R)$ to give a graded structure, and also to satisfy $\mu((a\otimes b)(c\otimes d))=\mu(a\otimes b)\mu(c\otimes d)$.
 
 \begin{theorem}[Künneth formula]
 If $H^n(Y;R)$ is finitely-generated for all $n$, then the cross product $\mu$ induces $H^\ast(X;R)\otimes_RH^\ast(Y;R)\cong H^\ast(X\times Y;R)$.
@@ -535,19 +537,185 @@ If $X$ is infinite-dimensional, then it reduces to the finie-dimensional case by
 
 \item Let $T^2$ be a torus, then $H^0(T^2;\Z)=H^2(T^2;\Z)=\Z$ and $H^1(T^2;\Z)=\Z^2=(\alpha,\beta)$. On the $\Delta$-complex structure of $T^2$ we see that $\alpha\smile\beta=-(\beta\smile\alpha)$ generates $H^2(T^2;\Z)$. Hence $H^\ast(T^2;\Z)=\Z[\alpha,\beta]/(\alpha^2,\beta^2,\alpha\beta=-\beta\alpha)=\Lambda_\Z[\alpha,\beta]$, a result also obtainable by the Künneth formula $H^\ast(\s^1\times\s^1;\Z)=\Lambda_\Z[\alpha]\otimes_\Z\Lambda_\Z[\beta]=\Lambda_\Z[\alpha,\beta]$, since $\abs{\alpha}=\abs{\beta}=1$ is odd.\medbreak
 
-In general, since $H^\ast(\s^n;\Z)=\Lambda_\Z[\alpha]=\Z[\alpha]/(\alpha^2)$ where $\abs{\alpha}=n$, by the Künneth formula $H^\ast(\s^{2m}\times\s^{2n+1};\Z)=\Z[\alpha]/(\alpha^2)\otimes_\Z\Lambda_\Z[\beta]$ where $\abs{\alpha}=2m$ and $\abs{\beta}=2n+1$. The distinction of parity comes from the commutativity criteria\footnote{When $\abs{\alpha}$ and $\abs{\beta}$ is odd, $\Lambda_R[\alpha,\beta]$ guarantees $\alpha\beta=-\beta\alpha$ but $\Z[\alpha]/(\alpha^2)\otimes_\Z\Z[\beta]/(\beta^2)$ does not. The distinction becomes irrelevant if $\Char R=2$.}.
+In general, since $H^\ast(\s^n;\Z)=\Lambda_\Z[\alpha]=\Z[\alpha]/(\alpha^2)$ where $\abs{\alpha}=n$, by the Künneth formula $H^\ast(\s^{2m}\times\s^{2n+1};\Z)=\Z[\alpha]/(\alpha^2)\otimes_\Z\Lambda_\Z[\beta]$ where $\abs{\alpha}=2m$ and $\abs{\beta}=2n+1$. The distinction of parity comes from the commutativity criteria.\footnote{When $\abs{\alpha}$ and $\abs{\beta}$ is odd, $\Lambda_R[\alpha,\beta]$ guarantees $\alpha\beta=-\beta\alpha$ but $\Z[\alpha]/(\alpha^2)\otimes_\Z\Z[\beta]/(\beta^2)$ does not. The distinction becomes irrelevant if $\Char R=2$.}
 
 \item Let $K$ be a Klein bottle, $\partial_1^\ast:\alpha\mapsto\eta+\zeta$ since $\partial_1^\ast\alpha(U)=\partial_1^\ast\alpha(L)=1$, and similarly, $\beta\mapsto\eta-\zeta$ and $\gamma\mapsto\zeta-\eta$. Hence $\im\partial_1^\ast=(\eta+\zeta,\eta-\zeta,\zeta-\eta)=(\eta+\zeta)$, taking $R=\Z_2$, and $\ker\partial^\ast_1=(\alpha+\beta,\alpha+\gamma)$. Since $\partial_0^\ast\mu$ on any of $a,b,c$ is $0$, $\im\partial^\ast_0=0$. In summary, $H^2(K;\Z_2)=(\eta,\zeta)/(\eta+\zeta)=(\eta)$ and $H^1(K;\Z_2)=(\alpha+\beta,\alpha+\gamma)$. Finally let $x=\alpha+\beta$ and $y=\beta+\gamma$, then $x\smile x(U)=x\smile y(U)=1$ and all other terms are $0$. Hence $x\smile x=x\smile y$ acting on $U$ gives $\eta$. We obtain $H^\ast(K,\Z_2)=\Z_2[x,y]/(x^3,y^3,xy,x^2-y^2)$ with basis $1,x,x^2,y$.
 
+\item Hatcher Example 3.16 says that the exterior algebra $\Lambda_R[\alpha_1,\cdots,\alpha_n]$ is the graded tensor product over $R$ of $\Lambda_R[\alpha_i]$ where all $\alpha_i$ has odd degree/dimension. I want to make sure that the antisymmetry $\alpha_i\alpha_j=-\alpha_j\alpha_i$ in $\Lambda_R[\alpha_1,\cdots,\alpha_n]$ is guaranteed by the odd degree like this:
+\[\alpha_i\alpha_j=(\1_{\Lambda_R[\alpha_i]}\otimes\alpha_i)(\alpha_j\otimes\1_{\Lambda_R[\alpha_i]})=(-1)^{1\cdot1}\alpha_j\alpha_i\]
 
 \end{enumerate} 
 
-
+\newpage
 \subsection{Application to manifolds}
 
-\subsection{Tools}
+An $n$-manifold is a second countable Hausdorff space locally homeomorphic to $\R^n$.
 
-\paragraph{CW approximation}
+\paragraph{Orientation}
+Let $X$ be a manifold. A generator $\mu_x\in H_n(X,X\setminus\{x\})\cong\Z$ is a local orientation at $x\in X$. $(\widetilde{X},\pi)$ is a covering space where $\widetilde{X}=\{(x,\mu_x)\}$ and $\pi$ is the natural projection. Topologize $\widetilde{X}$: for open $U\subseteq X$ homeomorphic to $\R^n$, $\pi^{-1}(U)$ consists of $(x,\mu_x)$ such that $x\in U$ and $\mu_x$ is the image of $H_n(X,X\setminus U)\cong H_n(X,X\setminus\{x\}\}$. $X$ is orientable if there is a section $s:X\to\widetilde{X}$ with $\pi s=\1_X$. With this topology the continuity of $s$ implies the compatibility of orientation.\medbreak
+
+For a connected manifold $X$, it is orientable if and only if $\widetilde{X}$ has two connected components $X\sqcup X$. Hence if $X$ is simply connected, then it is orientable since it does not have subgroups of index $2$. Also the fact that $\s^2$ covers $\mathbf{R}P^2$ tells us that $\mathbf{R}P^2$ is non-orientable.\medbreak
+
+We also have a more general $\Z$-cover $\smash{\widetilde{X}_\Z=\bigcup_{k\geq0}\widetilde{X}_k}$ where $\smash{\widetilde{X}_0\cong X}$ and $\smash{\widetilde{X}_k\cong\widetilde{X}}$ for $k>0$. More generally, for a commutative ring $R$ choosing units $\mu_x\in H_n(X,X\setminus\{x\};R)$, we have a covering space $\smash{\widetilde{X}_R=\bigcup_{r\in R}\widetilde{X}_r}$ where $\smash{\widetilde{X}_r}\cong X$ if $r=0$ or $2r=0$ and $\smash{\widetilde{X}_r\cong\widetilde{X}}$ otherwise. $R$-orientability is the existence of a section $s:X\to\widetilde{X}_R$ with $s(x)$ is a unit of $H_n(X,X\setminus\{x\};R)\cong R$.\medbreak
+
+If $R$ has a unit of order $2$, then every space $X$ is $R$-orientable by taking the identity map; otherwise, a space is $R$-orientable if and only if it is $\Z$-orientable, in terms of a double cover $\widetilde{X}$.\medbreak
+
+\begin{theorem}
+If $X$ is a compact connected $n$-manifold, then:\begin{enumerate}[(i)]
+    \item If $X$ is $R$-orientable, then $H_n(X;R)\cong H_n(X,X\setminus\{x\};R)$;
+    \item otherwise $H_n(X;R)\to H_n(X,X\setminus\{x\};R)$ is injective and has image $\{r\in R;2r=0\}$.
+    \item $H_k(X;R)=0$ for $k>n$. (Non-trivial since not all manifolds have triangulation.)
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+\[\begin{tikzcd}
+H_n(X;R)\arrow[dr]\arrow[rr,dashrightarrow]&&H_n(X,X\setminus\{x\};R)\arrow[dl,"\cong"]\\
+&\Gamma_R(X)
+\end{tikzcd}\]
+\end{proof}
+
+\begin{theorem}[Poincaré Duality]
+Let $X$ be a $R$-orientable $n$-manifold with fundamental class $\mu$, then $H^k_c(X;R)\cong H_{n-k}(X;R)$ for all $k$ by $D_X:\alpha\mapsto\mu\frown\alpha$.
+\end{theorem}
+\begin{proof}
+We give two proofs, one more geometric and one more algebraic.\medbreak
+
+\textit{Second proof.} We appeal to two inductive facts:\begin{enumerate}[(i)]
+    \item Let $X=U\cup V$ where $U,V$ are open, then if $D_U,D_V,D_{U\cap V}$ are isomorphisms, so is $D_X$.
+    \item Let $\smash{X=\bigcup_{\alpha\in I}U_\alpha}$ where $U_\alpha$ are open sets, then if $D_{U_\alpha}$ are isomorphisms, so is $D_X$
+\end{enumerate}
+(i) follows from the five-lemma and the the commutativity (up to a $\pm$ sign) of the following diagram:
+\[\begin{tikzcd}[column sep=small,row sep=scriptsize]
+\cdots\arrow[r]&H_c^k(U\cap V)\arrow{d}{D_{U\cap V}}\arrow[r]&H_c^k(U)\oplus H_c^k(V)\arrow{d}{D_U\oplus-D_V}\arrow{r}&H_c^k(X)\arrow{d}{D_X}\arrow{r}{\delta}&H_c^{k+1}(U\cap V)\arrow{d}{D_{U\cap V}}\arrow[r]&\cdots\\
+\cdots\arrow[r]&H_{n-k}(U\cap V)\arrow[r]&H_{n-k}(U)\oplus H_{n-k}(V)\arrow[r]&H_{n-k}(X)\arrow{r}{\partial}&H_{n-k}(U\cap V)\arrow[r]&\cdots
+\end{tikzcd}.\]
+All the maps are natural except for the connecting homomorphisms $\delta$ and $\partial$ in the Mayer-Vietoris sequences. The commutativity of the last square is obtained by passing the limit over compact $K\subseteq U$ and $L\subseteq V$ in the following diagram, noting that the direct limit preserves exactness:
+\[\begin{tikzcd}
+H^k(X|K\cup L)\arrow{d}{\mu_{K\cup L}\frown}\arrow{r}{\delta}&H^{k+1}(X|K\cap L)\cong H^{k+1}(U\cap V|K\cap L)\arrow{d}{\mu_{K\cap L}\frown}\\
+H_{n-k}(X)\arrow{r}{\partial}&H_{n-k-1}(U\cap V)
+\end{tikzcd}.\]
+Indeed, blah\medbreak
+
+(ii) follow from properties of direct limit:
+\[\begin{tikzcd}[column sep=scriptsize,row sep=scriptsize]
+0\arrow[r]&H_c^k(U_\alpha)\cong H_c^k(X|K_\alpha)\arrow{d}{\varinjlim_\alpha}\arrow{r}{D_{U_\alpha}}&H_{n-k}(U\alpha)\arrow{d}{\varinjlim_\alpha}\arrow[r]&0\\
+0\arrow[r]&\varinjlim_\alpha H_c^k(X|K_\alpha)\cong H_c^k(X)\arrow{r}{D_X}&H_{n-k}(X)\arrow[r]&0
+\end{tikzcd}\]
+where $K_\alpha$ ranges over compact subsets of $U_\alpha$.\medbreak
+
+First let $X=\R^n$, then $H_c^k(\R^n;R)\cong R\cong H^k(\Delta^n,\partial\Delta^n;R)$, only when $k=n$. Choose a generator $\mu\in H_n(\Delta^n,\partial\Delta^n;R)$ which is an $n$-simplex, then $D_X(\alpha)=\mu\frown\alpha=\alpha(\mu)$ is a generator in $H_0(X;R)\cong R$, for a generator $\alpha\in H^n(\Delta^n,\partial\Delta^n;R)=\Hom(H_n(\Delta^n,\partial\Delta^n),R)$.\medbreak
+
+By (i) $D_X$ is an isomorphism for $X$ a finite union of open convex sets each homeomorphic to $\R^n$. By (ii) the statement also holds for any open $X\subseteq\R^n$, since $X$ is a countable union of such.\medbreak
+
+Repeat the procedure as above, then the statement holds for $X$ a countable union of open sets each homeomorphic to $\R^n$. For uncountable union use (ii) and Zorn's lemma. 
+\end{proof}
+
+If $X$ is compact, then $H_c^k(X;R)=H^k(X;R)$.\medbreak
+
+As a corollary, the Euler characteristic of an odd dimensional compact manifold is zero. The orientable case is easy; otherwise let $R=\Z_2$ and conclude that $\dim H_i(X;\Z_2)=\rank H_i(X;\Z)$ by analyzing torsion using the universal coefficient theorem for cohomology.
+
+\newpage
+\section{Homotopy Theory}
+
+Higher homotopy groups $\pi_n$ is a covariant functor from $\textbf{Top}^\ast$ to $\textbf{Set}$ ($n=0$), $\textbf{Grp}$ ($n=1$), and $\textbf{Ab}$ ($n\geq2$). Verify the homotopy invariance.
+
+\paragraph{Construction} For a based space $(X,x_0)$, define $\pi_n(X,x_0)$ to be the set of homotopy classes of maps $f:(I^n,\partial I^n)\to(X,x_0)$ under ``fix-end" ($f_t(\partial I^n)=x_0$ for all $t$) homotopies. Define sum operation in $\pi_n(X,x_0)$ for $n\geq2$
+\[(f+g)(s_1,\cdots,s_n)=\begin{cases}
+f(2s_1,s_2,\cdots,s_n),&s_1\in[0,1/2]\\f(2s_1-1,s_2,\cdots,s_n),&s_1\in[1/2,1]
+\end{cases},\]
+which makes $\pi_n(X,x_0)$ into an abelian group. Alternatively, one think $\pi_n(X,x_0)$ as the set of homotopy classes of maps $f:(\s^n,s_0)\to(X,x_0)$ under homotopies of the same form. If $X$ is path-connected, then the base point is irrelevant.
+
+\begin{theorem}
+A covering map $p:(\widetilde{X},\widetilde{x}_0)\to(X,x_0)$ induces $\pi_n(\widetilde{X},\widetilde{x}_0)\cong\pi_n(X,x_0)$ for $n\geq2$.
+\end{theorem}
+\begin{proof}
+For $f:(\s^n,s_0)\to(X,x_0)$, as $\s^n$ is connected and locally connected and $\pi_1(\s^n)=0$, by the lifting criterion there exists $\widetilde{f}$ such that $p_\ast([\widetilde{f}])=[f]$. On the other hand, if $g\in\ker p_\ast$, then $p(g)\simeq0\in\pi_n(X,x_0)$, which lifts to a constant map in $\pi_n(\widetilde{X},\widetilde{x}_0)$. Hence $g\simeq0\in\pi_n(\widetilde{X},\widetilde{x}_0)$.
+\end{proof}
+
+As a result, since $\mathbf{T}^n$ is covered by $\R^n$ (identifying all the lattice points in $\R^n$) which is contractible, $\pi_k(\mathbf{T}^n)=0$ for $k\geq2$.
+
+\begin{theorem}
+For each path-connected space $X_\alpha$, there are $\pi_n(\coprod_\alpha X_\alpha)\cong\prod_\alpha\pi_n(X_\alpha)$ for all $n$, contrasting to homology groups.
+\end{theorem}
+
+Define relative homotopy group $\pi_n(X,A,x_0)=[(I^n,\partial I^n,J^{n-1})\to(X,A,x_0)]$ (or alternatively $[(\mathbf{D}^n,\s^{n-1},s_0)\to(X,A,x_0)]$) with homotopies of the same form, where $J^{n-1}=\partial I^n-I^{n-1}$, $I^{n-1}$ being the face with last coordinate $0$. A map $(\mathbf{D}^n,\s^{n-1},s_0)\to(X,A,x_0)=0\in\pi_n(X,A,x_0)$ if and only if it is homotopic $\rel\s^{n-1}$ to a map with images in $A$.
+
+\begin{theorem}
+Let $i$ and $j$ be inclusions and $\partial$ be the restriction of $f\in\pi_n(X,A,x_0)$ to $I^{n-1}$ (or $\s^{n-1}$), then the following sequence is exact:
+\begin{center}\begin{tikzcd}
+\cdots\arrow{r}{i_\ast}&\pi_n(A,B,x_0)\arrow{r}{j_\ast}&\pi_n(X,B,x_0)\arrow{r}{\partial}&\pi_{n-1}(X,A,x_0)\arrow{r}{i_\ast}&\cdots
+\end{tikzcd}.\end{center}
+\end{theorem}
+
+\paragraph{On CW complexes}
+
+Whitehead, extension, compression, cellular, CW\medbreak
+
+A CW pair $(X,A)$ is $n$-connected if cells in $X\setminus A$ have dimensions greater than $n$. In particular, $\pi_i(X^n)=\pi_i(X)$ is an isomorphism for $i<n$ and a surjection for $i=n$.
+
+\newpage
+\paragraph{Homotopy excision and Eilenberg-MacLane spaces} Excision for homotopy only works for CW complexes in a certain range of dimensions, as opposed to homology excision.
+
+\begin{theorem}[excision]
+Let $X=A\cup B$ be a CW complex where $A$ and $B$ are subcomplexes and $C=A\cap B$ is nonempty and connected. If $(A,C)$ is $m$-connected and $(B,C)$ is $n$-connected, then $\pi_i(A,C)\to\pi_i(X,B)$ is an isomorphism for $i<m+n$ and a surjection for $i=m+n$.
+\end{theorem}
+
+Two useful consequences of homotopy excision are:
+
+\begin{theorem}[Freudenthal suspension theorem]
+If CW complex $X$ is $(n-1)$-connected, then the suspension $\pi_i(X)\to\pi_{i+1}(SX)$ is an isomorphism for $i<2n-1$ and a surjection for $i=2n-1$.
+\end{theorem}
+\begin{proof}
+Since cones are contractible, from the long exact sequence of pairs we obtain $\pi_{i+1}(SX)\cong\pi_{i+1}(SX,C_-X)$ and $\pi_{i+1}(C_+X,X)\cong\pi_i(X)$. By the same exact sequence $(C_+X,X)$ and $(C_-X,X)$ are $n$-connected if $X$ is $(n-1)$-connected. The statement follows from homotopy excision.
+\end{proof}
+
+\begin{theorem}
+If a CW pair $(X,A)$ is $m$-connected and $A$ is $n$-connected, then $\pi_i(X,A)\to\pi_i(X/A)$ is an isomorphism for $i<m+n+1$ and a surjection for $i=m+n+1$.
+\end{theorem}
+
+Consequently we can calculate $\pi_n(\s^n)$ from the sequence $\Z=\pi_1(\s^1)\twoheadrightarrow\pi_2(\s^2)\to\cdots$ where all maps after the first are isomorphisms. Since maps $\s^n\to\s^n$ of arbitrary degrees exist and degree is homotopy invariant, $\pi_2(\s^2)\to\Z$ is surjective. Hence $\pi_n(\s^n)=\Z$ for all $n$.\medbreak
+
+Then we can calculate $\smash{\pi_n(\bigvee_\alpha\s^n)}$.\medbreak
+
+Finally, the most important calculation is for $X=(\bigvee_\alpha\s^n)\cup_\beta e^{n+1}_\beta$ where $e^{n+1}_\beta$ is attached by basepoint-preserving inclusions $\varphi_\beta:\s^n\to\bigvee_\alpha\s^n$. By cellular approximation $\pi_i(X)=0$ for $i<n$. Consider the long exact sequence $\smash{\pi_{n+1}(X,\bigvee_\alpha\s^n)\xrightarrow{\partial}\pi_n(\bigvee_\alpha\s^n)\to\pi_n(X)\to\pi_n(X,\bigvee_\alpha\s^n)}$ where $\smash{\pi_{n+1}(X,\bigvee_\alpha\s^n)}$ collapses to $\pi_{n+1}(\bigvee_\alpha\s^{n+1}_\beta)$ and $\pi_n(X,\bigvee_\alpha\s^n)=0$ by cellular approximation. $\pi_{n+1}(\bigvee_\alpha\s_\beta^{n+1})$ is free abelian with basis $\varphi_\beta$, which is sent to $[\varphi_\beta]$ by $\partial$. Hence $\pi_n(X)=\oplus_\alpha\Z/[\varphi_\beta]$. Any subgroup can be realized as such.\medbreak
+
+The Eilenberg-MacLane space $X=K(G,n)$ is the space with the only nontrivial homotopy group $\pi_n(X)=G$. The calculation above together with Postnikov tower gives an explicit construction of $K(G,n)$ with CW structure. Examples of 
+
+\begin{theorem}[Hurewicz theorem]
+If $(X,A)$ is $(n-2)$-connected for $n\geq2$ and $A\neq\varnothing$ connected, then $H_i(X,A)=0$ for $i<n$ and $h:\pi_n(X,A)\to H_n(X,A)$ by $[f]\mapsto f_\ast(\alpha)$ is an isomorphism where $\alpha$ is a generator of $H_n(\mathbf{D}^n,\s^{n-1})=\Z$.
+\end{theorem}
+
+\newpage
+\paragraph{Fibration} A map $p:E\to B$ have homotopy lifting property with respect to $X$ if for a homotopy $f_t:X\to B$ and a map $\widetilde{f}_0:X\to E$ lifting $f_0$, there exists a homotopy $\widetilde{f}_t:X\to E$ lifting $f_t$. If instead of $X$ there is a pair $(X,A)$, then $f_t:X\to B$ lifts to $\widetilde{f}_t:X\to E$ which starts at a given lift $\widetilde{f}_0$ and extends a given lift $\widetilde{g}_t:A\to E$.
+\[\begin{tikzcd}
+(X\times\{0\})\cup(A\times I)\arrow{r}{\widetilde{f}_0\cup \widetilde{g}_t}\arrow[d,hook]&E\arrow{d}{p}\\
+(X,A)\arrow[swap]{r}{f_t}\arrow[ur,dashrightarrow,"\widetilde{f}_t"']&B
+\end{tikzcd}\]\medbreak
+
+Fibers of a map $p:E\to B$ are elements $p^{-1}(b)\subseteq E$. The map $p$ is a fibration if it has homotopy lifting property with respect to all spaces $X$; it is a Serre fibration if it has homotopy lifting property for disks $\mathbf{D}^k$, or equivalently for pairs $(\mathbf{D}^k,\partial\mathbf{D}^k)$ by deformation retraction, where $k\geq0$.
+
+\begin{theorem}
+Let $p:E\to B$ be a Serre fibration, then for a fixed $b_0\in B$ and $x_0\in F=p^{-1}(b_0)$, the map $p_\ast:\pi_n(E,F,x_0)\to\pi_n(B,b_0,b_0)$ is an isomorphism for $n\geq1$.
+\end{theorem}
+\begin{proof}
+blah
+\end{proof}
+
+A fiber bundle over $E$ is $F\to E\xrightarrow{p}B$ with fiber $F$ such that every $p\in B$ has a neighborhood $U$ for which the local trivialization $h:p^{-1}(U)\to U\times F$ is a homeomorphism. Fiber bundles have a local product structure.
+\[\begin{tikzcd}
+p^{-1}(U)\arrow[swap]{dr}{p}\arrow{rr}{h}&&U\times F\arrow[dl]\\
+&U
+\end{tikzcd}\]\medbreak
+
+Examples include Möbius band, and Hopf fibration.
+
+\begin{theorem}
+A fibre bundle $p:E\to B$ has homotopy lifting property with respect to all CW pairs.
+\end{theorem}
+
+
+
+
 
 
 \end{document}
