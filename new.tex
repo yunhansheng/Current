@@ -713,7 +713,24 @@ Examples include Möbius band, and Hopf fibration.
 A fibre bundle $p:E\to B$ has homotopy lifting property with respect to all CW pairs.
 \end{theorem}
 
+\begin{thm}[Hurewicz]
+If a pair $(X,A)$ is $(n-1)$-connected for $n>1$, then $h:\pi_i(X,A)\to H_i(X,A)$ by $[f]\mapsto f_\ast(\alpha)$ is an isomorphism for $i\leq n$ with $\alpha$ being a generator of $H_n(\mathbf{D}^n,\s^{n-1})=\Z$.
+\end{thm}
 
+\begin{thm}[Whitehead]
+For a map $f:X\to Y$ between $1$-connected spaces, the following are equivalent for $n\geq1$:\begin{enumerate}[(i)]
+    \item The induced $\pi_i(f):\pi_i(X)\to\pi_i(Y)$ is an isomorphism for $i<n$ and an epimorphism for $i=n$;
+    \item the induced $H_i(f):H_i(X)\to H_i(Y)$ is an isomorphism for $i<n$ and and epimorphism for $i=n$.
+\end{enumerate}
+\end{thm}
+
+\begin{lem}
+Let $\mathfrak{C}$ be a Serre class and $X$ be $1$-connected. Then $\pi_i(X)\in\mathfrak{C}$ for all $i$ if and only if $H_i(X)\in\mathfrak{C}$ for all $i$.
+\end{lem}
+
+\begin{thm}[mod-$\mathfrak{C}$ Hurewicz]
+Let $\mathfrak{C}$ be a Serre class and $(X,A)$ be $1$-connected. If $\pi_i(X,A)\in\mathfrak{C}$ for $i<n$, then $H_i(X,A)\in\mathfrak{C}$ for $i<n$ and the Hurewicz map $h:\pi_i(X,A)\to H_i(X,A)$ is a $\mathfrak{C}$-isomorphism for $i\leq n$.
+\end{thm}
 
 
 

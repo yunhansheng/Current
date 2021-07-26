@@ -1,0 +1,65 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage[mathscr]{eucal}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{titlesec}
+\usepackage{tikz-cd}
+\usepackage[shortlabels]{enumitem}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[OT1]{fontenc}
+\usepackage{physics}
+\usepackage{xpatch}
+\usepackage{hyperref}
+
+\setlength\parindent{0pt}
+
+\setcounter{section}{+1}
+
+\theoremstyle{definition}
+\newtheorem*{defin}{Definition}
+\newtheorem*{example}{Example}
+
+\theoremstyle{plain}
+\newtheorem{prop}{Proposition}[section]
+\newtheorem{cor}{Corollary}[section]
+
+\newcommand{\R}{\mathbf{R}}
+\newcommand{\C}{\mathrm{C}}
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\U}{\mathcal{U}}
+\newcommand{\V}{\mathcal{V}}
+
+\begin{document}
+
+\begin{defin}
+An $n$-dimensional \textbf{manifold} $M$ is a second-countable Hausdorff space locally homeomorphic to $\R^n$. A locally Euclidean neighborhood $U\subseteq M$ is a \textbf{chart} with \textbf{local coordinates} the pullback of the coordinate functions $f_i=p_i\varphi$ where $\varphi:U\to\R^n$ is the \textbf{coordinate map} and $p_i$ is the projection onto the $i$-th coordinate. The collection $\U=\{(U,\varphi)\}$ of open charts $U$ and coordinate maps $\varphi:U\to\R^n$ is an \textbf{atlas} of $M$ if $\smash{M=\bigcup_{(U,\varphi)\in\U}U}$.
+\end{defin}
+
+Let $(U,\varphi_U)\in\U$ and $(V,\varphi_V)\in\U$, the map
+\[\varphi_V\varphi_U^{-1}:\varphi_U(U\cap V)\to\varphi_V(U\cap V)\]
+defines a coordinate transition function.
+
+\begin{defin}
+An atlas on $M$ such that all coordinate transition functions are diffeomorphisms gives a \textbf{smooth structure} on $M$. Smooth structures are characterized up to equivalence $\sim$: two atlases $\U\sim\V$ if for any $(U,\varphi_U)\in\U$ and $(V,\varphi_V)\in\V$, maps $\varphi_V\varphi_U^{-1}$ and $\varphi_U\varphi_V^{-1}$ are diffeomorphisms.
+\end{defin}
+
+Let $M$ be a manifold with smooth structure given by atlas $\U$. A function $f:M\to\R$ is smooth if $f\varphi^{-1}$ is smooth on $\varphi(U)\subseteq\R^n$ for any $(U,\varphi)\in\U$. Atlas $\V$ defines the same collection $C^\infty(M;\R)$ of smooth functions on $M$ if $\U\sim\V$.\medbreak
+
+Let $\U$ and $\V$ be locally finite atlases that give smooth structures on manifolds $M$ and $N$ respectively. A map $h:M\to N$ is smooth if $\psi h\varphi^{-1}:\varphi(U\cap h^{-1}(V))\to\psi(h(U)\cap V)$ is smooth for any $(U,\varphi)\in\U$ and $(V,\psi)\in\V$.
+
+\begin{example}
+The $n$-sphere $S^n$, the real $n$-dimensional vector space, the general linear group $\GL(n,\R)$.
+\end{example}
+
+
+
+
+
+
+
+\end{document}
