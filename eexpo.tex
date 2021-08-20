@@ -67,6 +67,7 @@
 \newcommand{\F}{\mathbb{F}}
 \newcommand{\Cof}{\mathrm{Cof}}
 \newcommand{\Fib}{\mathrm{Fib}}
+\newcommand{\dgcAlg}{\mathbf{dgcAlg}}
 \newcommand{\cof}{\mathrm{cof}}
 \newcommand{\fib}{\mathrm{fib}}
 \newcommand{\Obj}{\textup{Obj}}
@@ -124,7 +125,7 @@ To accomplish the goal we first describe appropriate model structures on $\Top$,
 	\arrow[""{name=0, anchor=center, inner sep=0},"\mathcal{S}_\bullet",shift left=1.3, from=1-1, to=1-2]
 	\arrow[""{name=1, anchor=center, inner sep=0},"\abs{-}",shift left=1.4, from=1-2, to=1-1]
 	\arrow["\dashv"{anchor=center, rotate=-90}, draw=none, from=0, to=1]
-	\arrow[""{name=0, anchor=center, inner sep=0},"\mathcal{A}^\ast", shift left=1.3, from=1-2, to=1-3]
+	\arrow[""{name=0, anchor=center, inner sep=0},"\Omega_\textrm{PLdR}", shift left=1.3, from=1-2, to=1-3]
 	\arrow[""{name=1, anchor=center, inner sep=0},"\mathcal{K}_\bullet",shift left=1.4, from=1-3, to=1-2]
 	\arrow["\dashv"{anchor=center, rotate=-90}, draw=none, from=0, to=1]
 \end{tikzcd}.\]
@@ -377,38 +378,43 @@ The inclusion $\smash{\W\subseteq\Fib^r\circ\Cof^l}$ is immediate. For the conve
 \textit{2-out-of-3 Axiom.} All isomorphisms of cdg-algebras are quasi-isomorphisms. The 2-out-of-3 property holds for quasi-isomorphisms.
 \end{proof}
 
-We want to describe the cofibrations in $\CDGA_k$ explicitly, instead of defining it to meet the axioms of model category. In the proof of Factorization Axiom of Proposition 2.15 we used kill cocycles by adding generators.
-
-If $A$ be an DGM$_k$ with an $n$-cocycle $x\in H^n(A)$, then $A[y|dy=x]$ with $A\otimes\Lambda(y)$ as the underlying algebra and $dy=a$ as the differential forms a DGM$_k$, with the description  ``adding a generator $y$ to kill the cocycle $a$". Alternatively $A[y|dy=x]$ is the pushout of
-\[\begin{tikzcd}
-\ch(S^n)\arrow[d]\arrow[r,"a"]&A\arrow[d]\\
-\ch(D^{n-1})\arrow[r,"y"]&A[y|dy=x]
-\end{tikzcd}.\]
-
-A relative Sullivan algebra is an inclusion $A\hookrightarrow X$ of CDGA$_k$ with the filtration $A=X_{-1}\subseteq X_0\subseteq\cdots\subseteq X$ and inductive building
-\[\begin{tikzcd}
-\Lambda(V_n)\arrow[d]\arrow[r,]&X_{n-1}\arrow[d]\\
-\Lambda(V_n\oplus sV)\arrow[r]&X_n
-\end{tikzcd}\]
-where $V_n$ is a DGM$_k$, and $dv=0$ and $d(sv)=v$ in $\Lambda(V_n)$ and $\Lambda(V_n\oplus sV)$ for all $v\in V_n$. This develops an intuitive understanding of the concept.
+We want to be able to describe the cofibrations in $\CDGA_k$ explicitly, instead of defining it
+to satisfy the axioms of model category. These cofibrations are so-called relative Sullivan algebras.
 
 \begin{defns}
-A \textbf{relative Sullivan algebra} is an inclusion $A\hookrightarrow A\otimes\Lambda V$ of CDGA$_k$ where $V$ is a DGM$_k$ with $dV^n\subseteq\Lambda V^{n-1}$ for all $n$. A \textbf{Sullivan algebra} is a relative Sullivan algebra with $A=k$. A relative Sullivan algebra is \textbf{minimal} if $\im d\subseteq\Lambda^{\geq2}V$, subspace of words of length at least two.
+A \textbf{relative Sullivan algebra} is an inclusion $A\hookrightarrow A\otimes_k\Lambda V$ of cdga$_k$ where $V=\{V^i\}_{i\geq1}$ is a DGM$_k$ with filtration
+\[0=V(-1)\subseteq V(0)\subseteq V(1)\subseteq\cdots\]
+satisfying $V=\cup_{j\geq0}V(j)$ and $dV(n)\subseteq A\otimes_k\Lambda V(n-1)$ for all $n\geq0$.
+
+A map $f:A\otimes_k\Lambda V\to A'\otimes_k\Lambda V'$ is a morphism of relative Sullivan algebras if it's restriction to $A$ and $A'$ is a morphism of cdga$_k$s:
+\[\begin{tikzcd}
+A\arrow[d,hookrightarrow]\arrow[r,"f|_A"]&A'\arrow[d,hookrightarrow]\\
+A\otimes_k\Lambda V\arrow[r,"f"]&A'\otimes_k\Lambda'
+\end{tikzcd}.\]
+
+A \textbf{Sullivan algebra} is a relative Sullivan algebra with $A=k$. A relative Sullivan algebra is \textbf{minimal} if $\im d\subseteq\Lambda^{\geq2}V$, subspace of words of length at least two.
 \end{defns}
+
+Relative Sullivan algebras can also be built inductively similar to CW complexes by gluing disks algebras along sphere algebras. In the proof of factorization axiom in Proposition 2.15 this equivalent to adding generators to kill cocycles: if $A$ is an differential graded module over $k$ with $x\in Z^n(A)$, then $A\otimes_k\Lambda V$ with $V=\{y\}$ and $dy=x$ is the pushout of $D(V)\leftarrow S(V)\rightarrow A$.
+
+A relative Sullivan algebra is an inclusion $A\hookrightarrow X$ of differential graded algebras over $k$ with a filtration
+\[A=X(0)\subseteq X(1)\subseteq\cdots\]
+satisfying $X=\cup_{j\geq0}X(j)$, where each $X(j)$ is obtained as the pushout of $D(V^j)\leftarrow S(V^j)\rightarrow X(j-1)$ for some differential graded module $V=\{V^i\}_{i\geq1}$.
 
 \begin{prop}
 Relative Sullivan algebras are cofibrations and Sullivan algebras are cofibrant in the $q$-model structure of $\CDGA_k$.
 \end{prop}
 
 \begin{defn}
-Let $f\in\Hom_{\CDGA_k}(A,B)$. A \textbf{Sullivan model} for $f$ is a factorization of a relative Sullivan algebra $A\hookrightarrow M$ and a quasi-isomorphism $M\sim B$.
+Let $f\in\Hom_{\CDGA_k}(A,B)$. A \textbf{Sullivan model} for $f$ is a relative Sullivan algebra $A\hookrightarrow M$ together with a quasi-isomorphism $M\sim B$.
 \[\begin{tikzcd}
 A\arrow[dr,hookrightarrow]\arrow[rr,"f"]&&B\\
-&M\arrow[ur,"\sim"]
+&M\arrow[ur,"\sim"']
 \end{tikzcd}\]
+A Sullivan model is \textbf{minimal} if $A$
 \end{defn}
 
-Now we state and prove the existence and uniqueness of minimal Sullivan model.
+Minimal Sullivan model plays.
 
 \begin{prop}
 Every $f\in\Hom_{\CDGA_k,1}(A,B)$ admits a minimal Sullivan model which is unique up to isomorphism.
@@ -424,55 +430,121 @@ Every $f\in\Hom_{\CDGA_k,1}(A,B)$ admits a minimal Sullivan model which is uniqu
 \end{tikzcd}\]
 \end{prop}
 
-\subsection{Equivalence between homotopy categories of $\sSet$ and $\CDGA_\Q$} 
+\newpage
+\subsection{Equivalence between homotopy categories of $\sSet$ and $\CDGA_\Q$}
 
-We begin by constructing a passage from simplicial datum to algebraic ones.
+In this section we prove the main equivalence. We begin by constructing a pair of adjoint functors between $\sSet$ and $\CDGA_\Q$.
 
 \begin{defn}
-The \textbf{simplicial de Rham algebra} $\Omega_\bullet^\ast$ is a CDGA$_k$ of the form
-\[\Omega_n^\ast=\frac{\Lambda(t_0,\cdots,t_n,dt_0,\cdots,dt_n)}{\left(\sum_{i=0}^nt_i=1,\sum_{i=0}^ndt_i=0\right)}\]
+The \textbf{polynomial differential form} $\Omega^\bullet_\textrm{poly}$ is the simplicial object in $\CDGA_k$ given by
+\begin{align*}
+\mathbf{\Delta}^\textrm{op}&\to\CDGA_k\\
+\Delta[n]&\mapsto\Omega^n_\textrm{poly}=\Lambda(t_0,\cdots,t_n,dt_0,\cdots,dt_n)/\left(\sum_{i=0}^nt_i=1,\sum_{i=0}^ndt_i=0\right)
+\end{align*}
 where $\abs{t_i}=0$ and $\abs{dt_i}=1$.
 \end{defn}
 
-Note that $\Omega_\bullet^\ast$ is an object of $\mathbf{sCDGA}_k$, carrying simplicial data with face map $\partial_i:\Omega_n^\ast\to\Omega_{n-1}^\ast$ and degeneracy map $s_i:\Omega_n^\ast\to\Omega_{n+1}^\ast$ given by
-\[\partial_i:t_k\to\begin{cases}
+The superscript $^\bullet$ encodes the simplicial information, which is specified by face maps $\smash{\delta_i:\Omega^n_\textrm{poly}\to\Omega^{n-1}_\textrm{poly}}$ and degeneracy maps $\smash{\partial_i:\Omega^n_\textrm{poly}\to\Omega^{n+1}_\textrm{poly}}$ below
+\[\delta_i:t_k\mapsto\begin{cases}
 t_k,&k<i\\0,&k=i\\t_{k-1},&k>i
-\end{cases},\quad \textrm{and}\quad s_i:t_k\to\begin{cases}
+\end{cases},\quad s_i:t_k\mapsto\begin{cases}
 t_k,&k<i\\t_k+t_{k+1},&k=i\\t_{k+1},&k>i
-\end{cases}\]
-respectively. We can extend $\Omega_\bullet^\ast:\mathbf{\Delta}\to\CDGA_k$ to $\mathcal{A}^\ast:\sSet\to\CDGA_k$ along $\Delta:\mathbf{\Delta}\to\sSet$ categorically via Kan extension.
+\end{cases}.\]
+Apart form the simplicial structure, $\Omega^\bullet_\textrm{poly}$ as also carries a grading structure. We denote the $k$-module of homogeneous elements of degree $p$ by $\Omega^\bullet_{\textrm{poly},p}$.
+
+\begin{lem}
+For any $p\geq0$, $\Omega^\bullet_{\mathrm{poly},p}$ is a trivial Kan complex.
+\end{lem}
+\begin{proof}
+For any $p\geq0$, $\Omega^\bullet_{\mathrm{poly},p}$ is a simplicial $k$-module, and thus a Kan complex. By a theorem of Eilenberg-Mac Lane, the homotopy groups of $\Omega^\bullet_{\textrm{poly},p}$ corresponds to the homology groups of the alternating face map complex
 \[\begin{tikzcd}
-	{\mathbf{\Delta}} && {\textbf{CDGA}_k} \\
-	& {\textbf{sSet}}
-	\arrow["{\Omega_\bullet^\ast}", from=1-1, to=1-3]
-	\arrow["\Delta"', from=1-1, to=2-2]
-	\arrow[""{name=0, anchor=center, inner sep=0}, "{\mathcal{K}_\bullet}", shift left=3, from=1-3, to=2-2]
-	\arrow[""{name=1, anchor=center, inner sep=0}, "{\mathcal{A}^\ast}" from=2-2, to=1-3]
-	\arrow["\dashv"{anchor=center, rotate=299}, draw=none, from=0, to=1]
+\cdots\arrow[r]&\Omega^2_{\textrm{poly},p}\arrow[r,"\partial_2"]&\Omega^1_{\textrm{poly},p}\arrow[r,"\partial_1"]&\Omega^0_{\textrm{poly},p}\end{tikzcd}\]
+with differential given by $\partial_n=\sum_{i=1}^n(-1)^i\delta_i$. Define shifting chain maps $\{s_n:\Omega^n_{\textrm{poly},p}\to\Omega^{n+1}_{\textrm{poly},p}\}_{n}$ given by $s_n(1)=(1-t_0)^2$ and $s_n(t_i)=(1-t_0)t_{i+1}$ for $0\leq i\leq n$. It's standard to verify that $s_n$ is a degeneracy map, Goerss-Jardin 201. 
+\end{proof}
+
+Now we can extend $\Omega^\bullet_\textrm{poly}:\mathbf{\Delta}^\textrm{op}\to\dgcAlg_k$ along $\Delta:\mathbf{\Delta}^\textrm{op}\to\sSet$ via left Kan extension, which establishes a functor $\sSet\to\dgcAlg_k$.
+\[\begin{tikzcd}
+\mathbf{\Delta}^\textrm{op}\arrow[swap]{dr}{\Delta[-]}\arrow{rr}{\Omega^\bullet_\textrm{poly}}&&\dgcAlg_k\\
+&\sSet\arrow[swap,near start,dashed]{ur}
 \end{tikzcd}\]
 
-Explicitly, let $\mathcal{A}^\ast(X)=\Hom_{\sSet}(X,\Omega^\ast_\bullet)$ and $\mathcal{K}_n(Y)=\Hom_{\CDGA_k}(Y,\Omega_n^\ast)$ for $X\in\sSet$ and $Y\in\CDGA_k$. Then functors $\mathcal{A}^\ast$ and $\mathcal{K}_\bullet$ are adjoint:
+\begin{defn}
+The \textbf{piecewise-linear de Rham complex} $\Omega^\bullet_\textrm{PLdR}$ is the hom-functor specified by
 \begin{align*}
-\Hom_{\CDGA_k}(Y,\mathcal{A}^\ast(X))&\cong\Hom_{\CDGA_k}(Y,\textstyle{\lim_{\Delta[n]\to X}\Omega_n^\ast})\quad\textrm{(Yoneda lemma)}\\
-&\cong\colim_{\Delta[n]\to X}\mathcal{K}_n(Y)\\
-&\cong\colim_{\Delta[n]\to X}\Hom_{\sSet}(\mathcal{K}(Y),\Delta[n])\quad\textrm{(Yoneda lemma)}\\
-&\cong\Hom_{\sSet}(\mathcal{K}(Y),X).
+\sSet&\to\dgcAlg_k^\mathrm{op}\\
+S&\mapsto\Hom_\sSet(S,\Omega^\bullet_\textrm{poly}).
 \end{align*}
+\end{defn}
 
-\begin{prop}
-The adjoint functors $\mathcal{A}^\ast\dashv\mathcal{K}_\bullet$ forms a Quillen adjunction.
+The density theorem in category theory gives a limit construction of $\smash{\Omega^\bullet_\textrm{PLdR}}$:
+\[\smash{\Hom_\sSet(S,\Omega^\bullet_\textrm{poly})=\lim_{\Delta[n]\to S}\Omega^\bullet_\textrm{poly}}.\]\bigbreak
+
+The classical de Rham theorem asserts that the Stokes' correspondence between de Rham complex and singular cochcain complex is an equivalence on the cohomology level. The piecewise-linear analog is stated below.
+
+Given a simplex $x\in S$ and a polynomial $k$-form $f\in\Omega^k_\textrm{PLdR}(S)$, there is an integration map $\oint:\Omega^\bullet_\textrm{PLdR}(S)\to C^\bullet(S;k)$ given by
+\[(\oint f)(x)=\int_{\Delta^n}f(x)\]
+where $f(x)=\hat{f}(x)dt_1\cdots dt_n$ and $\hat{f}(x)\in\Q[t_1,\cdots,t_n]$. This map is simplicial $\{\oint_k\}_{k\geq0}$, and each $\oint_k$ is a linear chain map. The Stokes' theorem applies.
+
+\begin{prop}[PL de Rham theorem]
+For a simplicial set $S$, the integration map $\oint:\Omega_\mathrm{PLdR}^\bullet(S)\to C^\bullet(S;k)$ is a quasi-isomorphism.
 \end{prop}
 \begin{proof}
-We show that $\mathcal{A}^\ast$ preserves cofibrations and acyclic cofibrations. We only need to check this for generating sets $I$ and $J$.\medbreak
+We split the proof into two steps. The first step provides the basis for the skeleta induction in the second step.\medbreak
 
-\textit{Preserving cofibrations.} Consider\medbreak
+\textit{First step.} The goal is to prove the theorem for $S=\Delta[n]$ for any $n$. The limit construction gives $\smash{\Omega^\bullet_\textrm{PLdR}(\Delta[n])=\Omega^n_\textrm{poly}}$, and the natural identification
+\begin{align*}
+\Lambda(t_0,\cdots,t_n,dt_0,\cdots,dt_n)/\left(\sum_{i=0}^nt_i=1,\sum_{i=0}^ndt_i=0\right)=\Lambda(t_1,\cdots,t_n,dt_1,\cdots,dt_n)
+\end{align*}
+identifies $\Omega^n_\textrm{poly}$ with the tensor product of $n$ copies of $\Lambda(t,dt)=\Omega^1_\textrm{poly}$. Since $\Omega^1_\textrm{poly}$ has trivial cohomology, so does $\smash{\Omega^n_\textrm{poly}}$ by the Künneth formula. The chain map $\smash{\oint}_n$ takes the trivial class in $\smash{\Omega^n_\textrm{poly}}$ to the trivial class in $\smash{C^n(\Delta[n],k)}$, thus inducing isomorphism on cohomology.\medbreak
+
+\textit{Second step.}
+Any simplicial set $S$ has a skeletal filtration
+\[\emptyset=S^{(-1)}\subseteq S^{(0)}\subseteq\cdots\subseteq S=\textstyle{\colim_nS^{(n)}}\]
+where $S^{(n)}$ is generated by non-degenerate simplices of $S$ of degree at most $n$. The base case $\Omega^\bullet_\textrm{PLdR}(S^{(0)})\simeq C^\bullet(S^{(0)};k)$ is trivial. Now suppose the claim is true for $S^{(n-1)}$, then $S^{(n)}$ is obtained by gluing copies of $\Delta[n]$, which appears as a pushout of the form $\coprod\Delta[n]\leftarrow\coprod\partial\Delta[n]\rightarrow S$. Consider the cube diagram:
+\[\begin{tikzcd}[column sep=scriptsize]
+\Omega^\bullet_\textrm{PLdR}(S^{(n)})\arrow[dd]\arrow[dr]\arrow[rr]&&\Omega^\bullet_\textrm{PLdR}(\Delta[n])\arrow[dd,dashed,two heads]\arrow[dr,"\simeq"]\\
+&C^\bullet(S^{(n)};k)\arrow[dd]\arrow[rr]&&C^\bullet(\Delta[n];k)\arrow[dd,two heads]\\
+\Omega^\bullet_\textrm{PLdR}(S^{(n-1)})\arrow[dr,"\simeq"']\arrow[rr,dashed]&&\Omega^\bullet_\textrm{PLdR}(\partial\Delta[n])\arrow[dr,dashed,"\simeq"]\\
+&C^\bullet(S^{(n-1)};k)\arrow[rr]&&C^\bullet(\partial\Delta[n];k)
+\end{tikzcd}.\]
+The front and back squares are pullbacks, since both $\Omega^\bullet_\textrm{PLdR}$ and $C^\bullet$ are contravariant functors that preserve (co)limits. The contravariance also sends inclusions (which are cofibrations in $\sSet$) to surjections (which are fibrations in $\dgcAlg_k$. The front and back squares are connected by $\oint$. The bottom horizontal quasi-isomorphisms are obtained from inductive assumption (noticing that $\partial\Delta[n]$ is an $(n-1)$-skeleton. The upper-right quasi-isomorphism follows from the First step.
+\end{proof}
+
+We define the right adjoint functor $\mathcal{K}_\bullet$ of $\Omega_\textrm{PLdR}$ as another hom-set functor:
+\begin{align*}
+\dgcAlg_k^\textrm{op}&\to\sSet\\
+A&\mapsto\Hom_{\dgcAlg_k}(A,\Omega^\bullet_\textrm{poly})
+\end{align*}
+which forces the adjunction
+\[\begin{tikzcd}
+	{\Omega_\textrm{PLdR}:\sSet} & {\dgcAlg_k^\textrm{op}:\mathcal{K}_\bullet}
+	\arrow[""{name=0, anchor=center, inner sep=0}, shift left=1.5, from=1-1, to=1-2]
+	\arrow[""{name=1, anchor=center, inner sep=0}, shift left=1.5, from=1-2, to=1-1]
+	\arrow["\dashv"{anchor=center, rotate=-90}, draw=none, from=0, to=1]
+\end{tikzcd}\]
+by the following calculation:
+\begin{align*}
+\Hom_{\CDGA_k}(A,\Omega_\textrm{PLdR}(S))&\cong\Hom_{\CDGA_k}(A,\textstyle{\lim_{\Delta[n]\to S}\Omega_\textrm{poly}^\bullet}) \\
+&\cong\colim_{\Delta[n]\to S}\mathcal{K}_n(A)\\
+&\cong\colim_{\Delta[n]\to S}\Hom_{\sSet}(\mathcal{K}(A),\Delta[n])\quad\textrm{(Yoneda lemma)}\\
+&\cong\Hom_{\sSet}(\mathcal{K}(A),S).
+\end{align*}
+The bullet subscript $_\bullet$ implies that the functor carries simplicial data in accordance with $\Omega^\bullet_\textrm{poly}$, so that $\mathcal{K}_n(A)=\Hom_{\dgcAlg_k}(A,\Omega^n_\textrm{poly})$.
+
+\begin{prop}
+The adjunction $\Omega_\mathrm{PLdR}\dashv\mathcal{K}_\bullet$ forms a Quillen adjunction.
+\end{prop}
+\begin{proof}
+We show that $\Omega_\textrm{PLdR}$ preserves cofibrations and acyclic cofibrations. We only need to check this for generating sets $I$ and $J$.\medbreak
+
+\textit{Preserving cofibrations.} We need to show that the inclusions $\partial\Delta[n]\hookrightarrow\Delta[n]$ are sent to degreewise surjections in $\dgcAlg_k$. Moerdijk 29.\medbreak
 
 \textit{Preserving acyclic cofibrations.} f
 \end{proof}
 
 Since every simplicial set is cofibrant in $\sSet$ and every CDGA$_k$ is fibrant in $\CDGA_k$, we obtain a pair of derived functors
 \[\begin{tikzcd}
-	{\mathbb{L}\mathcal{A}^\ast:\Ho(\sSet)} & {\Ho(\CDGA_k):\mathbb{R}\mathcal{K}_\bullet}
+	{\mathbb{L}\Omega_\textrm{PLdR}:\Ho(\sSet)} & {\Ho(\CDGA_k):\mathbb{R}\mathcal{K}_\bullet}
 	\arrow[""{name=0, anchor=center, inner sep=0}, shift left=1.5, from=1-1, to=1-2]
 	\arrow[""{name=1, anchor=center, inner sep=0}, shift left=1.5, from=1-2, to=1-1]
 	\arrow["\dashv"{anchor=center, rotate=-90}, draw=none, from=0, to=1]
@@ -480,22 +552,22 @@ Since every simplicial set is cofibrant in $\sSet$ and every CDGA$_k$ is fibrant
 which allows us to compare the homotopy theories of $\sSet$ and $\CDGA_k$.
 
 \begin{prop}
-The map $A\mapsto M[\mathcal{A}^\ast(\mathcal{K}_\bullet(A))]$ is a weak equivalence for minimal Sullivan models $A\in\CDGA_{\Q,1,f}$.  
+The map $A\mapsto M[\Omega_\textrm{PLdR}(\mathcal{K}_\bullet(A))]$ is a weak equivalence for minimal Sullivan models $A\in\CDGA_{\Q,1,f}$.  
 \end{prop}
 \begin{proof}
-By $2$-out-of-$3$ property of weak equivalence, we only need to prove the statement for $A\mapsto\mathcal{A}^\ast(\mathcal{K}_\bullet(A))$, and we do that by induction.\medbreak
+By $2$-out-of-$3$ property of weak equivalence, we only need to prove the statement for $A\mapsto\Omega_\textrm{PLdR}(\mathcal{K}_\bullet(A))$, and we do that by induction.\medbreak
 
 \textit{Base case.} Let $A=\Lambda x$ with $\abs{x}=n$. Then $H^\ast(A)=\Q[x]$, and
-\[H^\ast(\mathcal{A}^\ast(\mathcal{K}_\bullet(A)))\stackrel{(1)}{=}H^\ast(\mathcal{K}_\bullet(A))\stackrel{(2)}{=}H^\ast(K(\mathcal{Q}^\ast,n))=\Q[x]\]
+\[H^\ast(\Omega_\textrm{PLdR}(\mathcal{K}_\bullet(A)))\stackrel{(1)}{=}H^\ast(\mathcal{K}_\bullet(A))\stackrel{(2)}{=}H^\ast(K(\mathcal{Q}^\ast,n))=\Q[x]\]
 where $(1)$ is induced by $\oint$ and $(2)$ is a consequence of \textcolor{red}{blah}.\medbreak
 
-\textit{Inductive step.} Let $A$ be a Sullivan algebra and assume $A\mapsto\mathcal{A}^\ast(\mathcal{K}_\bullet(A))$ is a weak equivalence.
-Apply $\mathcal{A}^\ast\mathcal{K}_\bullet$ to the back square where $B$ is the pushout:
+\textit{Inductive step.} Let $A$ be a Sullivan algebra and assume $A\mapsto\Omega_\textrm{PLdR}(\mathcal{K}_\bullet(A))$ is a weak equivalence.
+Apply $\Omega_\textrm{PLdR}\mathcal{K}_\bullet$ to the back square where $B$ is the pushout:
 \[\begin{tikzcd}
 	{\Lambda\ch(S^n)} && A\arrow[dd,phantom,"\ulcorner",very near end, shift right=4ex] \\
-	& {\mathcal{A}^\ast[\mathcal{K}^\bullet(\Lambda\ch(S^n))]} && {\mathcal{A}^\ast(\mathcal{K}^\bullet(A))} \\
+	& {\Omega_\textrm{PLdR}[\mathcal{K}^\bullet(\Lambda\ch(S^n))]} && {\Omega_\textrm{PLdR}(\mathcal{K}^\bullet(A))} \\
 	{\Lambda\ch(D^{n-1})} && B \\
-	& {\mathcal{A}^\ast[\mathcal{K}^\bullet(\Lambda\ch(D^{n-1}))]} && {\mathcal{A}^\ast(\mathcal{K}^\bullet(B))}
+	& {\Omega_\textrm{PLdR}[\mathcal{K}^\bullet(\Lambda\ch(D^{n-1}))]} && {\Omega_\textrm{PLdR}(\mathcal{K}^\bullet(B))}
 	\arrow["\simeq"{description}, from=1-1, to=2-2]
 	\arrow[from=1-1, to=1-3]
 	\arrow[from=2-2,crossing over, to=2-4]
@@ -510,13 +582,13 @@ Apply $\mathcal{A}^\ast\mathcal{K}_\bullet$ to the back square where $B$ is the 
 	\arrow[from=4-2, to=4-4]
 \end{tikzcd}.\]
 The three weak equivalences are by 
-We see that $B\mapsto\mathcal{A}^\ast(\mathcal{K}_\bullet(B))$ is a weak equivalence.
+We see that $B\mapsto\Omega_\textrm{PLdR}(\mathcal{K}_\bullet(B))$ is a weak equivalence.
 
 Recall that every $1$-connected
 \end{proof}
 
 \begin{prop}
-The map $\mathcal{K}_\bullet[M(\mathcal{A}^\ast(-))]$ is a weak equivalence in ${\sSet_{\Q,1,f}}$.
+The map $\mathcal{K}_\bullet[M(\Omega_\textrm{PLdR}(-))]$ is a weak equivalence in ${\sSet_{\Q,1,f}}$.
 \end{prop}
 
 \newpage
