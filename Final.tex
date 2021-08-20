@@ -1,0 +1,327 @@
+\documentclass[psamsfonts]{amsart}
+
+\usepackage{amssymb,amsfonts}
+\usepackage[all,arc]{xy}
+\usepackage{enumerate}
+\usepackage{mathrsfs}
+\usepackage{tikz-cd}
+\usetikzlibrary{decorations.pathmorphing}
+
+\usepackage{hyperref}  
+\hypersetup{
+  bookmarksnumbered=true,%
+  bookmarks=true,%
+  colorlinks=true,%
+  linkcolor=magenta,%
+  citecolor=blue,%
+  filecolor=blue,%
+  menucolor=blue,%
+  pagecolor=blue,%
+  urlcolor=blue,%
+  pdfnewwindow=true,%
+  pdfstartview=FitBH}
+  
+\let\fullref\autoref
+%
+%  \autoref is very crude.  It uses counters to distinguish environments
+%  so that if say {lemma} uses the {theorem} counter, then autrorefs
+%  which should come out Lemma X.Y in fact come out Theorem X.Y.  To
+%  correct this give each its own counter eg:
+%                 \newtheorem{theorem}{Theorem}[section]
+%                 \newtheorem{lemma}{Lemma}[section]
+%  and then equate the counters by commands like:
+%                 \makeatletter
+%                   \let\c@lemma\c@theorem
+%                  \makeatother
+%
+%  To work correctly the environment name must have a corrresponding 
+%  \XXXautorefname defined.  The following command does the job:
+%
+\def\makeautorefname#1#2{\expandafter\def\csname#1autorefname\endcsname{#2}}
+
+\def\equationautorefname~#1\null{(#1)\null}
+\makeautorefname{footnote}{footnote}%
+\makeautorefname{item}{item}%
+\makeautorefname{figure}{Figure}%
+\makeautorefname{table}{Table}%
+\makeautorefname{part}{Part}%
+\makeautorefname{appendix}{Appendix}%
+\makeautorefname{chapter}{Chapter}%
+\makeautorefname{section}{Section}%
+\makeautorefname{subsection}{Section}%
+\makeautorefname{subsubsection}{Section}%
+\makeautorefname{theorem}{Theorem}%
+\makeautorefname{thm}{Theorem}%
+\makeautorefname{cor}{Corollary}%
+\makeautorefname{lem}{Lemma}%
+\makeautorefname{prop}{Proposition}%
+\makeautorefname{defn}{Definition}%
+\makeautorefname{rem}{Remark}%
+\makeautorefname{rems}{Remarks}%
+\makeautorefname{quest}{Question}%
+\makeautorefname{exmp}{Example}%
+\makeautorefname{ax}{Axiom}%
+\makeautorefname{claim}{Claim}%
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}{Corollary}[section]
+\newtheorem{prop}{Proposition}[section]
+\newtheorem{lem}{Lemma}[section]
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}[section]
+\newtheorem{ax}{Axiom}[section]
+\newtheorem{con}{Construction}[section]
+\newtheorem{exmp}{Example}[section]
+\newtheorem{quest}{Question}[section]
+\newtheorem{rem}{Remark}[section]
+\newtheorem{rems}{Remarks}[section]
+
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Top}{\mathbf{Top}}
+\newcommand{\sSet}{\mathbf{sSet}}
+\newcommand{\dgcAlg}{\mathbf{dgcAlg}}
+\newcommand{\Hom}{\mathrm{Hom}}
+
+\DeclareMathOperator{\colim}{colim}
+
+\makeatletter
+\let\c@obs=\c@thm
+\let\c@cor=\c@thm
+\let\c@prop=\c@thm
+\let\c@lem=\c@thm
+\let\c@prob=\c@thm
+\let\c@con=\c@thm
+\let\c@conj=\c@thm
+\let\c@defn=\c@thm
+\let\c@notn=\c@thm
+\let\c@notns=\c@thm
+\let\c@exmp=\c@thm
+\let\c@ax=\c@thm
+\let\c@pro=\c@thm
+\let\c@ass=\c@thm
+\let\c@warn=\c@thm
+\let\c@rem=\c@thm
+\let\c@conv=\c@thm
+\let\c@sch=\c@thm
+\let\c@equation\c@thm
+\numberwithin{equation}{section}
+\makeatother
+
+\bibliographystyle{plain}
+
+\title{On Realizing Rational and Polynomial Cohomology Rings}
+
+\author{Yunhan (Alex) Sheng}
+
+\begin{document}
+
+\begin{abstract}
+
+This is an expository paper written during the $\textrm{\smash{2021 REU}}$ program at the University of Chicago. In this paper we address the following question: which commutative graded $R$-algebras can be realized as the cohomology ring of a space with coefficients in $R$? We discuss two solved cases: for $R=\Q$, and for $R$ is the polynomial algebra over $\Z$ or $\Z_p$ for prime $p$. Model categories play an important role in our discussion.
+
+\end{abstract}
+
+\maketitle
+
+\tableofcontents
+
+\section{Introduction}
+
+\section{Rational Homotopy Theory}
+
+The
+
+\subsection{Localization and rationalization}
+
+\subsection{The Quillen equivalence between $\Top$ and $\sSet$}
+
+\subsection{A model structure on $\dgcAlg_k$}
+
+\newpage
+\subsection{The main equivalence}
+
+In this section we prove the main equivalence
+\[dd\]
+of homotopy theories. We begin by constructing a functor from $\sSet$ to $\dgcAlg_k$. For the whole section $k$ will be a field with characteristic $0$.
+
+\begin{defn}
+The \textbf{polynomial differential form} $\Omega^\bullet_\textrm{poly}$ is a simplicial object in $\dgcAlg_k$ (that is, a functor $\mathbf{\Delta}^\textrm{op}\to\dgcAlg_k$) given by
+
+\[\Omega^\bullet[n]=\Omega^n_\textrm{poly}=\Lambda(t_0,\cdots,t_n,dt_0,\cdots,dt_n)/\left(\sum_{i=0}^nt_i=1,\sum_{i=0}^ndt_i=0\right)\]
+where $|t_i|=0$ and $|dt_i|=1$.
+\end{defn}
+
+The superscript $^\bullet$ encodes the simplicial information specified by face maps $\smash{\delta_i:\Omega^n_\textrm{poly}\to\Omega^{n-1}_\textrm{poly}}$ and degeneracy maps $\smash{\sigma_i:\Omega^n_\textrm{poly}\to\Omega^{n+1}_\textrm{poly}}$ below:
+
+\[\delta_i:t_k\mapsto\begin{cases}
+t_k,&k<i\\0,&k=i\\t_{k-1},&k>i
+\end{cases},\quad\quad s_i:t_k\mapsto\begin{cases}
+t_k,&k<i\\t_k+t_{k+1},&k=i\\t_{k+1},&k>i
+\end{cases}.\]
+
+In addition to the simplicial structure, $\Omega^\bullet_\textrm{poly}$ also carries a grading structure as an algebra. We encode this structure in the subscript and write $\Omega^\bullet_{\textrm{poly},p}$ for the subspace of homogeneous elements of $\Omega^\bullet_\textrm{poly}$ of degree $p$. This subspace is a $k$-module.
+
+\begin{lem}
+For any $p\geq0$, $\Omega^\bullet_{\mathrm{poly},p}$ is a trivial Kan complex.
+\end{lem}
+\begin{proof}
+For any $p\geq0$, $\Omega^\bullet_{\textrm{poly},p}$ is a simplicial $k$-module, and thus a Kan complex. By a theorem of Eilenberg-Mac Lane, the homotopy groups of $\Omega^\bullet_{\textrm{poly},p}$ corresponds to the homology groups of the alternating face map complex
+
+\[\begin{tikzcd}
+\cdots\arrow[r]&\Omega^2_p\arrow[r,"\partial_2"]&\Omega^1_p\arrow[r,"\partial_1"]&\Omega^0_p\end{tikzcd}\]
+with differential given by $\partial_n=\sum_{i=1}^n(-1)^i\delta_i$. Define shifting chain maps $\{s_n:\Omega^n_{\textrm{poly},p}\to\Omega^{n+1}_{\textrm{poly},p}\}_{n}$ given by $s_n(1)=(1-t_0)^2$ and $s_n(t_i)=(1-t_0)t_{i+1}$ for $0\leq i\leq n$. It's standard to verify that $s_n$ is a degeneracy map, Goerss-Jardin 201. 
+\end{proof}
+
+Now we can extend $\Omega^\bullet_\textrm{poly}:\mathbf{\Delta}^\textrm{op}\to\dgcAlg_k$ along $\mathbf{\Delta}^\textrm{op}\to\sSet$ via the left Kan extension. This establishes a functor $\sSet\to\dgcAlg_k$.
+
+\[\begin{tikzcd}
+\mathbf{\Delta}^\textrm{op}\arrow[swap]{dr}{\Delta}\arrow{rr}{\Omega^\bullet_\textrm{poly}}&&\dgcAlg_k\\
+&\sSet\arrow[swap,near start,dashed]{ur}
+\end{tikzcd}\]
+
+\begin{defn}
+For any simplicial set $S$, the \textbf{PL de Rham complex} $\Omega^\bullet$ is a hom-functor $\sSet\to\dgcAlg_k^\mathrm{op}$ given by
+
+\[\Omega^\bullet(S)=\Hom_\sSet(S,\Omega^\bullet_\textrm{poly})\]
+Alternatively, we can define $\Omega^\bullet(S)=\lim_{\Delta[n]\to S}\Omega^n_\textrm{poly}$. See xxx for the detail.
+\end{defn}
+
+The integration $\int$ maps smooth differential $p$-forms to $p$-cochains. By Stokes' theorem, $\int$ is a chain map between the de Rham complex and the singular cochain complex. The classical de Rham's theorem asserts that $\int$ induces isomorphism on cohomology. The analogy for polynomial forms is explain below.
+
+\begin{con}
+Let $S$ be a simplicial set and $x\in S$ a simplex. Let $f\in\Omega^p(S)$ be a polynomial $p$-form on $S$. Define an integration map $\oint_p:\Omega^p(S)\to C^p(S;k)$ by
+
+\[(\oint_pf)(x)=\int_{\Delta[p]}f(x)\]
+where $f(x)=\hat{f}(x)dt_1\cdots dt_p$ and $\hat{f}(x)\in\Q[t_1,\cdots,t_p]$. The collection $\oint=\{\oint_p\}_{p\geq0}$ defines a chain map from $\Omega^\bullet(S)$ to $C^\bullet(S;k)$ by the Stokes' theorem.
+\end{con}
+
+\begin{prop}[PL de Rham's theorem]
+For a simplicial set $S$, the integration map $\oint:\Omega^\bullet(S)\to C^\bullet(S;k)$ is a quasi-isomorphism.
+\end{prop}
+\begin{proof}
+Since any simplicial set $S$ has a skeletal filtration
+\[\emptyset=S^{(-1)}\subseteq S^{(0)}\subseteq\cdots\subseteq S=\textstyle{\colim_nS^{(n)}}\]
+where $S^{(n)}$ is generated by non-degenerate simplices of $S$ of degree at most $n$, we will use skeleta induction for the proof.\medbreak
+
+\textit{First step.} The goal is to prove the theorem for $S=\Delta[n]$ for any $n$. The limit construction gives $\smash{\Omega^\bullet_\textrm{PLdR}(\Delta[n])=\Omega^n_\textrm{poly}}$, and the natural identification
+\begin{align*}
+\Lambda(t_0,\cdots,t_n,dt_0,\cdots,dt_n)/\left(\sum_{i=0}^nt_i=1,\sum_{i=0}^ndt_i=0\right)=\Lambda(t_1,\cdots,t_n,dt_1,\cdots,dt_n)
+\end{align*}
+identifies $\Omega^n_\textrm{poly}$ with the tensor product of $n$ copies of $\Lambda(t,dt)=\Omega^1_\textrm{poly}$. Since $\Omega^1_\textrm{poly}$ has trivial cohomology, so does $\smash{\Omega^n_\textrm{poly}}$ by the Künneth formula. The chain map $\smash{\oint}_n$ takes the trivial class in $\smash{\Omega^n_\textrm{poly}}$ to the trivial class in $\smash{C^n(\Delta[n],k)}$, thus inducing isomorphism on cohomology.\medbreak
+
+\textit{Second step.}
+Any simplicial set $S$ has a skeletal filtration
+\[\emptyset=S^{(-1)}\subseteq S^{(0)}\subseteq\cdots\subseteq S=\textstyle{\colim_nS^{(n)}}\]
+where $S^{(n)}$ is generated by non-degenerate simplices of $S$ of degree at most $n$. The base case $\Omega^\bullet_\textrm{PLdR}(S^{(0)})\simeq C^\bullet(S^{(0)};k)$ is trivial. Now suppose the claim is true for $S^{(n-1)}$, then $S^{(n)}$ is obtained by gluing copies of $\Delta[n]$, which appears as a pushout of the form $\coprod\Delta[n]\leftarrow\coprod\partial\Delta[n]\rightarrow S$. Consider the cube diagram:
+\[\begin{tikzcd}[column sep=scriptsize]
+\Omega^\bullet_\textrm{PLdR}(S^{(n)})\arrow[dd]\arrow[dr]\arrow[rr]&&\Omega^\bullet_\textrm{PLdR}(\Delta[n])\arrow[dd,dashed,two heads]\arrow[dr,"\simeq"]\\
+&C^\bullet(S^{(n)};k)\arrow[dd]\arrow[rr]&&C^\bullet(\Delta[n];k)\arrow[dd,two heads]\\
+\Omega^\bullet_\textrm{PLdR}(S^{(n-1)})\arrow[dr,"\simeq"']\arrow[rr,dashed]&&\Omega^\bullet_\textrm{PLdR}(\partial\Delta[n])\arrow[dr,dashed,"\simeq"]\\
+&C^\bullet(S^{(n-1)};k)\arrow[rr]&&C^\bullet(\partial\Delta[n];k)
+\end{tikzcd}.\]
+The front and back squares are pullbacks, since both $\Omega^\bullet_\textrm{PLdR}$ and $C^\bullet$ are contravariant functors that preserve (co)limits. The contravariance also sends inclusions (which are cofibrations in $\sSet$) to surjections (which are fibrations in $\dgcAlg_k$. The front and back squares are connected by $\oint$. The bottom horizontal quasi-isomorphisms are obtained from inductive assumption (noticing that $\partial\Delta[n]$ is an $(n-1)$-skeleton. The upper-right quasi-isomorphism follows from the First step. The cube lemma then completes the induction $\Omega^\bullet_\textrm{PLdR}(S^{(n)})\simeq C^\bullet(S^{(n)};k)$.
+\end{proof}
+
+We have hitherto constructed a functor $\Omega^\bullet:\sSet\to\dgcAlg^\textrm{op}_k$. We now define its right adjoint functor.
+
+\begin{con}
+For $A$ a differential graded-commutative algebra over $k$, define $\mathcal{K}_\bullet$ to be the hom-functor $\dgcAlg_k^\textrm{op}\to\sSet$ given by
+\[\mathcal{K}_\bullet(A)=\Hom_{\dgcAlg_k}(A,\Omega^\bullet_\textrm{poly}).\]
+Then $\mathcal{K}_\bullet$ is right adjoint to $\Omega^\bullet$, as shown by the following calculation:
+\begin{align*}
+\dgcAlg_k(A,\Omega^\bullet(S))&\cong\dgcAlg_k(A,\textstyle{\lim_{\Delta[n]\to S}\Omega_\textrm{poly}^\bullet}) \\
+&\cong\colim_{\Delta[n]\to S}\mathcal{K}_n(A)\\
+&\cong\colim_{\Delta[n]\to S}\sSet(\mathcal{K}(A),\Delta[n])\quad\textrm{(Yoneda lemma)}\\
+&\cong\sSet(\mathcal{K}(A),S).
+\end{align*}
+\end{con}
+
+\begin{prop}
+The adjunction $\Omega^\bullet\dashv\mathcal{K}_\bullet$ is a Quillen adjunction.
+\end{prop}
+\begin{proof}
+We show that $\Omega^\bullet$ preserves cofibrations and acyclic cofibrations. We only need to check this for generating sets $I$ and $J$.\medbreak
+
+\textit{Preserving cofibrations.} We need to show that the inclusions $\partial\Delta[n]\hookrightarrow\Delta[n]$ are sent to degreewise surjections in $\dgcAlg_k$. Moerdijk 29.\medbreak
+
+\textit{Preserving acyclic cofibrations.} f
+\end{proof}
+
+Since every simplicial set is cofibrant in $\sSet$ and every CDGA$_k$ is fibrant in $\dgcAlg_k$, we obtain a pair of derived functors
+\[\begin{tikzcd}
+	{\mathbb{L}\Omega_\textrm{PLdR}:\Ho(\sSet)} & {\Ho(\dgcAlg_k):\mathbb{R}\mathcal{K}_\bullet}
+	\arrow[""{name=0, anchor=center, inner sep=0}, shift left=1.5, from=1-1, to=1-2]
+	\arrow[""{name=1, anchor=center, inner sep=0}, shift left=1.5, from=1-2, to=1-1]
+	\arrow["\dashv"{anchor=center, rotate=-90}, draw=none, from=0, to=1]
+\end{tikzcd}\]
+which allows us to compare the homotopy theories of $\sSet$ and $\dgcAlg_k$.
+
+\begin{prop}
+The map $A\mapsto M[\Omega_\textrm{PLdR}(\mathcal{K}_\bullet(A))]$ is a weak equivalence for minimal Sullivan models $A\in\dgcAlg_{\Q,1,f}$.  
+\end{prop}
+\begin{proof}
+By $2$-out-of-$3$ property of weak equivalence, we only need to prove the statement for $A\mapsto\Omega_\textrm{PLdR}(\mathcal{K}_\bullet(A))$, and we do that by induction.\medbreak
+
+\textit{Base case.} Let $A=\Lambda x$ with $\abs{x}=n$. Then $H^\ast(A)=\Q[x]$, and
+\[H^\ast(\Omega_\textrm{PLdR}(\mathcal{K}_\bullet(A)))\stackrel{(1)}{=}H^\ast(\mathcal{K}_\bullet(A))\stackrel{(2)}{=}H^\ast(K(\mathcal{Q}^\ast,n))=\Q[x]\]
+where $(1)$ is induced by $\oint$ and $(2)$ is a consequence of \textcolor{red}{blah}.\medbreak
+
+\textit{Inductive step.} Let $A$ be a Sullivan algebra and assume $A\mapsto\Omega_\textrm{PLdR}(\mathcal{K}_\bullet(A))$ is a weak equivalence.
+Apply $\Omega_\textrm{PLdR}\mathcal{K}_\bullet$ to the back square where $B$ is the pushout:
+\[\begin{tikzcd}
+	{\Lambda\ch(S^n)} && A\arrow[dd,phantom,"\ulcorner",very near end, shift right=4ex] \\
+	& {\Omega_\textrm{PLdR}[\mathcal{K}^\bullet(\Lambda\ch(S^n))]} && {\Omega_\textrm{PLdR}(\mathcal{K}^\bullet(A))} \\
+	{\Lambda\ch(D^{n-1})} && B \\
+	& {\Omega_\textrm{PLdR}[\mathcal{K}^\bullet(\Lambda\ch(D^{n-1}))]} && {\Omega_\textrm{PLdR}(\mathcal{K}^\bullet(B))}
+	\arrow["\simeq"{description}, from=1-1, to=2-2]
+	\arrow[from=1-1, to=1-3]
+	\arrow[from=2-2,crossing over, to=2-4]
+	\arrow["\simeq"{description}, from=1-3, to=2-4]
+	\arrow[from=1-1, to=3-1]
+	\arrow[from=2-2,crossing over, to=4-2]
+	\arrow["\simeq"{description}, from=3-1, to=4-2]
+	\arrow[from=2-4, to=4-4]
+	\arrow[from=3-1, to=3-3]
+	\arrow[from=1-3, to=3-3]
+	\arrow[from=3-3, to=4-4]
+	\arrow[from=4-2, to=4-4]
+\end{tikzcd}.\]
+The three weak equivalences are by 
+We see that $B\mapsto\Omega_\textrm{PLdR}(\mathcal{K}_\bullet(B))$ is a weak equivalence.
+
+Recall that every $1$-connected
+\end{proof}
+
+\begin{prop}
+The map $\mathcal{K}_\bullet[M(\Omega_\textrm{PLdR}(-))]$ is a weak equivalence in ${\sSet_{\Q,1,f}}$.
+\end{prop}
+
+\[\begin{tikzcd}
+	{\Omega_\textrm{PLdR}:\sSet} & {\dgcAlg_k^\textrm{op}:\mathcal{K}_\bullet}
+	\arrow[""{name=0, anchor=center, inner sep=0}, shift left=1.5, from=1-1, to=1-2]
+	\arrow[""{name=1, anchor=center, inner sep=0}, shift left=1.5, from=1-2, to=1-1]
+	\arrow["\dashv"{anchor=center, rotate=-90}, draw=none, from=0, to=1]
+\end{tikzcd}\]
+
+%\section{Rational Homotopy Theory: A Higher Perspective}
+
+\section{Realizing polynomial cohomology rings}
+
+\section*{Acknowledgments}
+
+It is a pleasure to thank my mentor, Danny Xiaolin Shi, for blah. I also thank blah for helping me understand blah.
+
+\begin{thebibliography}{99}
+
+\bibitem{Andersen-Grodal}
+Andersen, K. K., \& Grodal, J. (2008). \textit{The Steenrod problem of realizing polynomial cohomology rings}. Journal of Topology, 1(4), 747–760. https://doi.org/10.1112/jtopol/jtn021 
+
+\bibitem{May} 
+May, J. P., \& Ponto, K.. \textit{More Concise Algebraic Topology}. 2011.
+
+\end{thebibliography}
+
+\end{document}
+
