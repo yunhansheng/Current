@@ -137,7 +137,56 @@ This is an expository paper written during the $\textrm{\smash{2021 REU}}$ progr
 
 The
 
+\newpage
 \subsection{Localization and rationalization}
+
+In this section we lay down some preparatory work necessary for later stages.
+
+\begin{defn}
+A collection of abelian groups $\mathfrak{C}$ is a \textbf{Serre class} if for a short exact sequence of abelian groups
+\[0\to A\to B\to C\to0,\] $A\in\mathfrak{C}$ and $C\in\mathfrak{C}$ implies $B\in\mathfrak{C}$. A map $f\in\Hom_{\Ab}(A,B)$ is a \textbf{$\mathfrak{C}$-isomorphism} if both $\ker f\in\mathfrak{C}$ and $\coker f\in\mathfrak{C}$.
+\end{defn}
+
+One can think of a Serre class as the class of groups we wish to kill. In particular, the Serre class of torsion abelian groups is of our interest.
+
+\begin{prop}[Serre-Whitehead]
+Let $\mathfrak{C}$ be a Serre class and $f:X\to Y$ be a map between $1$-connected spaces. Then $\pi_i(f):\pi_i(X)\to\pi_i(Y)$ is a $\mathfrak{C}$-isomorphism if and only if $H_i(f):H_i(X)\to H_i(Y)$ is a $\mathfrak{C}$-isomorphism for $i<n$.
+\end{prop}
+
+A proof using the Serre spectral sequence is given in Berglund\cite{Berglund}.
+
+\begin{defn}
+A map $f:X\to Y$ between $1$-connected spaces is a \textbf{rational homotopy equivalence} if $\pi_i(f)\otimes\Q$ is an isomorphism for all $i$. A space $X$ is \textbf{rational} if $\pi_i(X)$ is uniquely divisible for all $i$.
+\end{defn}
+
+Note that $\pi_i(f)\otimes\Q$ being an isomorphisms is equivalent to $\pi_i(f)$ being a ${\mathfrak{C}\textrm{-isomorphism}}$, taking $\mathfrak{C}$ to be the class of torsion abelian groups
+
+\begin{defn}
+A \textbf{rationalization} of a space $X$ is a rational space $X_\Q$ and a rational homotopy equivalence $r:X\to X_\Q$.
+\end{defn}
+
+Rationalization can be formulated via localization.
+
+\begin{defn}
+Let $\mathcal{C}$ be a category and $\mathrm{L}$ a subclass of morphisms in $\mathcal{C}$. An object $A$ of $\mathcal{C}$ is \textbf{$\mathrm{L}$-local} if every $f\in\Hom_\mathcal{C}(X,Y)$ with $f\in\mathrm{L}$ induces a bijection $f^\ast:\Hom_\mathcal{C}(Y,A)\to\Hom_\mathcal{C}(X,A)$. A map $\ell:A\to A_\mathrm{L}$ is a \textbf{$\mathrm{L}$-localization} if $\ell\in\mathrm{L}$ and $A_\mathrm{L}$ is $\mathrm{L}$-local.
+\[\begin{tikzcd}
+Y\arrow[dr]\arrow[rr,"f^\ast"]&&X\arrow[dl]\\
+&A
+\end{tikzcd}\]
+\end{defn}
+
+Take the category of $1$-connected topological spaces $\Top_1$ and let $\mathrm{Q}$ be the class of rational homotopy equivalences in $\Top_1$.
+
+\begin{prop}
+An object of $\Top_1$ is rational if and only if it is $\mathrm{Q}$-local. Hence a map is a rationalization if and only if it is a $\mathrm{Q}$-localization.
+\end{prop}
+\begin{proof}
+\textcolor{red}{wef}
+\end{proof}
+
+\begin{cor}
+Every $1$-connected space $X$ admits a rationalization.
+\end{cor}
 
 \subsection{The Quillen equivalence between $\Top$ and $\sSet$}
 
@@ -253,27 +302,40 @@ We show that $\Omega^\bullet$ preserves cofibrations and acyclic cofibrations. W
 \textit{Preserving acyclic cofibrations.} f
 \end{proof}
 
+In PL de Rham's theorem we see how $\Omega^\bullet$ relates to ordinary cohomology. In the following lemma we show that $\mathcal{K}_\bullet$ relates nicely to homotopy groups.
+
+\begin{lem}
+Let $A$ be a cofibrant object in $\dgcAlg_{k,1}$, then there is a group isomorphism $\pi_n\mathcal{K}_\bullet(A)\cong\Hom_k(\pi^nA,k)$
+\end{lem}
+
 Recall that for a Quillen functor, its left and right derived functor are obtained by restricting to cofibrant and fibrant objects respectively. The following construction allows to compare the homotopy theories of $\sSet$ and $\dgcAlg_k$.
 
 \begin{con}
 Since every object $S$ of $\sSet$ is cofibrant, the left derived functor of $\Omega^\bullet$
 \[\mathbf{L}\Omega^\bullet:\Ho(\sSet)\to\Ho(\dgcAlg_k^\textrm{op})\]
-corresponds with $\Omega^\bullet$. That is, $\mathbf{L}\Omega^\bullet(S)=\Omega^\bullet(S^\Cof)=\Omega^\bullet(S)$.
+corresponds with $\Omega^\bullet$. That is, $\mathbf{L}\Omega^\bullet(S)=\Omega^\bullet(S^\textrm{cof})=\Omega^\bullet(S)$.
 
 As proved in Corollary 4.12, every minimal model $M_A$ is cofibrant in $\dgcAlg_k$ (and hence fibrant in the opposite category). The right derived functor of $\mathcal{K}_\bullet$
 \[\mathbf{R}\mathcal{K}_\bullet:\Ho(\dgcAlg_k^\textrm{op})\to\Ho(\sSet)\]
-is obtained by $\mathbf{R}\mathcal{K}_\bullet(A)=\mathcal{K}_\bullet(A^\Fib)=\mathcal{K}_\bullet(M_A)$.
+is obtained by $\mathbf{R}\mathcal{K}_\bullet(A)=\mathcal{K}_\bullet(A^\textrm{fib})=\mathcal{K}_\bullet(M_A)$.
 \end{con}
 
-Finally, we wish to prove that . This is done in the following propositions
+Finally, we wish to show that the adjunction $\Omega^\bullet\dashv\mathcal{K}_\bullet$ is a Quillen equivalence, so that the derived functors induces an equivalence on the homotopy categories. We show that by proving that the adjunction counit and unit are weak equivalences.
+
+\begin{defn}
+de
+\end{defn}
 
 \begin{prop}
-The map $A\mapsto M[\Omega_\textrm{PLdR}(\mathcal{K}_\bullet(A))]$ is a weak equivalence for minimal Sullivan models $A\in\dgcAlg_{\Q,1,f}$.  
+The derived adjunction counit $\Bar{\epsilon}:\mathbf{L}\Omega^\bullet(\mathcal{K}_\bullet(A))\to A$ is a weak equivalence in $\dgcAlg_{\Q,1,f}$.  
 \end{prop}
 \begin{proof}
-By $2$-out-of-$3$ property of weak equivalence, we only need to prove the statement for $A\mapsto\Omega_\textrm{PLdR}(\mathcal{K}_\bullet(A))$, and we do that by induction.\medbreak
 
-\textit{Base case.} Let $A=\Lambda x$ with $\abs{x}=n$. Then $H^\ast(A)=\Q[x]$, and
+The derived adjunction counit is the composition of the normal adjunction counit $\epsilon$ with a cofibrant replacement:
+\[\Bar{\epsilon}:\mathbf{L}\Omega^\bullet(\mathcal{K}_\bullet(A))=\Omega^\bullet(\mathcal{K}_\bullet(A)^\textrm{cof})\longrightarrow\Omega^\bullet(\mathcal{K}_\bullet(A))\xrightarrow{\ \epsilon\ }A.\]
+The cofibrant replacement is trivial since every object is cofibrant in $\sSet$. The proof is via induction, bearing similarities that of Proposition 2.12. Since every object in $\dgcAlg_\Q$ can be assigned to a minimal d\medbreak
+
+\textit{Base case.} Let $A=\Lambda x$ with $|x|=n$. Then $H^\ast(A)=\Q[x]$, and
 \[H^\ast(\Omega_\textrm{PLdR}(\mathcal{K}_\bullet(A)))\stackrel{(1)}{=}H^\ast(\mathcal{K}_\bullet(A))\stackrel{(2)}{=}H^\ast(K(\mathcal{Q}^\ast,n))=\Q[x]\]
 where $(1)$ is induced by $\oint$ and $(2)$ is a consequence of \textcolor{red}{blah}.\medbreak
 
@@ -304,15 +366,15 @@ Recall that every $1$-connected
 \end{proof}
 
 \begin{prop}
-The map $\mathcal{K}_\bullet[M(\Omega_\textrm{PLdR}(-))]$ is a weak equivalence in ${\sSet_{\Q,1,f}}$.
+The derived adjunction unit $\Bar{\eta}:S\to\mathbf{R}\mathcal{K}_\bullet(\Omega^\bullet(S))$ is a weak equivalence in $\sSet_{\Q,1,f}$
 \end{prop}
-
-\[\begin{tikzcd}
-	{\Omega_\textrm{PLdR}:\sSet} & {\dgcAlg_k^\textrm{op}:\mathcal{K}_\bullet}
-	\arrow[""{name=0, anchor=center, inner sep=0}, shift left=1.5, from=1-1, to=1-2]
-	\arrow[""{name=1, anchor=center, inner sep=0}, shift left=1.5, from=1-2, to=1-1]
-	\arrow["\dashv"{anchor=center, rotate=-90}, draw=none, from=0, to=1]
-\end{tikzcd}\]
+\begin{proof}
+The derived adjunction unit is the composition of the normal adjunction unit $\eta$ with a fibrant replacement:
+\[S\xrightarrow{\ \eta\ }\mathcal{K}_\bullet(\Omega^\bullet(S))\longrightarrow\mathcal{K}_\bullet(\Omega^\bullet(S)^\textrm{fib})=\mathbf{R}\mathcal{K}_\bullet(\Omega^\bullet(S))=\mathcal{K}_\bullet(M_{\Omega^\bullet(S)}).\]
+In prop 2.14 we've shown that $\Omega^\bullet$ preserves weak equivalences. Hence $\Bar{\eta}$ is a weak equivalence if and only if
+\[\Omega^\bullet(\Bar{\eta}):\Omega^\bullet(S)\to\Omega^\bullet(\mathcal{K}_\bullet(M_{\Omega^\bullet(S)}))\]
+is a quasi-isomorphism. Since $M_{\Omega^\bullet(S)}$ is a minimal algebra, by Proposition 2.17 $\Omega^\bullet(\mathcal{K}_\bullet(M_{\Omega^\bullet(S)}))\simeq M_{\Omega^\bullet(S)}$. Finally, $M_{\Omega^\bullet(S)}\simeq\Omega^\bullet(S)$ by definition of minimal model. Hence $\Omega^\bullet(\Bar{\eta})$ is a quasi-isomorphism.
+\end{proof}
 
 %\section{Rational Homotopy Theory: A Higher Perspective}
 
@@ -320,7 +382,7 @@ The map $\mathcal{K}_\bullet[M(\Omega_\textrm{PLdR}(-))]$ is a weak equivalence 
 
 \section*{Acknowledgments}
 
-It is a pleasure to thank my mentor, Danny Xiaolin Shi, for blah. I also thank blah for helping me understand blah.
+It is a pleasure to thank my mentor, Danny Xiaolin Shi, for blah. Big thanks to Peter for not only organizing this event but also recommending me I also thank blah for helping me understand blah.
 
 \begin{thebibliography}{99}
 
