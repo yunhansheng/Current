@@ -62,6 +62,8 @@
 \makeautorefname{exmp}{Example}%
 \makeautorefname{ax}{Axiom}%
 \makeautorefname{claim}{Claim}%
+\makeautorefname{notn}{Notation}
+\makeautorefname{notns}{Notations}%
 
 \newtheorem{thm}{Theorem}[section]
 \newtheorem{cor}{Corollary}[section]
@@ -75,7 +77,7 @@
 \newtheorem{exmp}{Example}[section]
 \newtheorem{quest}{Question}[section]
 \newtheorem{rem}{Remark}[section]
-\newtheorem{rems}{Remarks}[section]
+\newtheorem{notn}{Notation}[section]
 
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\Z}{\mathbb{Z}}
@@ -329,45 +331,48 @@ where $\Delta[n]$ are the $n$-simplices of $S$. In plain terms, we associate a t
 
 We now turn to model categories. Model category abstracts certain common homotopy-theoretical properties that exist in many different categories.
 
+\begin{notn}
+For a class of morphisms $\mathrm{M}$, we write $\mathrm{M}^l$ (resp. $\mathrm{M}^r$) for the class of morphisms that have the left (resp. right) lifting property with respect to morphisms in $\mathrm{M}$.
+\end{notn}
+
 \begin{defn}
-A \textbf{model category} if a category $\mathcal{C}$ with three subclasses of morphisms specified: the weak equivalences $\W$, the fibrations $\Fib$ and the cofibrations $\Cof$. They satisfy the following axioms:\begin{enumerate}[(i)]
+A \textbf{model category} if a category $\mathcal{C}$ with three subclasses of morphisms specified: the weak equivalences $\W$, the fibrations $\Fib$ and the cofibrations $\Cof$. They satisfy the following axioms:\begin{enumerate}[(M1)]
     \item The category $\mathcal{C}$ admits finite limits and colimits;
-    \item The class of weak equivalences $\W$ contains all isomorphisms and satisfy the 2-out-of-3 property: if any two of the three morphisms $f$, $g$, and $fg$ belongs to $\W$, then the third also belongs to $\W$.
-    \item Any two classes determine the third as follows:\begin{enumerate}[(a)]
-        \item $W=\Fib^r\circ\Cof^l$,
-        \item $\Fib=(\W\cap\Cof)^r$
-        \item $\Cof=(\W\cap\Fib)^l$
-    \end{enumerate}
+    \item The class of weak equivalences $\W$ contains all isomorphisms and satisfy the 2-out-of-3 property: if any two of the three morphisms $f$, $g$, and $fg$ belongs to $\W$, then the third also belongs to $\W$;
+    \item Any two classes determine the third as follows:
+    \[W=\Fib^r\circ\Cof^l,\quad\Fib=(\W\cap\Cof)^r,\quad\Cof=(\W\cap\Fib)^l;\]
+    \item Any morphism in $\mathcal{C}$ can be factored in two ways: either $\Fib\circ(\W\cap\Cof)$ or $(\W\cap\Fib)\circ\Cof$.
 \end{enumerate}
 \end{defn}
 
-\begin{prop}
-The following defines a model category structure on $\Top$:
-\begin{enumerate}[(i)]
-    \item weak homotopy equivalences as weak equivalences;
-    \item Serre fibrations as fibrations;
-    \item the set of maps $I=\{S^{n-1}\hookrightarrow D^n:n\geq0\}$ generating cofibrations.
-\end{enumerate}
-\end{prop}
+\begin{exmp}
+Reader should be familiar with fibrations and cofibrations in $\Top$. In fact, the following defines a model category structure on $\Top$:\begin{itemize}
+    \item weak homotopy equivalences as weak equivalences $\W$;
+    \item Serre fibrations as fibrations $\Fib$;
+    \item the set of maps $I=\{S^{n-1}\hookrightarrow D^n:n\geq0\}$ generating cofibrations $\Cof$.
+\end{itemize}
+This is sometimes referred to as the $q$-model structure on $\Top$. It is \textit{cofibrantly generated}. The verification is not exactly straightforward, and we refer to Quillen's original tome \cite{Quillen} for a detailed treatment.
+\end{exmp}
 
-\begin{prop}
-The following defines a model category structure on $\sSet$:
-\begin{enumerate}[(i)]
-    \item morphisms whose geometric realizations induces weak homotopy equivalences as weak equivalences;
-    \item Kan fibrations as fibrations;
-    \item degreewise inclusions as cofibrations.
-\end{enumerate}
-\end{prop}
+\begin{exmp}
+The following classes of morphisms defines a model category structure on $\sSet$:
+\begin{itemize}
+    \item The weak equivalences $\W$ are those morphisms $f:S\to T$ that induce weak homotopy equivalences $f_\ast:|S|\to|T|$ on the geometric realization;
+    \item Kan fibrations as fibrations $\Fib$;
+    \item degreewise inclusions as cofibrations $\Cof$.
+\end{itemize}
+This is sometimes referred to as the $q$-model structure on $\sSet$. A proof due to Bousfield and May is available in \cite{May-Ponto}. The proof is similar to the proof the model structure on $\dgcAlg_k$, of which we develop a careful treatment in Section 2.3.
+\end{exmp}
 
-The detailed proof of the above propositions is in the Appendix.
-
-\begin{defns}
+\begin{defn}
 Let $\mathbf{C}$ and $\mathbf{D}$ be model categories. An adjunction $\mathcal{F}\dashv\mathcal{G}$ is a \textbf{Quillen adjunction} if it satisfy the following equivalent conditions:\begin{enumerate}[(i)]
     \item $\mathcal{F}$ preserves cofibrations and acyclic cofibrations;
     \item $\mathcal{G}$ preserves fibrations and acyclic fibrations.
 \end{enumerate}
-Moreover, $\mathcal{F}\dashv\mathcal{G}$ induces \textbf{Quillen equivalence} if $X^{\textrm{cof}}\to\mathcal{G}(Y^{\textrm{fib}})$ is a weak equivalence in $\mathbf{C}$ if and only if $\mathcal{F}(X^{\textrm{cof}})\to Y^{\textrm{fib}}$ is a weak equivalence in $\mathbf{D}$ for every cofibrant $X^{\textrm{cof}}\in\mathbf{C}$ and fibrant $Y^{\textrm{fib}}\in\mathbf{D}$.
-\end{defns}
+Moreover, $\mathcal{F}\dashv\mathcal{G}$ induces \textbf{Quillen equivalence} if the following conditions hold:\begin{itemize}[(i)]
+    \item 
+\end{itemize}
+\end{defn}
 
 If $\mathcal{F}\dashv\mathcal{G}$ is a Quillen equivalence, then the derived functors $\mathbf{L}\mathcal{F}\dashv\mathbf{R}\mathcal{G}$ induces an equivalence between homotopy categories $\Ho(\mathbf{C})$ and $\Ho(\mathbf{D})$, where homotopy categories are obtained by localizing weak equivalences.
 
