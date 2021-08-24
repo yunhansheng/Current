@@ -89,6 +89,8 @@
 \newcommand{\W}{\mathrm{W}}
 \newcommand{\Fib}{\mathrm{Fib}}
 \newcommand{\Cof}{\mathrm{Cof}}
+\newcommand{\cof}{\mathrm{cof}}
+\newcommand{\fib}{\mathrm{fib}}
 
 \DeclareMathOperator{\colim}{colim}
 \DeclareMathOperator{\coker}{coker}
@@ -199,7 +201,7 @@ Intuitively we can also think of the telescopic argument, and in the $n$-th step
 \end{exmp}
 
 \begin{defn}
-Let $\mathcal{C}$ be a category and $\mathrm{L}$ a subclass of morphisms in $\mathcal{C}$. An object $A$ of $\mathcal{C}$ is \textbf{$\mathrm{L}$-local} if for every $f\in\Hom_\mathcal{C}(X,Y)$ such that $f\in\mathrm{L}$, the induced map $f^\ast:\Hom_\mathcal{C}(Y,A)\to\Hom_\mathcal{C}(X,A)$ is a bijection. Diagrammatically,
+Let $\mathbf{C}$ be a category and $\mathrm{L}$ a subclass of morphisms in $\mathbf{C}$. An object $A$ of $\mathbf{C}$ is \textbf{$\mathrm{L}$-local} if for every $f\in\Hom_\mathbf{C}(X,Y)$ such that $f\in\mathrm{L}$, the induced map $f^\ast:\Hom_\mathbf{C}(Y,A)\to\Hom_\mathbf{C}(X,A)$ is a bijection. Diagrammatically,
 \[\begin{tikzcd}
 Y\arrow[dr]\arrow[rr,"f^\ast"]&&X\arrow[dl]\\
 &A
@@ -270,7 +272,7 @@ Let $\mathbf{\Delta}$ be the category with order sets $[n]=\{0,1,\cdots,n\}$ as 
 as morphisms.
 
 \begin{defn}
-A \textbf{simplicial object} in a category $\mathcal{C}$ is a functor $\mathbf{\Delta}^\textrm{op}\to\mathcal{C}$.
+A \textbf{simplicial object} in a category $\mathbf{C}$ is a functor $\mathbf{\Delta}^\textrm{op}\to\mathbf{C}$.
 \end{defn}
 
 \begin{rem}
@@ -336,12 +338,12 @@ For a class of morphisms $\mathrm{M}$, we write $\mathrm{M}^l$ (resp. $\mathrm{M
 \end{notn}
 
 \begin{defn}
-A \textbf{model category} if a category $\mathcal{C}$ with three subclasses of morphisms specified: the weak equivalences $\W$, the fibrations $\Fib$ and the cofibrations $\Cof$. They satisfy the following axioms:\begin{enumerate}[(M1)]
-    \item The category $\mathcal{C}$ admits finite limits and colimits;
+A \textbf{model category} if a category $\mathbf{C}$ with three subclasses of morphisms specified: the weak equivalences $\W$, the fibrations $\Fib$ and the cofibrations $\Cof$. They satisfy the following axioms:\begin{enumerate}[(M1)]
+    \item The category $\mathbf{C}$ admits finite limits and colimits;
     \item The class of weak equivalences $\W$ contains all isomorphisms and satisfy the 2-out-of-3 property: if any two of the three morphisms $f$, $g$, and $fg$ belongs to $\W$, then the third also belongs to $\W$;
     \item Any two classes determine the third as follows:
     \[W=\Fib^r\circ\Cof^l,\quad\Fib=(\W\cap\Cof)^r,\quad\Cof=(\W\cap\Fib)^l;\]
-    \item Any morphism in $\mathcal{C}$ can be factored in two ways: either $\Fib\circ(\W\cap\Cof)$ or $(\W\cap\Fib)\circ\Cof$.
+    \item Any morphism in $\mathbf{C}$ can be factored in two ways: either $\Fib\circ(\W\cap\Cof)$ or $(\W\cap\Fib)\circ\Cof$.
 \end{enumerate}
 \end{defn}
 
@@ -369,14 +371,21 @@ Let $\mathbf{C}$ and $\mathbf{D}$ be model categories. An adjunction $\mathcal{F
     \item $\mathcal{F}$ preserves cofibrations and acyclic cofibrations;
     \item $\mathcal{G}$ preserves fibrations and acyclic fibrations.
 \end{enumerate}
-Moreover, $\mathcal{F}\dashv\mathcal{G}$ induces \textbf{Quillen equivalence} if the following conditions hold:\begin{itemize}[(i)]
-    \item 
-\end{itemize}
 \end{defn}
 
-If $\mathcal{F}\dashv\mathcal{G}$ is a Quillen equivalence, then the derived functors $\mathbf{L}\mathcal{F}\dashv\mathbf{R}\mathcal{G}$ induces an equivalence between homotopy categories $\Ho(\mathbf{C})$ and $\Ho(\mathbf{D})$, where homotopy categories are obtained by localizing weak equivalences.
+If $\mathcal{F}\dashv\mathcal{G}$ is a Quillen adjunction between $\mathbf{C}$ and $\mathbf{D}$, then the total derived functors $\mathbf{L}\mathcal{F}$ and $\mathbf{R}\mathcal{G}$ are defined by taking cofibrant and fibrant replacements:
+\[\mathbf{L}\mathcal{F}(X)=\mathcal{F}(X^\cof),\quad\mathbf{R}\mathcal{G}(Y)=\mathcal{G}(Y^\fib).\]
+These derived functors form an adjunction on the homotopy categories $\Ho(\mathbf{C})$ and $\Ho(\mathbf{D})$ obtained by localizing with respect to weak equivalences:
+\[\Ho(\mathbf{C})=\mathbf{C}[\W_\mathbf{C}^{-1}],\quad\Ho(\mathbf{D})=\mathbf{D}[\W_\mathbf{D}^{-1}].\]
 
-Recall that for a model category $\mathcal{C}$, the homotopy category $\Ho(\mathcal{C})=\mathcal{C}[W_\mathcal{C}^{-1}]$ of $\mathcal{C}$ is obtained by localizing with respect to the weak equivalences $\W_\mathcal{C}$ in $\mathcal{C}$.
+\begin{defn}
+An Quillen adjunction $\mathcal{F}\dashv\mathcal{G}$ is a \textbf{Quillen equivalence} if the following conditions hold:\begin{enumerate}[(i)]
+    \item the derived adjunction unit $\Bar{\eta}:X\to\mathbf{R}\mathcal{G}(\mathcal{L}(X))$ is a weak equivalence in $\mathbf{C}$;
+    \item the derived adjunction counit $\Bar{\epsilon}:\mathbf{L}\mathcal{F}(\mathcal{G}(Y))\to Y$ is a weak equivalence in $\mathbf{D}$.
+\end{enumerate}
+\end{defn}
+
+The 
 
 \begin{prop}
 The singular complex functor $\mathcal{S}_\bullet$ and the geometric realization functor $\abs{-}$ induce a Quillen equivalence between $\Top$ and $\sSet$.
