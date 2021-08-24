@@ -134,11 +134,17 @@ This is an expository paper written during the $\textrm{\smash{2021 REU}}$ progr
 
 \section{Introduction}
 
+Some historical information.
+
 \section{Rational Homotopy Theory}
 
-The
+The main gaol of this section is to show, restricting to rational and $1$-connected objects of finite type, an equivalence between homotopy categories:
+\[\Ho(\Top_{\Q,1,f})\cong\Ho(\sSet_{\Q,1,f})\cong\Ho(\dgcAlg_{\Q,1,f}).\]
+where $\Top$, $\sSet$ and $\dgcAlg$ denote the category of topological spaces, simplicial sets, and differential graded-commutative algebras respectively.
+Therefore, any $1$-connected differential graded-commutative algebra over $\Q$ of finite type can be realized as a rational cohomology ring $H^\ast(X;\Q)$ of some space $X$.
 
-\newpage
+To prove the desired equivalence, we need the concept of model categories, which impose an additional structure on the original categories. We develop this machinery in Section 2.2. We will construct a pair of adjoint functors between $\Top$ and $\sSet$ and prove that they induce equivalence on the respective homotopy categories. In Section 2.3 we describe properties of differential graded-commutative algebras and the model structure on $\dgcAlg$. Finally in Section 2.4 we construct and prove the similar equivalence between $\sSet$ and $\dgcAlg$.
+
 \subsection{Rationalization and localization}
 
 In this section we introduce some basic notions of rational homotopy theory. They main result is Proposition 2.10.
@@ -162,7 +168,7 @@ $A\in\mathfrak{C}$ and $C\in\mathfrak{C}$ implies $B\in\mathfrak{C}$. A map $f\i
 \end{defn}
 
 \begin{rem}
-We can think of a Serre class as the class of groups we wish to ``kill". In our case, take $\mathfrak{C}$ to be the class of torsion abelian groups, then $f$ is a rational homotopy equivalence if and only if $\pi_i(f)$ is a $\mathfrak{C}$-isomorphism.
+We can think of a Serre class as the class of groups we wish to ``kill". In our case, take $\mathfrak{C}$ to be the class of torsion abelian groups, then $f$ is a rational homotopy equivalence if and only if $\pi_n(f)$ is a $\mathfrak{C}$-isomorphism.
 \end{rem}
 
 \begin{thm}[Serre-Hurewicz]
@@ -170,16 +176,24 @@ Let $\mathfrak{C}$ e a Serre class and $X$ be a $1$-connected space. Then $\pi_i
 \end{thm}
 
 \begin{thm}[Serre-Whitehead]
-Let $\mathfrak{C}$ be a Serre class and $f:X\to Y$ be a map between $1$-connected spaces. Then $\pi_i(f):\pi_i(X)\to\pi_i(Y)$ is a $\mathfrak{C}$-isomorphism if and only if $H_i(f):H_i(X)\to H_i(Y)$ is a $\mathfrak{C}$-isomorphism for $i<n$.
+Let $\mathfrak{C}$ be a Serre class and $f:X\to Y$ be a map between $1$-connected spaces. Then $\pi_i(f):\pi_i(X)\to\pi_i(Y)$ is a $\mathfrak{C}$-isomorphism for $i<n$ if and only if $H_i(f):H_i(X)\to H_i(Y)$ is a $\mathfrak{C}$-isomorphism for $i<n$.
 \end{thm}
 
-We want to associate an arbitrary space $X$ to a rational space $X_\Q$ such that $X\simeq_\Q X_\Q$. This is called rationalization, and it can be done via localization. Let's consider a heuristic example.
+We want to associate an arbitrary space $X$ to a rational space $X_\Q$ such that $X\simeq_\Q X_\Q$. This process is called \textbf{rationalization}, and it can be done via localization. Let's consider a heuristic example.
 
 \begin{exmp}
 
-In algebra we obtain $\Q$ from $\Z$
+In algebra we obtain $\Q$ from $\Z$ by inverting all primes:
+\[\Q\cong\colim\left(\Z\xrightarrow{\times2}\Z\xrightarrow{\times3}\Z\xrightarrow{\times5}\cdots\right).\]
+We mimic this construction, but instead of using colimit, we use \textit{homotopy colimit}, which can be thought as first passing to cofibrations and then taking colimits. %We will develop this concept rigorously in Section 3.
+Consider the limit sequence
+\[\begin{tikzcd}
+X_0\arrow[d,equal]\arrow[r,"f_1"]&X_1\arrow[d,shift right]\arrow[r,"f_2"]&X_2\arrow[d,shift right]\arrow[r,"f_3"]&\cdots\\
+M_0\arrow[r]&M_1\arrow[u,"r_1"',shift right]\arrow[r]&M_2\arrow[u,"r_2"',shift right]\arrow[r]&\cdots
+\end{tikzcd}\]
+where each $M_n$ is the mapping cylinder of the map $f_nr_{n-1}:M_{n-1}\to X_n$. The homotopy colimit of $X_n$ is the colimit of the cofibrations $M_n$, which is also the rationalization of $X_0$.
 
-Theoretically we can likewise construct the rationalization of an arbitrary space, though it's not as elegant as localization which we not introduce.
+Intuitively we can also think of the telescopic argument, and in the $n$-th step of a sequence we ``collapse'' to $X_n$. In the case of an $m$-sphere $S^m$, the rationalization $S^m_\Q$ is obtained by $\colim_n{S^m(n)}$, where each $S^m(n)$ is constructed inductively by gluing a copy of $S^m$ to $S^m(n-1)$ via a degree-$n$ map.
 \end{exmp}
 
 \begin{defn}
@@ -204,7 +218,7 @@ Let $A$ be a rational space and $f:X\to Y$ a map between $1$-connected spaces. W
 X\arrow[d,"f"']\arrow[r]&A_n\arrow[d]\arrow[r]&\ast\arrow[d]\\
 Y\arrow[r]\arrow[urr,dashed]\arrow[ur,dashed]&A_{n-1}\arrow[r,"k^{n+1}"]&K(\pi_n(A),n+1)
 \end{tikzcd}\]
-where $k^{n+1}$ is the $k$-invariant. We only need to check that the obstruction class $\omega\in H^{n+1}(Y,X;\pi_nA)$ is trivial. This is indeed the case since $\pi_nA$ is a $\Q$-vector space and $X\simeq_\Q Y$.\medbreak
+where $k^{n+1}$ is the $k$-invariant. We only need to check that the obstruction class $\omega\in H^{n+1}(Y,X;\pi_n(A))$ is trivial. This is indeed the case since $\pi_nA$ is a $\Q$-vector space and $X\simeq_\Q Y$.\medbreak
 
 \textit{Injectivity.} Given any $X\to A$ and suppose that $\lambda_0,\lambda_1:Y\to A$, we wish to find a homotopy between $\lambda_0$ and $\lambda_1$. This is equivalent to another lifting problem:
 \[\begin{tikzcd}[row sep=large]
@@ -215,10 +229,19 @@ where $X\times[0,1]\to A$ and $Y\times\partial[0,1]\to A$ are defined naturally.
 \end{proof}
 
 \begin{prop}
-Every $1$-connected space $X$ admits a rationalization.
+Every $1$-connected space $X$ admits a rationalization $X_\Q$.
 \end{prop}
 \begin{proof}
-ddd
+Fist note that we can rationalize an Eilenberg-MacLane space $K(G,n)$ by simply taking $K(G\otimes\Q,n)$. This motivates us to construct $X_\Q$ inductively from its Postnikov tower and associated $k$-th invariants.
+
+By $1$-connectedness, the base case starts from $X_2=K(\pi_2(X),2)$. Suppose that the rationalization $(X^{n+1})_\Q$ of $X_{n-1}$ is already constructed. Since $K(\pi_n(X)\otimes\Q,n+1)$ is rational, it is $\mathrm{Q}$-local by Proposition 2.9. Hence the rationalization $r:X_{n-1}\to(X_{n-1})_\Q$ induces a bijective correspondence
+\[[(X_{n-1})_\Q,K(\pi_n(X)\otimes\Q,n+1)]\cong[X_{n-1},K(\pi_n(X)\otimes\Q,n+1)]\]
+which identifies the $k$-th invariant $k^{n+1}$ with a map $(k^{n+1})_\Q$. Since $X_n$ is the fiber of $k^{n+1}$, we define $(X_n)_\Q$ to be the fiber of $(k^{n+1})_\Q$:
+\[\begin{tikzcd}
+X_n\arrow[r]&X_{n-1}\arrow[d]\arrow[r,"k^{n+1}"]&K(\pi_n(X),n+1)\arrow[d]\\
+(X_n)_\Q\arrow[r,dashed]&(X_{n-1})_\Q\arrow[r,"(k^{n+1})_\Q"]&K(\pi_n(X)\otimes\Q,n+1)
+\end{tikzcd}.\]
+Finally, we define $X_\Q$ to be the inverse limit $\lim_n(X_n)_\Q$ of the Postnikov tower.
 \end{proof}
 
 Now we have the following converse of Proposition 2.9
@@ -233,22 +256,28 @@ Suppose $A$ is $\mathrm{Q}$-local, then the rationalization $r:A\to A_\Q$ induce
 \begin{cor}
 Rationalization is equivalent to $\mathrm{Q}$-localization.
 \end{cor}
+\begin{proof}
+This follows from Proposition 2.9 and Proposition 2.11.
+\end{proof}
 
-\newpage
-\subsection{The Quillen equivalence between $\Top$ and $\sSet$}
+\subsection{The first Quillen equivalence}
 
-We construct the pair of adjoint functors between $\Top$ and $\sSet$ which induces Quillen equivalence.\medbreak
+We begin by introducing simplicial sets.\medbreak
 
-Let $\mathbf{\Delta}$ be the category with order sets $[n]=\{0,1,\cdots,n\}$ as objects and functions $\varphi:[m]\to[n]$ with $\varphi(i)\leq\varphi(i+1)$ for all $i\in[m]$ as morphisms. Each $\varphi$ is composed with unique face maps $\partial_i:[n-1]\to[n]$ and degeneracy maps $s_i:[n+1]\to[n]$.
-
-There is a covariant functor $\Phi:\mathbf{\Delta}\to\Top$ sending $[n]\to\Delta^n$ and $\varphi:[m]\mapsto[n]$ to $\varphi_\ast:\Delta^m\to\Delta^n$ where $\Delta^m$ and $\Delta^n$ are the standard topological simplices.
+Let $\mathbf{\Delta}$ be the category with order sets $[n]=\{0,1,\cdots,n\}$ as objects and order-preserving functions $\varphi:[m]\to[n]$ (that is, functions satisfying $\varphi(i)\leq\varphi(i+1)$ for all $i\in[m]$)
+as morphisms.
 
 \begin{defn}
-A \textbf{simplicial set} is a contravariant functor $\Delta:\mathbf{\Delta}\to\mathbf{Set}$
+A \textbf{simplicial object} in a category $\mathcal{C}$ is a functor $\mathbf{\Delta}^\textrm{op}\to\mathcal{C}$.
 \end{defn}
 
-Let $\sSet$ be the category with simplicial sets as objects and natural transformations between simplicial sets as morphisms.\medbreak
+\begin{rem}
+Simplicial objects provides a combinatorial way of viewing objects. Simplicial sets are simplicial objects in the category $\mathbf{Set}$ of sets. It generalizes the idea of simplicial complexes. Similarly, a simplicial space is a functor $\Phi:\mathbf{\Delta}\to\Top$ sending $[n]$ to the standard topological $n$-simplex $\Delta^n$.
+\end{rem}
 
+Let $\sSet$ be the category with simplicial sets as objects and natural transformations between simplicial sets as morphisms.
+
+\begin{con}
 Define the singular complex functor $\mathcal{S}_\bullet:\Top\to\sSet$ by
 \begin{align*}
 \mathcal{S}_n:&X\mapsto\Hom_{\Top}(\Delta^n,X),&&X\in\Top\\
@@ -259,7 +288,10 @@ This functor carries simplicial data as follows:
 {[m]}\arrow[d,"\varphi"]\arrow[r]&\Delta^m\arrow[r]\arrow[d,"\varphi_\ast"]&\mathcal{S}_m(X)=\Hom_{\Top}(\Delta^m,X)\\
 {[n]}\arrow[r]&\Delta^n\arrow[r]&\mathcal{S}_n(X)=\Hom_{\Top}(\Delta^n,X)\arrow[u,"\varphi^\ast"']
 \end{tikzcd}\]
-where $\varphi^\ast$ is given by $\varphi^\ast(\psi)=\psi\varphi_\ast$. Conversely, define the geometric realization functor $|-|:\sSet\to\Top$ to be the Kan extension of $\Phi$ along $\Delta$.
+where $\varphi^\ast$ is given by $\varphi^\ast(\psi)=\psi\varphi_\ast$.
+\end{con}
+
+Conversely, define the geometric realization functor $|-|:\sSet\to\Top$ to be the Kan extension of $\Phi$ along $\Delta$.
 \[\begin{tikzcd}
 \mathbf{\Delta}\arrow[dr,"\Delta"']\arrow[rr,"\Phi"]&&\Top\\
 &\sSet\arrow[ur,"\abs{-}"']
@@ -490,7 +522,7 @@ Every $f\in\Hom_{\CDGA_k,1}(A,B)$ admits a minimal Sullivan model which is uniqu
 \end{prop}
 
 \newpage
-\subsection{The main equivalence}
+\subsection{The second Quillen equivalence}
 
 In this section we prove the equivalence
 \[\Ho(\sSet_{\Q,1,f})\cong\Ho(\dgcAlg_{\Q,1,f})\]
