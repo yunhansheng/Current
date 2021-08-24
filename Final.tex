@@ -91,6 +91,7 @@
 \newcommand{\Cof}{\mathrm{Cof}}
 \newcommand{\cof}{\mathrm{cof}}
 \newcommand{\fib}{\mathrm{fib}}
+\newcommand{\id}{\mathrm{id}}
 
 \DeclareMathOperator{\colim}{colim}
 \DeclareMathOperator{\coker}{coker}
@@ -151,7 +152,7 @@ To prove the desired equivalence, we need the concept of model categories, which
 
 \subsection{Rationalization and localization}
 
-In this section we introduce some basic notions of rational homotopy theory. They main result is Proposition 2.10.
+In this section we introduce some basic notions of rational homotopy theory. The main result is Proposition 2.10.
 
 \begin{defn}
 A $1$-connected space is \textbf{rational} if $\pi_n(X)$ is a $\Q$-vector space for all $n\geq1$. A map $f:X\to Y$ between $1$-connected spaces is a \textbf{rational homotopy equivalence} (in which case we write $X\simeq_\Q Y$) if the map
@@ -353,7 +354,7 @@ Reader should be familiar with fibrations and cofibrations in $\Top$. In fact, t
     \item Serre fibrations as fibrations $\Fib$;
     \item the set of maps $I=\{S^{n-1}\hookrightarrow D^n:n\geq0\}$ generating cofibrations $\Cof$.
 \end{itemize}
-This is sometimes referred to as the $q$-model structure on $\Top$. It is \textit{cofibrantly generated}. The verification is not exactly straightforward, and we refer to Quillen's original tome \cite{Quillen} for a detailed treatment.
+This is sometimes referred to as the $q$-model structure on $\Top$. It is \textit{cofibrantly generated}. The verification is not readily straightforward, and we refer to Quillen's original tome \cite{Quillen} for a detailed treatment.
 \end{exmp}
 
 \begin{exmp}
@@ -385,84 +386,107 @@ An Quillen adjunction $\mathcal{F}\dashv\mathcal{G}$ is a \textbf{Quillen equiva
 \end{enumerate}
 \end{defn}
 
-The 
+If $\mathcal{F}\dashv\mathcal{G}$ is a Quillen equivalence, then the derived functor $\mathbf{L}\mathcal{F}:\Ho(\mathbf{C})\to\Ho(\mathbf{D})$ is an equivalence on homotopy categories. We omit the details of the proof.
 
 \begin{prop}
-The singular complex functor $\mathcal{S}_\bullet$ and the geometric realization functor $\abs{-}$ induce a Quillen equivalence between $\Top$ and $\sSet$.
+The singular simplicial complex $\mathcal{S}_\bullet$ and the geometric realization functor forms a Quillen equivalence between $\Top$ and $\sSet$.
 \end{prop}
 \begin{proof}
-We first prove the Quillen adjunction, then the Quillen equivalence.\medbreak
+Again, we only provide a brief sketch. We refer to xxx and xx for details.\medbreak
 
-\textit{Quillen adjunction.} Since both $\Top$ and $\sSet$ are cofibrantly generated, by Proposition A.88 we only need to check that $\abs{i}\in\Cof_{\Top}$ for $i\in I_{\sSet}$ and $\abs{j}\in\Cof_{\Top}\cap\W_{\Top}$ for $j\in J_{\sSet}$. Both are immediate since $\abs{\partial\Delta[n]}=S^{n-1}$ and $\abs{\Delta[n]}=D^n$.\medbreak
+\textit{Quillen adjunction.} Since both $\Top$ and $\sSet$ are cofibrantly generated, by Proposition A.88 we only need to check that $|i|in\Cof_{\Top}$ for $i\in I_{\sSet}$ and $|j|\in\Cof_{\Top}\cap\W_{\Top}$ for $j\in J_{\sSet}$. Both are immediate since $|\partial\Delta[n]|=S^{n-1}$ and $|\Delta[n]|=D^n$.\medbreak
 
 \textit{Quillen equivalence.} By Proposition A.87, we only need to check the following:\begin{enumerate}[(i)]
-    \item if $\abs{f}\in\W_{\Top}$ for cofibrant objects in $\Top$, then $f\in\W_{\sSet}$ for cofibrant objects in $\sSet$;
-    \item the map $\smash{\abs{\mathcal{S}_\bullet(Y)^{\cof}}\to Y}$ is a weak equivalence in $\Top$ for $Y\in\Fib_\Top$
+    \item if $|f|\in\W_{\Top}$ for cofibrant objects in $\Top$, then $f\in\W_{\sSet}$ for cofibrant objects in $\sSet$;
+    \item the map $\smash{|\mathcal{S}_\bullet(Y)^{\cof}|\to Y}$ is a weak equivalence in $\Top$ for $Y\in\Fib_\Top$
 \end{enumerate}
-(i) is immediate by definition of $\W_{\sSet}$. 
+(i) is immediate by definition of $\W_{\sSet}$.
 \end{proof}
 
-\newpage
 \subsection{A model structure on $\dgcAlg_k$}
 
-In this section we describe the $q$-model structure on $\CDGA_\Q$ and introduce the Sullivan minimal model.
+In this section we describe the algebraic model of our interest. A key result is Proposition 2.33.\medbreak
 
-\begin{defns}
-A \textbf{differential graded module} over $R$ (or DGM$_R$) $M$ is a $R$-module $M$ together with a differential $d$ of grading degree $+1$ satisfying $d^2=0$. Let $N$ be a DGM$_R$, a map $f:M\to N$ is called a \textbf{chain map} if $d_Nf=fd_M$.
-\end{defns}
-
-Let $\mathbf{DGM}_R$ be the category with DGM$_R$ as objects and chain maps as morphisms. Then $\mathbf{DGM}_R$ is a symmetric monoidal category with graded tensor product $M\otimes_RN$ and symmetry given by $a\otimes b=(-1)^{\abs{a}\abs{b}}b\otimes a$. In addition, the Leibniz rule $\smash{d(a\otimes b)=da\otimes b+(-1)^{\abs{a}}a\otimes db}$ satisfied.
+In what follows, let $R$ be a ring and $k$ be a field with characteristic $0$.
 
 \begin{defn}
-A \textbf{commutative differential graded algebra} over $R$ (or CDGA$_R$) $A$ is a commutative monoid in $\mathbf{DGM}_R$.
+A \textbf{differential graded module} $M$ over $R$ is a $R$-module endowed with a cochain structure
+\[\begin{tikzcd}
+M_0\arrow[r,"d"]&M_1\arrow[r,"d"]&M_2\arrow[r,"d"]&\cdots
+\end{tikzcd}.\]
 \end{defn}
 
-Explicitly, $A$ is an object of $\mathbf{DGM}_R$ together with a unit $\eta:R\to A$ and an associative product $\mu:A\otimes_RA\to R$ given by $a\otimes b\to a\cdot b$. The commutativity comes from the symmetric braiding $\smash{a\cdot b=(-1)^{\abs{a}\abs{b}}b\cdot a}$.
+Write $\mathbf{DGM}_R$ for the category with differential graded modules over $R$ as objects and chain maps (maps that respects differentials) as morphisms.
+
+\begin{rem}
+Let $M$ and $N$ be differential graded modules over $R$. The (graded) tensor product $M\otimes_RN$ endows $\mathbf{DGM}_R$ with a  symmetric monoidal structure. The symmetric braiding is given by
+\[a\otimes b=(-1)^{|a||b|}b\otimes a,\]
+where $|a|$ is the degree of $a$. In addition, the Leibniz rule holds:
+\[\smash{d(a\otimes b)=da\otimes b+(-1)^{|a|}a\otimes db}.\]
+%We see higher-categorical analog in Section 3.
+\end{rem}
+
+\begin{defn}
+A \textbf{differential graded-commutative algebra} $A$ over $R$ is a commutative monoid in $\mathbf{DGM}_R$.
+
+Explicitly, $A$ is an object of $\mathbf{DGM}_R$ together with a unit $\eta:R\to A$ and an associative product $\mu:A\otimes_RA\to R$ given by $a\otimes b\to a\cdot b$:
 \[\begin{tikzcd}[row sep=0.8em]
 	{(A\otimes_RA)\otimes_RA} & {A\otimes_RA} \\
 	&& A \\
 	{A\otimes_R(A\otimes_RA)} & {A\otimes_RA}
-	\arrow["\alpha"', from=1-1, to=3-1]
+	\arrow[from=1-1, to=3-1]
 	\arrow["{\mu\otimes_R\id}"', from=1-1, to=1-2]
 	\arrow["{\id\otimes_R\mu}", from=3-1, to=3-2]
 	\arrow["\mu"', from=3-2, to=2-3]
 	\arrow["\mu", from=1-2, to=2-3]
 \end{tikzcd}\quad
-\begin{tikzcd}[column sep=1.25em]
+\begin{tikzcd}[column sep=1.20em]
 	& {M\otimes_RM} \\
 	{R\otimes_RM} & M & {M\otimes_RR}
 	\arrow["{\eta\otimes_R\id}", from=2-1, to=1-2]
 	\arrow["{\id\otimes_R\eta}"', from=2-3, to=1-2]
-	\arrow["\ell"', from=2-1, to=2-2]
-	\arrow["r", from=2-3, to=2-2]
+	\arrow[from=2-1, to=2-2]
+	\arrow[from=2-3, to=2-2]
 	\arrow["\mu", from=1-2, to=2-2]
-\end{tikzcd}\]
+\end{tikzcd}.\]
+The monoid is commutative in the sense of $\smash{a\cdot b=(-1)^{|a||b|}b\cdot a}$.
+\end{defn}
 
-Let $A'$ be a CDGA$_R$, a chain map $f:A\to A'$ respects the units $f\eta=\eta'$ and products $f\mu=\mu'(f\otimes f)$. This defines a category $\CDGA_R$.\medbreak
+Chain maps $f$ between differential graded-commutative algebras respect the units $f\eta=\eta$ and products $f\mu=\mu(f\otimes f)$. Write $\dgcAlg_R$ for the category with differential graded-commutative algebras as objects and chain maps as morphisms.\medbreak
 
-From now on we take $k$ to be a field with characteristic $0$.
+Now we describe a model structure on $\dgcAlg_k$. Note that we switch form a ring $R$ to field $k$ of characteristic 0. (Why?)
 
 \begin{prop}
-The following defines a model structure on $\CDGA_k$:\begin{enumerate}[(i)]
-    \item quasi-isomorphisms as weak equivalences;
-    \item degreewise surjections as fibrations;
-    \item the naturally determined $(\Fib\cap\W)^r$ as cofibrations.
+The following defines a model category structure on $\dgcAlg_k$:\begin{enumerate}[(i)]
+    \item quasi-isomorphisms as weak equivalences $\W$;
+    \item degreewise surjections as fibrations $\Fib$.
 \end{enumerate}
+Note that the cofibrations $\Cof$ are thence uniquely determined to be
+$(\Fib\cap\W)^r$.
 \end{prop}
 
-Before proving the theorem, we need CDGA$_k$ models that generalizes the notion cochain complexes of spheres and disks.
+Before proving the theorem, we describe the models that mimic the notion of spheres $S^n$ and disks $D^{n-1}$ in $\Top$. This is crucial for inductive arguments.\medbreak
 
-The cochain complex $S(n)$ of $S^n$ is the CDGA$_k$ $(\Lambda x,dx=0)$ with $\abs{x}=n$. The cochain complex $D(n-1)$ of $D^{n-1}$ is the CDGA$_k$ $(\Lambda(x,y),dx=0,dy=x)$ with $\abs{x}=n$ and $\abs{y}=n-1$. Then for any CDGA$_k$ $A$, the following holds:\begin{enumerate}[(i)]
+For a graded vector space $V$, write $\Lambda V$ for the free graded-commutative algebra generated by $V$. It is equivalent to the tensor product
+\[\textrm{Sym}(V^\textrm{even})\otimes\textrm{Etr}(V^\textrm{odd})\]
+of symmetric algebra on vectors of even degrees and exterior algebra on odd.
+
+\begin{con}
+Let $S(n)$ be the free differential graded-commutative algebra with on one generator of degree $n$:
+\[(\Lambda x,dx=0),\quad|x|=n.\] Let $D(n-1)$ be the free differential graded-commutative algebra $\Lambda(x,y)$:
+\[(\Lambda(x,y),dx=0,dy=x),\quad|x|=n,\quad|y|=n-1.\]
+Write $Z^n(A)$ for the space of $n$-cocycles of $A$. We make the following observations:\begin{enumerate}[(i)]
     \item $S(n)\hookrightarrow D(n-1)$ is a natural inclusion;
-    \item $\Hom_{\CDGA_k}(S(n),A)\cong Z^n(A)$;
-    \item $\Hom_{\CDGA_k}(D(n-1),A)\cong A^{n-1}$.
+    \item $\Hom_{\dgcAlg_k}(S(n),A)\cong Z^n(A)$;
+    \item $\Hom_{\dgcAlg_k}(D(n-1),A)\cong A^{n-1}$.
 \end{enumerate}
-
-For any graded vector space $V$, define the CDGA$_k$ $S(V)=(\Lambda V,dv=0)$ for $v\in V$, and the CDGA$_k$ $D(V)=(\Lambda(V\oplus sV),dv=0,d(sv)=v)$ for $v\in V$. Then similarly the following holds for any CDGA$_k$ $A$:\begin{enumerate}[(i)]
+More generally, for any graded vector space $V$, define $S(V)$ to be $\Lambda V$ with $dv=0$ for all $v\in V$. Define $D(V)$ to be $\Lambda(V\oplus sV)$ with $dv=0$ and $d(sv)=v$ for $v\in V$. Then similarly the following holds:\begin{enumerate}[(i)]
     \item $S(V)\hookrightarrow D(V)$ is a natural inclusion;
-    \item $\Hom_{\CDGA_k}(S(V),A)\cong\Hom_k(V,Z(A))$;
-    \item $\Hom_{\CDGA_k}(D(V),A)\cong\Hom_k(V,A)$.
+    \item $\Hom_{\dgcAlg_k}(S(V),A)\cong\Hom_k(V,Z(A))$;
+    \item $\Hom_{\dgcAlg_k}(D(V),A)\cong\Hom_k(V,A)$.
 \end{enumerate}
+We will see later that $S(n)$ and $D(n-1)$ functions like $S^n$ and $D^{n-1}$ in inductive gluing constructions.
+\end{con}
 
 \begin{lem}
 For any graded vector spaces $V$ and $V'$ and any cdg-algebra $A$, the morphism $i:A\to A\otimes_kS(V)\otimes_kD(V')$ given by $a\mapsto a\otimes\eta\otimes\eta$ is a cofibration.
@@ -472,7 +496,7 @@ The morphism $j:A\to A\otimes_kD(V)$ given by $a\mapsto a\otimes\eta$ is a weak 
 \end{proof}
 
 \begin{proof}[Proof of Proposition 2.15]
-We choose to follow the proof in \cite{Gelfand-Manin}.\medbreak
+The proof outlined here is taken from \cite{Gelfand-Manin}.\medbreak
 
 \textit{Limit Axiom.} We show that pushout and pullback exist in $\CDGA_k$. It's standard to verify that $\{(b,c):f(b)=g(c)\}$ is the pullback of $\smash{B\xrightarrow{f}A\xleftarrow{g}C}$. For pushout of $\smash{B\xleftarrow{f}A\xrightarrow{g}C}$, consider $B\otimes_AC$ together with inclusions $\eta\otimes\id:C\to B\otimes_AC$ and $\id\otimes\eta:B\to B\otimes_AC$ where $\eta$ is the unit.\medbreak
 
