@@ -179,7 +179,7 @@ Let $\mathfrak{C}$ e a Serre class and $X$ be a $1$-connected space. Then $\pi_i
 Let $\mathfrak{C}$ be a Serre class and $f:X\to Y$ be a map between $1$-connected spaces. Then $\pi_i(f):\pi_i(X)\to\pi_i(Y)$ is a $\mathfrak{C}$-isomorphism for $i<n$ if and only if $H_i(f):H_i(X)\to H_i(Y)$ is a $\mathfrak{C}$-isomorphism for $i<n$.
 \end{thm}
 
-We want to associate an arbitrary space $X$ to a rational space $X_\Q$ such that $X\simeq_\Q X_\Q$. This process is called \textbf{rationalization}, and it can be done via localization. Let's consider a heuristic example.
+We would like to to associate an arbitrary space $X$ to a rational space $X_\Q$ such that $X\simeq_\Q X_\Q$. This process is called \textbf{rationalization}, and it can be done via localization. Let's consider a heuristic example.
 
 \begin{exmp}
 
@@ -234,7 +234,7 @@ Every $1$-connected space $X$ admits a rationalization $X_\Q$.
 \begin{proof}
 Fist note that we can rationalize an Eilenberg-MacLane space $K(G,n)$ by simply taking $K(G\otimes\Q,n)$. This motivates us to construct $X_\Q$ inductively from its Postnikov tower and associated $k$-th invariants.
 
-By $1$-connectedness, the base case starts from $X_2=K(\pi_2(X),2)$. Suppose that the rationalization $(X^{n+1})_\Q$ of $X_{n-1}$ is already constructed. Since $K(\pi_n(X)\otimes\Q,n+1)$ is rational, it is $\mathrm{Q}$-local by Proposition 2.9. Hence the rationalization $r:X_{n-1}\to(X_{n-1})_\Q$ induces a bijective correspondence
+By $1$-connectedness, the base case starts from $X_2=K(\pi_2(X),2)$. Suppose that the rationalization $(X^{n+1})_\Q$ of $X_{n-1}$ has already been constructed. Since $K(\pi_n(X)\otimes\Q,n+1)$ is rational, it is $\mathrm{Q}$-local by Proposition 2.9. Hence the rationalization $r:X_{n-1}\to(X_{n-1})_\Q$ induces a bijective correspondence
 \[[(X_{n-1})_\Q,K(\pi_n(X)\otimes\Q,n+1)]\cong[X_{n-1},K(\pi_n(X)\otimes\Q,n+1)]\]
 which identifies the $k$-th invariant $k^{n+1}$ with a map $(k^{n+1})_\Q$. Since $X_n$ is the fiber of $k^{n+1}$, we define $(X_n)_\Q$ to be the fiber of $(k^{n+1})_\Q$:
 \[\begin{tikzcd}
@@ -272,42 +272,74 @@ A \textbf{simplicial object} in a category $\mathcal{C}$ is a functor $\mathbf{\
 \end{defn}
 
 \begin{rem}
-Simplicial objects provides a combinatorial way of viewing objects. Simplicial sets are simplicial objects in the category $\mathbf{Set}$ of sets. It generalizes the idea of simplicial complexes. Similarly, a simplicial space is a functor $\Phi:\mathbf{\Delta}\to\Top$ sending $[n]$ to the standard topological $n$-simplex $\Delta^n$.
+Simplicial objects provides a combinatorial way of viewing things.
+
+Simplicial sets are simplicial objects in the category $\mathbf{Set}$ of sets. It generalizes the idea of simplicial complexes.
+
+Cosimplicial spaces are the cosimplicial objects in the category $\Top$. It is a covariant functor $\mathbf{\Delta}\to\Top$ (or a contravariant functor $\mathbf{\Delta}^\textrm{op}\to\Top$). It assigns each $[n]$ with a standard topological $n$-simplex $\Delta^n$.
 \end{rem}
 
-Let $\sSet$ be the category with simplicial sets as objects and natural transformations between simplicial sets as morphisms.
+Let $\sSet$ be the category with simplicial sets as objects and natural transformations between simplicial sets as morphisms. Then there is a natural functor $\Delta:\mathbf{\Delta}^\textrm{op}\to\sSet$ defined by $[n]\mapsto\Delta[n]$. The cosimplicial space defines a (contravariant) functor $\Phi:\mathbf{\Delta}^\textrm{op}\to\Top$. The \textit{Kan extension} then establishes functors between $\sSet$ and $\Top$:
+\[\begin{tikzcd}
+\mathbf{\Delta}^\textrm{op}\arrow[dr,"\Delta"']\arrow[rr,"\Phi"]&&\Top\arrow[dl,shift right,dashed]\\
+&\sSet\arrow[ur,shift right,dashed]
+\end{tikzcd}\]
 
-\begin{con}
-Define the singular complex functor $\mathcal{S}_\bullet:\Top\to\sSet$ by
-\begin{align*}
-\mathcal{S}_n:&X\mapsto\Hom_{\Top}(\Delta^n,X),&&X\in\Top\\
-&f\mapsto f\psi,&&f\in\Hom_{\Top}(X,Y),\ \psi\in\Hom_{\Top}(\Delta^n,X)
-\end{align*}
-This functor carries simplicial data as follows:
+We now make the definition precise.
+
+\begin{defn}
+For any space $X$, the \textbf{singular simplicial complex} $\mathcal{S}_\bullet$ is a hom-functor $\Top\to\sSet$ given by
+\[\mathcal{S}_\bullet(X)=\Hom_\Top(\Phi,X)=\Hom_\Top(\Delta^\bullet,X)\]
+where $\Phi$ is the cosimplicial space and $\Delta^\bullet$ are the standard topological simplices.
+\end{defn}
+
+\begin{rem}
+The subscript $_\bullet$ encodes simplicial data as follows:
 \[\begin{tikzcd}
 {[m]}\arrow[d,"\varphi"]\arrow[r]&\Delta^m\arrow[r]\arrow[d,"\varphi_\ast"]&\mathcal{S}_m(X)=\Hom_{\Top}(\Delta^m,X)\\
 {[n]}\arrow[r]&\Delta^n\arrow[r]&\mathcal{S}_n(X)=\Hom_{\Top}(\Delta^n,X)\arrow[u,"\varphi^\ast"']
-\end{tikzcd}\]
-where $\varphi^\ast$ is given by $\varphi^\ast(\psi)=\psi\varphi_\ast$.
-\end{con}
+\end{tikzcd}.\]
+For $\psi\in\mathcal{S}_n(X)$, the induced map $\varphi^\ast$ is given by $\varphi^\ast(\psi)=\psi\varphi_\ast$.
+\end{rem}
 
-Conversely, define the geometric realization functor $|-|:\sSet\to\Top$ to be the Kan extension of $\Phi$ along $\Delta$.
-\[\begin{tikzcd}
-\mathbf{\Delta}\arrow[dr,"\Delta"']\arrow[rr,"\Phi"]&&\Top\\
-&\sSet\arrow[ur,"\abs{-}"']
-\end{tikzcd}\]
-Explicitly, $|-|$ is defined by $X\mapsto\Hom_{\sSet}(X,\Phi)$ or equivalently by Yoneda lemma $X\mapsto\lim_{\Delta[n]\to X}\Phi[n]$. Written in this form, the adjunction is immediate:
+\begin{defn}
+For any simplicial set $S$, its \textbf{geometric realization} $|S|$ is a hom-functor $\sSet\to\Top$ given by
+\[|S|=\Hom_\sSet(S,\Phi)=\colim_{\Delta[n]\to S}\Phi[n]\]
+where $\Phi$ is the cosimplicial space $\mathbf{\Delta}\to\Top$.
+\end{defn}
+
+\begin{prop}
+The singular simplicial complex functor is left adjoint to the geometric realization functor.
+\end{prop}
+\begin{proof}
+Let $S$ be a simplicial set and $X$ be a space. Then
 \begin{align*}
-\Hom_{\Top}(Y,|X|)&\cong\Hom_{\Top}(Y,\textstyle{\lim_{\Delta[n]\to X}\Phi[n]})\quad\textrm{(Yoneda lemma)}\\
-&\cong\colim_{\Delta[n]\to X}\mathcal{S}_n(Y)\\
-&\cong\colim_{\Delta[n]\to X}\Hom_{\sSet}(\mathcal{S}_\bullet(Y),\Delta[n])\quad\textrm{(Yoneda lemma)}\\
-&\cong\Hom_{\sSet}(\mathcal{S}_\bullet(Y),X).
+\sSet(S,\mathcal{S}_\bullet(X))&\cong\textstyle{\lim_{\Delta[n]\to S}\sSet(\Delta[n],\mathcal{S}_\bullet(X))}\\
+&\cong\textstyle{\lim_{\Delta[n]\to S}\mathcal{S}_n(X)}\\
+&\cong\textstyle{\lim_{\Delta[n]\to S}\Top(\Phi[n],X)}\cong\Top(|S|,X)
 \end{align*}
-We remark that a more geometric definition of $\abs{-}$ is available:
-\[\abs{-}:X\mapsto\coprod_{n\geq0}(X[n]\times\Delta^n)/_{\sim}\]
-where we identify $(\varphi^\ast(x),t)\sim(x,\varphi_\ast(t))$. One associates an $n$-simplex to each $X[n]$ and they are glued together by the aforementioned identification.\medbreak
+where $\sSet(\Delta[n],\mathcal{S}_\bullet(X))\cong\mathcal{S}_n(X)$ is given by the Yoneda lemma.
+\end{proof}
 
-Now we discuss these functors on model-categorical level.
+\begin{rem}
+There is another more intuitive definition of geometric realization: for a simplicial set $S$, define
+\[|S|=\coprod_{n\geq0}(\Delta[n]\times\Delta^n)/_{\sim}\]
+where $\Delta[n]$ are the $n$-simplices of $S$. In plain terms, we associate a topological $n$-simplex to each $n$-simplex of $S$ and glue them together under the identification $(\varphi^\ast(x),t)\sim(x,\varphi_\ast(t))$. These two definitions are equivalent.
+\end{rem}
+
+We now turn to model categories. Model category abstracts certain common homotopy-theoretical properties that exist in many different categories.
+
+\begin{defn}
+A \textbf{model category} if a category $\mathcal{C}$ with three subclasses of morphisms specified: the weak equivalences $\W$, the fibrations $\Fib$ and the cofibrations $\Cof$. They satisfy the following axioms:\begin{enumerate}[(i)]
+    \item The category $\mathcal{C}$ admits finite limits and colimits;
+    \item The class of weak equivalences $\W$ contains all isomorphisms and satisfy the 2-out-of-3 property: if any two of the three morphisms $f$, $g$, and $fg$ belongs to $\W$, then the third also belongs to $\W$.
+    \item Any two classes determine the third as follows:\begin{enumerate}[(a)]
+        \item $W=\Fib^r\circ\Cof^l$,
+        \item $\Fib=(\W\cap\Cof)^r$
+        \item $\Cof=(\W\cap\Fib)^l$
+    \end{enumerate}
+\end{enumerate}
+\end{defn}
 
 \begin{prop}
 The following defines a model category structure on $\Top$:
@@ -565,8 +597,7 @@ Now we can extend $\Omega^\bullet_\textrm{poly}:\mathbf{\Delta}^\textrm{op}\to\d
 
 \begin{defn}
 For any simplicial set $S$, the \textbf{PL de Rham complex} $\Omega^\bullet$ is a hom-functor $\sSet\to\dgcAlg_k^\mathrm{op}$ given by
-
-\[\Omega^\bullet(S)=\Hom_\sSet(S,\Omega^\bullet_\textrm{poly})\]
+\[\Omega^\bullet(S)=\Hom_\sSet(S,\Omega^\bullet_\textrm{poly}).\]
 Alternatively, we can define $\Omega^\bullet(S)=\lim_{\Delta[n]\to S}\Omega^n_\textrm{poly}$. See xxx for the detail.
 \end{defn}
 
