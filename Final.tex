@@ -92,6 +92,7 @@
 \newcommand{\cof}{\mathrm{cof}}
 \newcommand{\fib}{\mathrm{fib}}
 \newcommand{\id}{\mathrm{id}}
+\newcommand{\B}{\mathrm{B}}
 
 \DeclareMathOperator{\colim}{colim}
 \DeclareMathOperator{\coker}{coker}
@@ -629,7 +630,7 @@ t_k,&k<i\\t_k+t_{k+1},&k=i\\t_{k+1},&k>i
 \bigbreak In addition to the simplicial structure, $\Omega^\bullet_\textrm{poly}$ also carries a grading structure as an algebra. We encode this structure in the subscript and write $\Omega^\bullet_{\textrm{poly},p}$ for the $k$-module of homogeneous elements of $\Omega^\bullet_\textrm{poly}$ of degree $p$.
 
 \begin{lem}
-For any $p\geq0$, $\Omega^\bullet_{\mathrm{poly},p}$ is a trivial Kan complex.
+For any $p\geq0$, $\Omega^\bullet_{\mathrm{poly},p}$ is a weakly contractible Kan complex.
 \end{lem}
 \begin{proof}
 This is a consequence of several theorems in simplicial homotopy theory. We state these theorems without proof.\medbreak
@@ -803,18 +804,31 @@ We only restrict
 
 \section{Realizing polynomial cohomology rings}
 
-\textcolor{red}{Warning: this section is unfinished}
+\subsection{Prime completion of finite loop spaces} We introduce in this section the concept of $p$-compact groups.
 
-\subsection{Prime completion of finite loop spaces}
-
-A principal $G$-bundle $p:E\to B$ where $G$ acts trivially on $B$ satisfies the local triviality condition: for a well chosen cover $\mathcal{U}$ of $B$ there is a $G$-homeomorphism $\varphi_U:p^{-1}(U)\to U\times G$ for any $U\in\mathcal{U}$ such that the diagram on the left commutes.
-\[\begin{tikzcd}
+\begin{defn}
+Let $G$ be a topological group. A \textbf{principal $G$-bundle} is a map $p:E\to B$ satisfying the following conditions:\begin{enumerate}[(i)]
+    \item $G$ acts trivially on $B$;
+    \item there is a cover $\mathcal{U}$ of $B$ such that for any $U\in\mathcal{U}$ there is a $G$-homeomorphism $\varphi_U:p^{-1}(U)\to U\times G$ making the following diagram commutes:
+    \[\begin{tikzcd}[row sep=large]
 p^{-1}(U)\arrow[d,"p"']\arrow[r,"\varphi_U"]&U\times G\arrow[dl]\\
 U
-\end{tikzcd}\]
-In other words, a principal $G$-bundle $E\to B$ consists of a locally trivial free $G$-space $E$ with orbit space $B$.
+\end{tikzcd}.\]
+\end{enumerate}
+The second condition is referred to as the local triviality. Hence a principle $G$-bundle $E\to B$ consists of a locally trivial free $G$-space $E$ with orbit space $B$.
+\end{defn}
 
-There exists a universal $G$-bundle $EG\to B$ such that for any space $X$ there is an isomorphism $\varphi:[X,B]\to P_G$ by $f\mapsto f^\ast EG$ where $P_GX$ is the isomorphism class of principal $G$-bundles over $X$. Such $B$ is called the classifying space of $G$ and denoted $\B G$.
+Write $\mathcal{P}_G(X)$ for the isomorphism classes of principle $G$-bundles over $X$.
+
+\begin{lem}
+Let $\pi:E\to B$ be a principle $G$-bundle with $E$ weakly contractible. Then there is an isomorphism $\varphi:[X,B]\to\mathcal{P}_G$ given by $f\mapsto f^\ast\pi$, where $f^\ast\pi$ is the pullback of $\pi$ along $f$:
+\[\begin{tikzcd}
+P\arrow[r]\arrow[d,"f^\ast\pi"]&E\arrow[d,"\pi"]\\
+X\arrow[r,"f"]&B
+\end{tikzcd}\]
+\end{lem}
+
+There exists a universal $G$-bundle $EG\to B$ such that for any space $X$ there is an isomorphism  is the isomorphism class of principal $G$-bundles over $X$. Such $B$ is called the classifying space of $G$ and denoted $\B G$.
 
 Under mild conditions (such as paracompactness or countability) $G\to EG\to\B G$ is a fibration, and from
 \[\begin{tikzcd}
