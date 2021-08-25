@@ -92,11 +92,13 @@
 \newcommand{\cof}{\mathrm{cof}}
 \newcommand{\fib}{\mathrm{fib}}
 \newcommand{\id}{\mathrm{id}}
+\newcommand{\F}{\mathbb{F}}
 \newcommand{\B}{\mathrm{B}}
 
 \DeclareMathOperator{\colim}{colim}
 \DeclareMathOperator{\coker}{coker}
 \DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\Tor}{Tor}
 
 \makeatletter
 \let\c@obs=\c@thm
@@ -151,7 +153,7 @@ When $R=\Q$, the problem was solved in rational homotopy theory, which was devel
 
 In 1967 Quillen introduced in \cite{Quillen1} the concept a model category, which is an axiomatic and homotopy-theoretical setting for homotopy theory. Later he applied this framework in his seminal paper \cite{Quillen2} in which he constructed and proved the equivalence of homotopy theories of an algebraic category and a topology category. As a consequence, every differential graded Lie algebra over $\Q$ can be realized as the rational cohomology ring of a space. However, Quillen's Lie algebra model has the disadvantage of being impossible to perform actual calculations upon.
 
-Sullivan bridged the calculability gap in the 1970s using differential graded-commutative algebras as his algebraic model. He also generalized the idea of de Rham complex and associated it with rational, singular cohomology. Sullivan's model has interesting applications to Kähler manifold as well. In 1976 Bousfield and Gugenheim reappraoched Sullivan's work in \cite{Bousfield-Gugenheim} by applying Quillen's model categories as well as the notion of Bousefield-Kan localization. It is their approach that we survey in Section 2 of this paper.\medbreak
+Sullivan bridged the calculability gap in the 1970s using differential graded-commutative algebras as his algebraic model. He also generalized the idea of de Rham complex and associated it with rational, singular cohomology. Sullivan's model has interesting applications to Kähler manifold as well. In 1976 Bousfield and Gugenheim reappraoched Sullivan's work in \cite{Bousfield-Gugenheim} by applying Quillen's model categories as well as the notion of Bousefield localization. It is their approach that we survey in Section 2 of this paper.\medbreak
 
 When $H^\ast(X;R)$ is a polynomial algebra over $R$, it is a completely different story. In 1960 N. E. Steenrod attemped to answer this question. He proved in \cite{Steenrod} using Steenrod operations that if $H^\ast(X;R)\cong\Z[x]$, then the degree of $x$ must be $2$ or $4$. Further progress was made by J. F. Adams, C. W. Wilkerson, and W. G. Dwyer. The problem was completely solved by Kasper K. S. Andersen and Jesper Grodal in 2008 in \cite{Andersen-Grodal}, in which they reduced the problem to a known case of the classification of $p$-compact groups. We sketch their treatment in Section 3.
 
@@ -198,7 +200,7 @@ Let $\mathfrak{C}$ e a Serre class and $X$ be a $1$-connected space. Then $\pi_i
 Let $\mathfrak{C}$ be a Serre class and $f:X\to Y$ be a map between $1$-connected spaces. Then $\pi_i(f):\pi_i(X)\to\pi_i(Y)$ is a $\mathfrak{C}$-isomorphism for $i<n$ if and only if $H_i(f):H_i(X)\to H_i(Y)$ is a $\mathfrak{C}$-isomorphism for $i<n$.
 \end{thm}
 
-We would like to to associate an arbitrary space $X$ to a rational space $X_\Q$ such that $X\simeq_\Q X_\Q$. This process is called \textbf{rationalization}, and it can be done via localization. Let's consider a heuristic example.
+We would like to to associate an arbitrary space $X$ to a rational space $X_\Q$ such that $X\simeq_\Q X_\Q$. This process is called \textbf{rationalization}, and it can be done via (Bousfield) localization. Let's consider a heuristic example.
 
 \begin{exmp}
 
@@ -822,26 +824,47 @@ Write $\mathcal{P}_G(X)$ for the isomorphism classes of principle $G$-bundles ov
 
 \begin{lem}
 Let $\pi:E\to B$ be a principle $G$-bundle with $E$ weakly contractible. Then there is an isomorphism $\varphi:[X,B]\to\mathcal{P}_G$ given by $f\mapsto f^\ast\pi$, where $f^\ast\pi$ is the pullback of $\pi$ along $f$:
-\[\begin{tikzcd}
-P\arrow[r]\arrow[d,"f^\ast\pi"]&E\arrow[d,"\pi"]\\
+\[\begin{tikzcd}[column sep=huge, row sep=huge]
+P\arrow[r]\arrow[phantom,dr,"\lrcorner", very near start]\arrow[d,"f^\ast\pi"']&E\arrow[d,"\pi"]\\
 X\arrow[r,"f"]&B
-\end{tikzcd}\]
+\end{tikzcd}.\]
 \end{lem}
 
-There exists a universal $G$-bundle $EG\to B$ such that for any space $X$ there is an isomorphism  is the isomorphism class of principal $G$-bundles over $X$. Such $B$ is called the classifying space of $G$ and denoted $\B G$.
+In Lemma 3.2, $\pi$ is a \textbf{universal} $G$-bundle and $B=\B G$ is a \textbf{classifying space} for $G$. Any topological group admits a classifying space, by Milnor's construction.
 
-Under mild conditions (such as paracompactness or countability) $G\to EG\to\B G$ is a fibration, and from
-\[\begin{tikzcd}
-G\arrow[r]\arrow[d]&EG\arrow[r]\arrow[d]&\B G\arrow[d]\\
-\Omega\B G\arrow[r]&\mathcal{P}\B G\arrow[r]&\B G
-\end{tikzcd}\]
-we see that $G$ is weak homotopy equivalent to $\Omega\B G$, taking $EG$ to be contractible.
+\begin{rem}
+We need some mild conditions on the base space $B$. It's common to assume $B$ as a CW complex. A weaker condition requires the locally trivialized bundle of $B$ to have partition of unity. Equivalently, it's also fine to restrict $B$ to paracompact spaces.
+\end{rem}
 
-A finite loop space consists of a space $X$ and its classifying space $\B X$ such that $X$ is homotopy equivalence to $\Omega\B X$. A $p$-compact group $X$ is a finite loop space such that\begin{enumerate}[(a)]
-    \item $\B X$ is $\mathrm{F_p}$-local
-    \item $H^i(X,\F_p)$ is finite for all $i$
+\begin{defn}
+A \textbf{finite loop space} is a pointed space $X$ such that $X\simeq\Omega\B X$.
+\end{defn}
+
+\begin{exmp}
+If $X$ is a topological group $G$, then $\Omega\B G$ is indeed homotopy equivalent to $G$. This comes from the following comparison of fibre sequences:
+\[\begin{tikzcd}[row sep=large]
+G\arrow[r]\arrow[d]&EG\arrow[r]\arrow[d,"\simeq"]&\B G\arrow[d,equal]\\
+\Omega\B G\arrow[r]&P\B G\arrow[r]&\B G
+\end{tikzcd},\]
+where $EG\simeq P\B G$ because the path space $P\B G$ is weakly contractible.
+\end{exmp}
+
+Recall the notion of Bousfield localization (Definition 2.8). In rational homotopy theory we localize with respect to rational homotopy equivalences. We now with to localization with respect to the class $\mathrm{F_p}$ of $\F_p$-equivalences.
+
+A map $f:X\to Y$ is an $\F_p$-equivalence if the induced map $f^\ast$ is an isomorphism on $\F_p$-cohomology:
+\[f^\ast:H^\bullet(Y;\F_p)\xrightarrow{\ \cong\ } H^\bullet(X;\F_p).\]
+We write $\F_p$ for the field 
+\bigbreak
+
+With this in mind, we are able to define the main object of our interest.
+
+\begin{defn}
+A \textbf{$p$-compact group} $X$ is a finite loop space such that\begin{enumerate}[(i)]
+    \item $\B X$ is $\mathrm{F_p}$-local;
+    \item $H^i(X,\F_p)$ is finite for all $i$;
 \end{enumerate}
-taking $\mathrm{F_p}$ to be the class of $\F_p$-equivalences.
+where $\mathrm{F_p}$ is the class of $\F_p$ equivalences.
+\end{defn}
 
 \subsection{The arithmetic fracture theorem: from local to global}
 
