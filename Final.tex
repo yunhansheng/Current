@@ -75,7 +75,7 @@
 \newtheorem{ax}{Axiom}[section]
 \newtheorem{con}{Construction}[section]
 \newtheorem{exmp}{Example}[section]
-\newtheorem{quest}{Question}[section]
+\newtheorem*{quest*}{Question}
 \newtheorem{rem}{Remark}[section]
 \newtheorem{notn}{Notation}[section]
 
@@ -95,6 +95,7 @@
 
 \DeclareMathOperator{\colim}{colim}
 \DeclareMathOperator{\coker}{coker}
+\DeclareMathOperator{\im}{im}
 
 \makeatletter
 \let\c@obs=\c@thm
@@ -129,7 +130,7 @@
 
 \begin{abstract}
 
-This is an expository paper written during the $\textrm{\smash{2021 REU}}$ program at the University of Chicago. In this paper we address the following question: which commutative graded $R$-algebras can be realized as the cohomology ring of a space with coefficients in $R$? We discuss two solved cases: for $R=\Q$, and for $R$ is the polynomial algebra over $\Z$ or $\Z_p$ for prime $p$. Model categories play an important role in our discussion.
+This is an expository paper written during the $\textrm{\smash{2021 REU}}$ program at the University of Chicago. In this paper we address the following question: which graded-commutative $R$-algebras can be realized as the cohomology ring of a space with coefficients in $R$? We discuss two solved cases: for $R=\Q$, and for polynomial algebras over $\Z$ or $\Z_p$ for prime $p$. We develop simplic and mod Model categories play an important role in our discussion.
 
 \end{abstract}
 
@@ -139,7 +140,19 @@ This is an expository paper written during the $\textrm{\smash{2021 REU}}$ progr
 
 \section{Introduction}
 
-Some historical information.
+We focus on the following classification problem which was due to Hopf:
+
+\begin{quest*}
+Which graded-commutative $R$-algebra can be realized as the cohomology ring $H^\ast(X;R)$ of a space $X$ with coefficients in $R$? 
+\end{quest*}
+
+When $R=\Q$, the problem was solved in rational homotopy theory, which was developed by Daniel Quillen and Dennis Sullivan.
+
+In 1967 Quillen introduced in \cite{Quillen1} the concept a model category, which is an axiomatic and homotopy-theoretical setting for homotopy theory. Later he applied this framework in his seminal paper \cite{Quillen2} in which he constructed and proved the equivalence of homotopy theories of an algebraic category and a topology category. As a consequence, every differential graded Lie algebra over $\Q$ can be realized as the rational cohomology ring of a space. However, Quillen's Lie algebra model has the disadvantage of being impossible to perform actual calculations upon.
+
+Sullivan bridged the calculability gap in the 1970s using differential graded-commutative algebras as his algebraic model. He also generalized the idea of de Rham complex and associated it with rational, singular cohomology. Sullivan's model has interesting applications to Kähler manifold as well. In 1976 Bousfield and Gugenheim reappraoched Sullivan's work in \cite{Bousfield-Gugenheim} by applying Quillen's model categories as well as the notion of Bousefield-Kan localization. It is their approach that we survey in Section 2 of this paper.\medbreak
+
+When $H^\ast(X;R)$ is a polynomial algebra over $R$, it is a completely different story. In 1960 N. E. Steenrod attemped to answer this question. He proved in \cite{Steenrod} using Steenrod operations that if $H^\ast(X;R)\cong\Z[x]$, then the degree of $x$ must be $2$ or $4$. Further progress was made by J. F. Adams, C. W. Wilkerson, and W. G. Dwyer. The problem was completely solved by Kasper K. S. Andersen and Jesper Grodal in 2008 in \cite{Andersen-Grodal}, in which they reduced the problem to a known case of the classification of $p$-compact groups. We sketch their treatment in Section 3.
 
 \section{Rational Homotopy Theory}
 
@@ -164,7 +177,7 @@ is an isomorphism for all $n\geq1$.
 In rational homotopy theory we study spaces up to rational homotopy equivalence. By tensoring with $\Q$ we ``kill" the torsion abelian groups. In order for the tensor product to be well-defined, we need the homotopy groups to be abelian. That's why we will be working with $1$-connected spaces exclusively. 
 \end{rem}
 
-The notion of a Serre class deals with the ``killing'' of abelian groups efficiently.
+The notion of a Serre class deals with the "killing" of abelian groups efficiently.
 
 \begin{defn}
 A collection $\mathfrak{C}$ of abelian groups is a \textbf{Serre class} if for a short exact sequence of abelian groups
@@ -310,7 +323,7 @@ For $\psi\in\mathcal{S}_n(X)$, the induced map $\varphi^\ast$ is given by $\varp
 \begin{defn}
 For any simplicial set $S$, its \textbf{geometric realization} $|S|$ is a hom-functor $\sSet\to\Top$ given by
 \[|S|=\Hom_\sSet(S,\Phi)=\colim_{\Delta[n]\to S}\Phi[n]\]
-where $\Phi$ is the cosimplicial space $\mathbf{\Delta}\to\Top$.
+where $\Phi$ is the cosimplicial space $\mathbf{\Delta}\to\Top$. An simplicial set is \textbf{$1$-connected} if its geometric realization is $1$-connected.
 \end{defn}
 
 \begin{prop}
@@ -321,7 +334,8 @@ Let $S$ be a simplicial set and $X$ be a space. Then
 \begin{align*}
 \sSet(S,\mathcal{S}_\bullet(X))&\cong\textstyle{\lim_{\Delta[n]\to S}\sSet(\Delta[n],\mathcal{S}_\bullet(X))}\\
 &\cong\textstyle{\lim_{\Delta[n]\to S}\mathcal{S}_n(X)}\\
-&\cong\textstyle{\lim_{\Delta[n]\to S}\Top(\Phi[n],X)}\cong\Top(|S|,X)
+&\cong\textstyle{\lim_{\Delta[n]\to S}\Top(\Phi[n],X)}\\
+&\cong\Top(|S|,X)
 \end{align*}
 where $\sSet(\Delta[n],\mathcal{S}_\bullet(X))\cong\mathcal{S}_n(X)$ is given by the Yoneda lemma.
 \end{proof}
@@ -354,7 +368,7 @@ Reader should be familiar with fibrations and cofibrations in $\Top$. In fact, t
     \item Serre fibrations as fibrations $\Fib$;
     \item the set of maps $I=\{S^{n-1}\hookrightarrow D^n:n\geq0\}$ generating cofibrations $\Cof$.
 \end{itemize}
-This is sometimes referred to as the $q$-model structure on $\Top$. It is \textit{cofibrantly generated}. The verification is not readily straightforward, and we refer to Quillen's original tome \cite{Quillen} for a detailed treatment.
+This is sometimes referred to as the $q$-model structure on $\Top$. It is \textit{cofibrantly generated}. The verification is not readily straightforward, and we refer to Quillen's original tome \cite{Quillen1} for a detailed treatment.
 \end{exmp}
 
 \begin{exmp}
@@ -410,9 +424,9 @@ In this section we describe the algebraic model of our interest. A key result is
 In what follows, let $R$ be a ring and $k$ be a field with characteristic $0$.
 
 \begin{defn}
-A \textbf{differential graded module} $M$ over $R$ is a $R$-module endowed with a cochain structure
+A \textbf{differential graded module} $M=\{M^{n}\}_{n\geq1}$ over $R$ is a $R$-module endowed with a cochain structure
 \[\begin{tikzcd}
-M_0\arrow[r,"d"]&M_1\arrow[r,"d"]&M_2\arrow[r,"d"]&\cdots
+M^0\arrow[r,"d"]&M^1\arrow[r,"d"]&M^2\arrow[r,"d"]&\cdots
 \end{tikzcd}.\]
 \end{defn}
 
@@ -450,6 +464,7 @@ Explicitly, $A$ is an object of $\mathbf{DGM}_R$ together with a unit $\eta:R\to
 	\arrow["\mu", from=1-2, to=2-2]
 \end{tikzcd}.\]
 The monoid is commutative in the sense of $\smash{a\cdot b=(-1)^{|a||b|}b\cdot a}$.
+The object $A$ is \textbf{1-connected} if $A^0=k$ and $A^1=0$.
 \end{defn}
 
 Chain maps $f$ between differential graded-commutative algebras respect the units $f\eta=\eta$ and products $f\mu=\mu(f\otimes f)$. Write $\dgcAlg_R$ for the category with differential graded-commutative algebras as objects and chain maps as morphisms.\medbreak
@@ -489,25 +504,27 @@ We will see later that $S(n)$ and $D(n-1)$ functions like $S^n$ and $D^{n-1}$ in
 \end{con}
 
 \begin{lem}
-For any graded vector spaces $V$ and $V'$ and any cdg-algebra $A$, the morphism $i:A\to A\otimes_kS(V)\otimes_kD(V')$ given by $a\mapsto a\otimes\eta\otimes\eta$ is a cofibration.
+For any graded vector spaces $V$ and $V'$ and any differential graded-commutative algebra $A$, consider the following morphisms:
+\begin{align*}
+i:A&\to A\otimes_kS(V)\otimes_kD(V')&j:A&\to A\otimes_kD(V)&l:S(V)\hookrightarrow D(V)\\
+a&\mapsto a\otimes\eta\otimes\eta& a&\mapsto a\otimes\eta.
+\end{align*}
+Then $i$ and $l$ are cofibrations, and $j$ is a weak equivalence.
 \end{lem}
-\begin{proof}
-The morphism $j:A\to A\otimes_kD(V)$ given by $a\mapsto a\otimes\eta$ is a weak equivalence. The inclusion $S(V)\hookleftarrow D(V)$ is a cofibration.
-\end{proof}
 
-\begin{proof}[Proof of Proposition 2.15]
+\begin{proof}[Proof of Proposition 2.30]
 The proof outlined here is taken from \cite{Gelfand-Manin}.\medbreak
 
-\textit{Limit Axiom.} We show that pushout and pullback exist in $\CDGA_k$. It's standard to verify that $\{(b,c):f(b)=g(c)\}$ is the pullback of $\smash{B\xrightarrow{f}A\xleftarrow{g}C}$. For pushout of $\smash{B\xleftarrow{f}A\xrightarrow{g}C}$, consider $B\otimes_AC$ together with inclusions $\eta\otimes\id:C\to B\otimes_AC$ and $\id\otimes\eta:B\to B\otimes_AC$ where $\eta$ is the unit.\medbreak
+\textit{Limit Axiom.} We show that pushout and pullback exist in $\dgcAlg_k$. It's standard to verify that $\{(b,c):f(b)=g(c)\}$ is the pullback of $\smash{B\xrightarrow{f}A\xleftarrow{g}C}$. For pushout of $\smash{B\xleftarrow{f}A\xrightarrow{g}C}$, consider $B\otimes_AC$ together with inclusions $\eta\otimes\id:C\to B\otimes_AC$ and $\id\otimes\eta:B\to B\otimes_AC$ where $\eta$ is the unit.\medbreak
 
-\textit{Factorization Axiom.} Let $f:A\to B$ be a morphism in $\CDGA_k$. We show that $\Fib\circ(\Cof\cap\W)=f=(\Fib\cap\W)\circ\Cof$.
+\textit{Factorization Axiom.} Let $f:A\to B$ be a morphism in $\dgcAlg_k$. We show that $\Fib\circ(\Cof\cap\W)=f=(\Fib\cap\W)\circ\Cof$.
 
 For the second equality consider the base case
 \[A\xrightarrow{j_0}C_0=A\otimes_kS(Z(B))\otimes_kD(B)\xrightarrow{q_0}B\]
 where $j_0=\id\otimes\eta\otimes\eta$ and $q_o:a\otimes z\otimes b\mapsto f(a)\alpha(z)\beta(b)$ and $\alpha$ corresponds to $\id:Z(B)\to Z(B)$ by previous discussion. Then $j_0\in\Cof$ by Lemma 2.16 and $q_0\in\Fib$ by definition. But instead of $q_0\in\W$, we can only guarantee that $q_0$ is surjective on cohomology.
 
 To fix this issue, we add generators to $C_n$ to kill cocycles in $C_n$. Suppose $\smash{A\xrightarrow{j_n}C_n\xrightarrow{q_n}B}$ has already been constructed. Let
-\[V_n=\{(c,b)\in C_n\oplus B:dc=0\textrm{ and }q_n(c)=db\}\textrm{ (with grading }\abs{(c,b)}=\abs{c})\]
+\[V_n=\{(c,b)\in C_n\oplus B:dc=0\textrm{ and }q_n(c)=db\}\textrm{ (with grading }|(c,b)|=|c|)\]
 contain the information we want to erase. We add generators to $C_n$ to construct $C_{n+1}$ in analogy to adding generators to $S(V_n)$ to construct $D(V_n)$. Formally, we construct $C_{n+1}$ as the pushout
 \[\begin{tikzcd}[column sep=large,row sep=large]
 S(V_n)\arrow[d,hookrightarrow]\arrow{r}{\alpha'}&C_n\arrow{d}{i_n}\arrow[ddr,bend left,"q_n"]&A\arrow[l,"j_n"']\\
@@ -516,7 +533,7 @@ D(V_n)\arrow[drr,bend right,"\beta'"]\arrow[r]&C_{n+1}\arrow[ul,phantom,"\ulcorn
 \end{tikzcd}\]
 where $\alpha'$ is the composition $S(V_n)\to S(V_n')\to C_n$ and $V_n'=\im(V_n\to C_n)$. Let $j_{n+1}=i_nj_n:A\to C_{n+1}$. The map $q_{n+1}:C_{n+1}\to B$ comes from the universality of pushout. The map $\beta'$ is the composition $D(V_n)\to D(V_n'')\to B$ where $V_n''=\im(V_n\to B)$. We have thus constructed $\smash{A\xrightarrow{j_{n+1}}C_{n+1}\xrightarrow{q_{n+1}}B}$.
 
-Finally let $C=\lim_n C_n$ and $j=\filtlim j_n:A\to C$. By Lemma 2.16 $\lambda\in\Cof$, and by xxx $i_n\in\Cof$. Hence $j_n\in\Cof$ for all $n$. Similarly let $q=\inverselim q_n:C\to B$, then $q$ is surjective on cohomology. By our construction $q$ is also injective on cohomology: any kernel in $H^\cdot(q_n)$ is becomes a boundary in $C_{n+1}$, and hence is trivial in $C$.
+Finally let $C=\lim_n C_n$ and $j=\lim j_n:A\to C$. By Lemma 2.16 $\lambda\in\Cof$, and by xxx $i_n\in\Cof$. Hence $j_n\in\Cof$ for all $n$. Similarly let $q=\lim q_n:C\to B$, then $q$ is surjective on cohomology. By our construction $q$ is also injective on cohomology: any kernel in $H^\cdot(q_n)$ is becomes a boundary in $C_{n+1}$, and hence is trivial in $C$.
 \medbreak
 
 \textit{Determination Axiom.} We forced $\Cof=(\Fib\cap\W)^r$ in the construction. It remains to show that $\smash{\Fib=(\Cof\cap\W)^l}$ and $\smash{\W=\Fib^r\circ\Cof^l}$. Let $f:A\to B$ and factorize $f$ to $\smash{A\xrightarrow{i}C\xrightarrow{p}B}$ where $i\in\Cof\cap\W$ and $p\in\Fib$. If $f\in(\Cof\cap\W)^r$, then there exists a lift $h:C\to A$ such that $p=fh$. Since $p$ is surjective, $f$ is surjective and $f\in\Fib$. Hence $(\Cof\cap\W)^r\subseteq\Fib$.
@@ -539,59 +556,56 @@ The inclusion $\smash{\W\subseteq\Fib^r\circ\Cof^l}$ is immediate. For the conve
 \textit{2-out-of-3 Axiom.} All isomorphisms of cdg-algebras are quasi-isomorphisms. The 2-out-of-3 property holds for quasi-isomorphisms.
 \end{proof}
 
-We want to be able to describe the cofibrations in $\CDGA_k$ explicitly, instead of defining it
-to satisfy the axioms of model category. These cofibrations are so-called relative Sullivan algebras.
+We want to be able to describe the cofibrations in $\dgcAlg_k$ explicitly, instead of merely defining it
+to satisfy the axioms of model category.
 
-\begin{defns}
-A \textbf{relative Sullivan algebra} is an inclusion $A\hookrightarrow A\otimes_k\Lambda V$ of cdga$_k$ where $V=\{V^i\}_{i\geq1}$ is a DGM$_k$ with filtration
-\[0=V(-1)\subseteq V(0)\subseteq V(1)\subseteq\cdots\]
-satisfying $V=\cup_{j\geq0}V(j)$ and $dV(n)\subseteq A\otimes_k\Lambda V(n-1)$ for all $n\geq0$.
+\begin{defn}
+A \textbf{relative Sullivan algebra} is an inclusion $A\hookrightarrow A\otimes_k\Lambda V$ of differential graded-commutative algebras where $V=\{V^i\}_{i\geq1}$ is a differential graded module with filtration
+\[0=V(-1)\subseteq V(0)\subseteq V(1)\subseteq\cdots\bigcup_{n\geq0}V(n)=V\]
+satisfying $dV(n)\subseteq A\otimes_k\Lambda V(n-1)$ for all $n\geq0$. A relative Sullivan algebra is \textbf{minimal} if $\im d\subseteq\Lambda^{\geq2}V$, subspace of words of length at least two. A \textbf{Sullivan algebra} is a relative Sullivan algebra with $A=k$.
+\end{defn}
 
-A map $f:A\otimes_k\Lambda V\to A'\otimes_k\Lambda V'$ is a morphism of relative Sullivan algebras if it's restriction to $A$ and $A'$ is a morphism of cdga$_k$s:
-\[\begin{tikzcd}
+\begin{lem}
+A $1$-connected minimal Sullivan algebra can be filtered by degree.
+\end{lem}
+\begin{proof}
+Take $V(n)=V^{\leq n}$. Since $\im d\subseteq\Lambda^{\geq2}V$, for $v\in V^n$ suppose that $dv=x\cdot y$ for $x,y\in\Lambda V$. Then $|x|+|y|=|x\cdot y|=n+1$. But $|x|,|y|\geq2$ since $\Lambda V$ is $1$-connected. Hence $|x|,|y|\leq n-1$, which means that $dV(n)\subseteq\Lambda V(n-1)$, and that $\Lambda V$ is indeed a Sullivan algebra.
+\end{proof}
+
+A morphism $f:A\otimes_k\Lambda V\to A'\otimes_k\Lambda V'$ of relative Sullivan algebra is a morphism of differential graded-commutative algebras when restricted to the base algebras $A$:
+\[\begin{tikzcd}[row sep=large]
 A\arrow[d,hookrightarrow]\arrow[r,"f|_A"]&A'\arrow[d,hookrightarrow]\\
 A\otimes_k\Lambda V\arrow[r,"f"]&A'\otimes_k\Lambda'
 \end{tikzcd}.\]
 
-A \textbf{Sullivan algebra} is a relative Sullivan algebra with $A=k$. A relative Sullivan algebra is \textbf{minimal} if $\im d\subseteq\Lambda^{\geq2}V$, subspace of words of length at least two.
-\end{defns}
-
-Relative Sullivan algebras can also be built inductively similar to CW complexes by gluing disks algebras along sphere algebras. In the proof of factorization axiom in Proposition 2.15 this equivalent to adding generators to kill cocycles: if $A$ is an differential graded module over $k$ with $x\in Z^n(A)$, then $A\otimes_k\Lambda V$ with $V=\{y\}$ and $dy=x$ is the pushout of $D(V)\leftarrow S(V)\rightarrow A$.
-
-A relative Sullivan algebra is an inclusion $A\hookrightarrow X$ of differential graded algebras over $k$ with a filtration
-\[A=X(0)\subseteq X(1)\subseteq\cdots\]
-satisfying $X=\cup_{j\geq0}X(j)$, where each $X(j)$ is obtained as the pushout of $D(V^j)\leftarrow S(V^j)\rightarrow X(j-1)$ for some differential graded module $V=\{V^i\}_{i\geq1}$.
+\begin{rem}
+Relative Sullivan algebras can also be built inductively like CW complexes by gluing sphere algebras $S(V)$ along disk algebras $D(V)$. This is the notion of ``adding generators to kill cocycles", as seen in the proof of Proposition 2.15. Explicitly, a relative Sullivan algebra $A\hookrightarrow X$ comes from a filtration
+\[A=X(0)\subseteq X(1)\subseteq\cdots\bigcup_{n\geq0}X(n)=X\]
+where each $X(n)$ is built as the pushout of $D(V^n)\leftarrow S(V^n)\rightarrow X(n-1)$ for some differential graded module $V=\{V^n\}_{n\geq1}$.
+\end{rem}
 
 \begin{prop}
-Relative Sullivan algebras are cofibrations and Sullivan algebras are cofibrant in the $q$-model structure of $\CDGA_k$.
+In the model category $\dgcAlg_k$, the relative Sullivan algebras are the cofibrations, and Sullivan algebras are cofibrant.
 \end{prop}
+\begin{proof}
+
+\end{proof}
 
 \begin{defn}
-Let $f\in\Hom_{\CDGA_k}(A,B)$. A \textbf{Sullivan model} for $f$ is a relative Sullivan algebra $A\hookrightarrow M$ together with a quasi-isomorphism $M\sim B$.
+Let $f\in\Hom_{\dgcAlg_k}(A,B)$. A \textbf{Sullivan model} for $f$ is a relative Sullivan algebra $A\hookrightarrow M_B$ together with a quasi-isomorphism $M_B\simeq B$. Diagrammatically,
 \[\begin{tikzcd}
 A\arrow[dr,hookrightarrow]\arrow[rr,"f"]&&B\\
-&M\arrow[ur,"\sim"']
-\end{tikzcd}\]
-A Sullivan model is \textbf{minimal} if $A$
+&M_B\arrow[ur,"\simeq"']
+\end{tikzcd}.\]
 \end{defn}
 
-Minimal Sullivan model plays.
-
 \begin{prop}
-Every $f\in\Hom_{\CDGA_k,1}(A,B)$ admits a minimal Sullivan model which is unique up to isomorphism.
-\[\begin{tikzcd}[row sep=large]
-	A && B \\
-	M && {M'}
-	\arrow["f","\cong"', from=1-1, to=1-3]
-	\arrow["\sim" near start, from=2-1, to=1-3]
-	\arrow["\sim"' near start, from=2-3, to=1-1]
-	\arrow["\cong"',dashed, from=2-1, to=2-3]
-	\arrow[from=1-1,hookrightarrow, to=2-1]
-	\arrow[from=1-3,hookrightarrow, to=2-3]
-\end{tikzcd}\]
+Every $f\in\Hom_{\dgcAlg_k,1}(A,B)$ admits a minimal Sullivan model which is unique up to isomorphism.
 \end{prop}
+\begin{proof}
 
-\newpage
+\end{proof}
+
 \subsection{The second Quillen equivalence}
 
 In this section we prove the equivalence
@@ -600,7 +614,6 @@ of homotopy theories. We begin by constructing a functor from $\sSet$ to $\dgcAl
 
 \begin{defn}
 The \textbf{polynomial differential form} $\Omega^\bullet_\textrm{poly}$ is a simplicial object in $\dgcAlg_k$ (that is, a functor $\mathbf{\Delta}^\textrm{op}\to\dgcAlg_k$) given by
-
 \[\Omega^\bullet[n]=\Omega^n_\textrm{poly}=\Lambda(t_0,\cdots,t_n,dt_0,\cdots,dt_n)/\left(\sum_{i=0}^nt_i=1,\sum_{i=0}^ndt_i=0\right)\]
 where $|t_i|=0$ and $|dt_i|=1$.
 \end{defn}
@@ -613,21 +626,21 @@ t_k,&k<i\\0,&k=i\\t_{k-1},&k>i
 t_k,&k<i\\t_k+t_{k+1},&k=i\\t_{k+1},&k>i
 \end{cases}.\]
 
-In addition to the simplicial structure, $\Omega^\bullet_\textrm{poly}$ also carries a grading structure as an algebra. We encode this structure in the subscript and write $\Omega^\bullet_{\textrm{poly},p}$ for the subspace of homogeneous elements of $\Omega^\bullet_\textrm{poly}$ of degree $p$. This subspace is a $k$-module.
+\bigbreak In addition to the simplicial structure, $\Omega^\bullet_\textrm{poly}$ also carries a grading structure as an algebra. We encode this structure in the subscript and write $\Omega^\bullet_{\textrm{poly},p}$ for the $k$-module of homogeneous elements of $\Omega^\bullet_\textrm{poly}$ of degree $p$.
 
 \begin{lem}
 For any $p\geq0$, $\Omega^\bullet_{\mathrm{poly},p}$ is a trivial Kan complex.
 \end{lem}
 \begin{proof}
-For any $p\geq0$, $\Omega^\bullet_{\textrm{poly},p}$ is a simplicial $k$-module, and thus a Kan complex. By a theorem of Eilenberg-Mac Lane, the homotopy groups of $\Omega^\bullet_{\textrm{poly},p}$ corresponds to the homology groups of the alternating face map complex
+This is a consequence of several theorems in simplicial homotopy theory. We state these theorems without proof.\medbreak
 
+Since $\Omega^\bullet_{\textrm{poly},p}$ is a simplicial $k$-module, it is a Kan complex. By a theorem of Eilenberg-Mac Lane, the homotopy groups of $\Omega^\bullet_{\textrm{poly},p}$ corresponds to the homology groups of the alternating face map complex
 \[\begin{tikzcd}
 \cdots\arrow[r]&\Omega^2_p\arrow[r,"\partial_2"]&\Omega^1_p\arrow[r,"\partial_1"]&\Omega^0_p\end{tikzcd}\]
-with differential given by $\partial_n=\sum_{i=1}^n(-1)^i\delta_i$. Define shifting chain maps $\{s_n:\Omega^n_{\textrm{poly},p}\to\Omega^{n+1}_{\textrm{poly},p}\}_{n}$ given by $s_n(1)=(1-t_0)^2$ and $s_n(t_i)=(1-t_0)t_{i+1}$ for $0\leq i\leq n$. It's standard to verify that $s_n$ is a degeneracy map, Goerss-Jardin 201. 
+with differential given by $\partial_n=\sum_{i=1}^n(-1)^i\delta_i$. Define maps $s_n:\Omega^n_{\textrm{poly},p}\to\Omega^{n+1}_{\textrm{poly},p}$ by $s_n(1)=(1-t_0)^2$ and $s_n(t_i)=(1-t_0)t_{i+1}$ for $0\leq i\leq n$. It's standard to verify that $s_n$ is a degeneracy map. Finally, an extra degeneracy renders $\Omega^\bullet_{\textrm{poly},p}$ trivial.
 \end{proof}
 
 Now we can extend $\Omega^\bullet_\textrm{poly}:\mathbf{\Delta}^\textrm{op}\to\dgcAlg_k$ along $\mathbf{\Delta}^\textrm{op}\to\sSet$ via the left Kan extension. This establishes a functor $\sSet\to\dgcAlg_k$:
-
 \[\begin{tikzcd}
 \mathbf{\Delta}^\textrm{op}\arrow[swap]{dr}{\Delta}\arrow{rr}{\Omega^\bullet_\textrm{poly}}&&\dgcAlg_k\\
 &\sSet\arrow[swap,near start,dashed]{ur}
@@ -635,15 +648,13 @@ Now we can extend $\Omega^\bullet_\textrm{poly}:\mathbf{\Delta}^\textrm{op}\to\d
 
 \begin{defn}
 For any simplicial set $S$, the \textbf{PL de Rham complex} $\Omega^\bullet$ is a hom-functor $\sSet\to\dgcAlg_k^\mathrm{op}$ given by
-\[\Omega^\bullet(S)=\Hom_\sSet(S,\Omega^\bullet_\textrm{poly}).\]
-Alternatively, we can define $\Omega^\bullet(S)=\lim_{\Delta[n]\to S}\Omega^n_\textrm{poly}$. See xxx for the detail.
+\[\Omega^\bullet(S)=\Hom_\sSet(S,\Omega^\bullet_\textrm{poly})=\textstyle{\lim_{\Delta[n]\to S}\Omega^n_\textrm{poly}}.\]
 \end{defn}
 
 The integration $\int$ maps smooth differential $p$-forms to $p$-cochains. By Stokes' theorem, $\int$ is a chain map between the de Rham complex and the singular cochain complex. The classical de Rham's theorem asserts that $\int$ induces isomorphism on cohomology. The analogy for polynomial forms is explain below.
 
 \begin{con}
 Let $S$ be a simplicial set and $x\in S$ a simplex. Let $f\in\Omega^p(S)$ be a polynomial $p$-form on $S$. Define an integration map $\oint_p:\Omega^p(S)\to C^p(S;k)$ by
-
 \[(\oint_pf)(x)=\int_{\Delta[p]}f(x)\]
 where $f(x)=\hat{f}(x)dt_1\cdots dt_p$ and $\hat{f}(x)\in\Q[t_1,\cdots,t_p]$. The collection $\oint=\{\oint_p\}_{p\geq0}$ defines a chain map from $\Omega^\bullet(S)$ to $C^\bullet(S;k)$ by the Stokes' theorem.
 \end{con}
@@ -654,25 +665,27 @@ For a simplicial set $S$, the integration map $\oint:\Omega^\bullet(S)\to C^\bul
 \begin{proof}
 Since any simplicial set $S$ has a skeletal filtration
 \[\emptyset=S^{(-1)}\subseteq S^{(0)}\subseteq\cdots\subseteq S=\textstyle{\colim_nS^{(n)}}\]
-where $S^{(n)}$ is generated by non-degenerate simplices of $S$ of degree at most $n$, we will use skeleta induction for the proof.\medbreak
+where $S^{(n)}$ is generated by non-degenerate simplices of $S$ of degree at most $n$, we will perform induction on degrees for this proof.\medbreak
 
-\textit{First step.} The goal is to prove the theorem for $S=\Delta[n]$ for any $n$. The limit construction gives $\smash{\Omega^\bullet_\textrm{PLdR}(\Delta[n])=\Omega^n_\textrm{poly}}$, and the natural identification
+\textit{First step.} The goal is to prove the theorem for $S=\Delta[n]$ for any $n$. The limit construction gives $\Omega^\bullet(\Delta[n])=\Omega^n_\textrm{poly}$, and the natural identification
 \begin{align*}
 \Lambda(t_0,\cdots,t_n,dt_0,\cdots,dt_n)/\left(\sum_{i=0}^nt_i=1,\sum_{i=0}^ndt_i=0\right)=\Lambda(t_1,\cdots,t_n,dt_1,\cdots,dt_n)
 \end{align*}
 identifies $\Omega^n_\textrm{poly}$ with the tensor product of $n$ copies of $\Lambda(t,dt)=\Omega^1_\textrm{poly}$. Since $\Omega^1_\textrm{poly}$ has trivial cohomology, so does $\smash{\Omega^n_\textrm{poly}}$ by the Künneth formula. The chain map $\smash{\oint}_n$ takes the trivial class in $\smash{\Omega^n_\textrm{poly}}$ to the trivial class in $\smash{C^n(\Delta[n],k)}$, thus inducing isomorphism on cohomology.\medbreak
 
 \textit{Second step.}
-Any simplicial set $S$ has a skeletal filtration
-\[\emptyset=S^{(-1)}\subseteq S^{(0)}\subseteq\cdots\subseteq S=\textstyle{\colim_nS^{(n)}}\]
-where $S^{(n)}$ is generated by non-degenerate simplices of $S$ of degree at most $n$. The base case $\Omega^\bullet_\textrm{PLdR}(S^{(0)})\simeq C^\bullet(S^{(0)};k)$ is trivial. Now suppose the claim is true for $S^{(n-1)}$, then $S^{(n)}$ is obtained by gluing copies of $\Delta[n]$, which appears as a pushout of the form $\coprod\Delta[n]\leftarrow\coprod\partial\Delta[n]\rightarrow S$. Consider the cube diagram:
+The base case $\Omega^\bullet(S^{(0)})\simeq C^\bullet(S^{(0)};k)$ is trivial. Suppose the claim is also true for $S^{(n-1)}$. Note that $S^{(n)}$ is obtained by gluing copies of $\Delta[n]$, which appears as a pushout of the form $\coprod\Delta[n]\leftarrow\coprod\partial\Delta[n]\rightarrow S$. We apply $\Omega^\bullet$ and $C^\bullet$ to this pushout square and obtain the following cube diagram:
 \[\begin{tikzcd}[column sep=scriptsize]
-\Omega^\bullet_\textrm{PLdR}(S^{(n)})\arrow[dd]\arrow[dr]\arrow[rr]&&\Omega^\bullet_\textrm{PLdR}(\Delta[n])\arrow[dd,dashed,two heads]\arrow[dr,"\simeq"]\\
-&C^\bullet(S^{(n)};k)\arrow[dd]\arrow[rr]&&C^\bullet(\Delta[n];k)\arrow[dd,two heads]\\
-\Omega^\bullet_\textrm{PLdR}(S^{(n-1)})\arrow[dr,"\simeq"']\arrow[rr,dashed]&&\Omega^\bullet_\textrm{PLdR}(\partial\Delta[n])\arrow[dr,dashed,"\simeq"]\\
+\Omega^\bullet(S^{(n)})\arrow[dd]\arrow[dr]\arrow[rr]&&\Omega^\bullet(\Delta[n])\arrow[dd,two heads]\arrow[dr,"\simeq"]\\
+&C^\bullet(S^{(n)};k)\arrow[rr,crossing over]&&C^\bullet(\Delta[n];k)\arrow[dd,two heads]\\
+\Omega^\bullet(S^{(n-1)})\arrow[dr,"\simeq"']\arrow[rr]&&\Omega^\bullet(\partial\Delta[n])\arrow[dr,"\simeq"]\\
 &C^\bullet(S^{(n-1)};k)\arrow[rr]&&C^\bullet(\partial\Delta[n];k)
-\end{tikzcd}.\]
-The front and back squares are pullbacks, since both $\Omega^\bullet_\textrm{PLdR}$ and $C^\bullet$ are contravariant functors that preserve (co)limits. The contravariance also sends inclusions (which are cofibrations in $\sSet$) to surjections (which are fibrations in $\dgcAlg_k$). The front and back squares are connected by $\oint$. The bottom horizontal quasi-isomorphisms are obtained from inductive assumption (noticing that $\partial\Delta[n]$ is an $(n-1)$-skeleton. The upper-right quasi-isomorphism follows from the First step. The cube lemma then completes the induction $\Omega^\bullet_\textrm{PLdR}(S^{(n)})\simeq C^\bullet(S^{(n)};k)$.
+\arrow[from=2-2, to=4-2,crossing over]
+\end{tikzcd}.\]\bigbreak
+
+The front and back squares are connected by $\oint$. They are both pullbacks quares since both $\Omega^\bullet$ and $C^\bullet$ are contravariant functors that preserve colimits. Moreover, since $\Delta[n]\to\partial\Delta[n]$ is a cofibration in $\sSet$, the two vertical arrows on the right are fibrations in $\dgcAlg_k$.
+
+We proved the quasi-isomorphism on the upper right corner in the first step. The quasi-isomorphisms on the bottom follow from the inductive assumption. By the cube lemma we obtain the fourth isomorphism $\Omega^\bullet(S^{(n)})\simeq C^\bullet(S^{(n)};k)$.
 \end{proof}
 
 We have hitherto constructed a functor $\Omega^\bullet:\sSet\to\dgcAlg^\textrm{op}_k$. We now define its right adjoint functor. This can also be done by Kan extension.
@@ -682,47 +695,58 @@ For $A$ a differential graded-commutative algebra over $k$, define $\mathcal{K}_
 \[\mathcal{K}_\bullet(A)=\Hom_{\dgcAlg_k}(A,\Omega^\bullet_\textrm{poly}).\]
 Then $\mathcal{K}_\bullet$ is right adjoint to $\Omega^\bullet$, as shown by the following calculation:
 \begin{align*}
-\dgcAlg_k(A,\Omega^\bullet(S))&\cong\dgcAlg_k(A,\textstyle{\lim_{\Delta[n]\to S}\Omega_\textrm{poly}^\bullet}) \\
+\dgcAlg_k(A,\Omega^\bullet(S))&\cong\colim_{\Delta[n]\to S}\dgcAlg_k(A,\Omega^n_\textrm{poly})\\
 &\cong\colim_{\Delta[n]\to S}\mathcal{K}_n(A)\\
-&\cong\colim_{\Delta[n]\to S}\sSet(\mathcal{K}(A),\Delta[n])\quad\textrm{(Yoneda lemma)}\\
-&\cong\sSet(\mathcal{K}(A),S).
+&\cong\colim_{\Delta[n]\to S}\sSet(\mathcal{K}(A),\Delta[n])\\
+&\cong\sSet(\mathcal{K}(A),S),
 \end{align*}
+where $\mathcal{K}_n(A)\cong\sSet(\mathcal{K}(A),\Delta[n])$ is given by the co-Yoneda lemma.
 \end{con}
 
 \begin{prop}
 The adjunction $\Omega^\bullet\dashv\mathcal{K}_\bullet$ is a Quillen adjunction.
 \end{prop}
 \begin{proof}
-We show that $\Omega^\bullet$ preserves cofibrations and acyclic cofibrations. We only need to check this for generating sets $I$ and $J$.\medbreak
+We show that $\Omega^\bullet$ preserves cofibrations and acyclic cofibrations. We only need to check this for generating cofibrations $\partial\Delta[n]\hookrightarrow\Delta[n]$ and generating acyclic cofibrations $\Lambda^i[n]\hookrightarrow\Delta[n]$.
+\medbreak
 
-\textit{Preserving cofibrations.} We need to show that the inclusions $\partial\Delta[n]\hookrightarrow\Delta[n]$ are sent to degreewise surjections in $\dgcAlg_k$. Moerdijk 29.\medbreak
+\textit{Preserving cofibrations.} We need to show that $\Omega^\bullet(\Delta[n])\to\Omega^\bullet(\partial\Delta[n])$ is a degreewise surjections in $\dgcAlg_k$. For an element $\varphi\in\Omega^\bullet(\partial\Delta[n])$ of degree $p$, this amounts to finding a lift $\Delta[n]\to\Omega^\bullet_{\textrm{poly},p}$:
+\[\begin{tikzcd}
+\partial\Delta[n]\arrow[d,hookrightarrow]\arrow[r,"\varphi"]&\Omega^\bullet_{\textrm{poly},p}\\
+\Delta[n]\arrow[ur,dashed]
+\end{tikzcd}.\]
+By Lemma 2.40, $\Omega^\bullet_{\textrm{poly},p}$ is a trivial Kan complex. Hence such lift always exists.\medbreak
 
-\textit{Preserving acyclic cofibrations.} f
+\textit{Preserving acyclic cofibrations.} We need to show that $\Omega^\bullet(\Delta[n])\to\Omega^\bullet(\Lambda^i[n])$ is a quasi-isomorphism. On the singular cochain level, $C^\bullet(\Delta[n])\to C^\bullet(\Lambda^i[n])$ is a quasi-isomorphism. By the PL de Rham's theorem $\Omega^\bullet(\Delta[n])\simeq C^\bullet(\Delta[n])$ and $\Omega^\bullet(\Lambda^i[n])\simeq C^\bullet(\Lambda^i[n])$. Everything else follows.
 \end{proof}
 
-In PL de Rham's theorem we see how $\Omega^\bullet$ relates to ordinary cohomology. In the following lemma we investigate the homotopy groups of $\mathcal{K}_\bullet$. We omit the proof.
+In PL de Rham's theorem we calculated the cohomology of $\Omega^\bullet$. In the following lemma we investigate the homotopy groups of $\mathcal{K}_\bullet$.
 
 \begin{lem}
-Let $A=\Lambda V$ be a cofibrant object in $\dgcAlg_{k,1}$. Then there is a group isomorphism $\pi_n\mathcal{K}_\bullet(A)\cong\Hom_k(V^n,k)$.
+Let $A=\Lambda V$ be a $1$-connected minimal algebra. Then there is a group isomorphism $\pi_n\mathcal{K}_\bullet(A)\cong\Hom_k(V^n,k)$. In particular if $V $is generated by one element of degree $n$, then $\mathcal{K}_\bullet(A)$ has the homotopy type of an Eilenberg-MacLane space $K(V^\ast,n)$, where $V^\ast$ is the dual space of $V$.
 \end{lem}
-
-\begin{cor}
-If $V$ is generated by one element of degree $n$ and $A=\Lambda V$ is a minimal algebra, then $\mathcal{K}_\bullet(A)$ has the homotopy type of an Eilenberg-MacLane space $K(V^\ast,n)$, where $V^\ast$ is the dual space of $V$.
-\end{cor}
 
 Recall that for a Quillen functor, its left and right derived functor are obtained by restricting to cofibrant and fibrant objects respectively. The following construction allows to compare the homotopy theories of $\sSet$ and $\dgcAlg_k$.
 
 \begin{con}
-Since every object $S$ of $\sSet$ is cofibrant, the left derived functor of $\Omega^\bullet$
+Since every object of $\sSet$ is cofibrant, the left derived functor
 \[\mathbf{L}\Omega^\bullet:\Ho(\sSet)\to\Ho(\dgcAlg_k^\textrm{op})\]
-corresponds with $\Omega^\bullet$. That is, $\mathbf{L}\Omega^\bullet(S)=\Omega^\bullet(S^\textrm{cof})=\Omega^\bullet(S)$.
+of $\Omega^\bullet$ corresponds with $\Omega^\bullet$. That is, $\mathbf{L}\Omega^\bullet(S)=\Omega^\bullet(S^\textrm{cof})=\Omega^\bullet(S)$.
 
-As proved in Corollary 4.12, every minimal model $M_A$ is cofibrant in $\dgcAlg_k$ (and hence fibrant in the opposite category). The right derived functor of $\mathcal{K}_\bullet$
+Since every minimal model $M_A$ is cofibrant in $\dgcAlg_k$ (and hence fibrant in the opposite category), the right derived functor
 \[\mathbf{R}\mathcal{K}_\bullet:\Ho(\dgcAlg_k^\textrm{op})\to\Ho(\sSet)\]
-is obtained by $\mathbf{R}\mathcal{K}_\bullet(A)=\mathcal{K}_\bullet(A^\textrm{fib})=\mathcal{K}_\bullet(M_A)$.
+of $\mathcal{K}_\bullet$ is obtained by $\mathbf{R}\mathcal{K}_\bullet(A)=\mathcal{K}_\bullet(A^\textrm{fib})=\mathcal{K}_\bullet(M_A)$.
 \end{con}
 
 Finally, we wish to show that the adjunction $\Omega^\bullet\dashv\mathcal{K}_\bullet$ is a Quillen equivalence, so that the derived functors induces an equivalence on the homotopy categories. We show that by proving that the adjunction counit and unit are weak equivalences.
+
+\begin{defn}
+An object in $\Top$, $\sSet$, or $\dgcAlg_K$ is of \textbf{finite type} if the corresponding cohomology groups $H^n(X;\Q)$, $H^n(|S|;\Q)$, or $H^n(A)$ are finite-dimensional in each degree.
+\end{defn}
+
+\begin{rem}
+minimal model
+\end{rem}
 
 \begin{prop}
 The derived adjunction counit $\Bar{\epsilon}:\mathbf{L}\Omega^\bullet(\mathcal{K}_\bullet(A))\to A$ is a weak equivalence in $\dgcAlg_{\Q,1,f}$.  
@@ -731,9 +755,9 @@ The derived adjunction counit $\Bar{\epsilon}:\mathbf{L}\Omega^\bullet(\mathcal{
 
 The derived adjunction counit is the composition of the normal adjunction counit $\epsilon$ with a cofibrant replacement:
 \[\Bar{\epsilon}:\mathbf{L}\Omega^\bullet(\mathcal{K}_\bullet(A))=\Omega^\bullet(\mathcal{K}_\bullet(A)^\textrm{cof})\longrightarrow\Omega^\bullet(\mathcal{K}_\bullet(A))\xrightarrow{\ \epsilon\ }A.\]
-The cofibrant replacement is trivial since every object is cofibrant in $\sSet$. The proof is by degreewise induction, bearing similarities to that of Proposition 2.12.\medbreak
+The cofibrant replacement is trivial since every object is cofibrant in $\sSet$. The proof is by degreewise induction, similar to the proof of PL de Rham's theorem.\medbreak
 
-\textit{Base case.} Let $A=\Lambda V$ be a minimal algebra with $V$ generated by one element $v$ of degree $n$. By Corollary 2.16 we have $\mathcal{K}_\bullet(A)\simeq K(\Q,n)$, and the cohomology of which is $\Q[x]$, the free graded-commutative algebra on one generator $x$. This can be calculated via spectral sequences, first replacing $K(\Q,n)$ with $K(\Z,n)$ since $\Z\hookrightarrow\Q$ induces rational homotopy equivalence. Let $z\in\Omega^\bullet(\mathcal{K}_\bullet(A))$ by a cycle representing $x$, and the map $\Omega^\bullet(\mathcal{K}_\bullet(A))\to A$ defined by $z\mapsto v$ is a quasi-isomorphism.\medbreak
+\textit{Base case.} Let $A=\Lambda V$ be a minimal algebra with $V$ generated by one element $v$ of degree $n$. By Lemma 2.46 we have $\mathcal{K}_\bullet(A)\simeq K(\Q,n)$, and the cohomology of which is $\Q[x]$, the free graded-commutative algebra on one generator $x$. This can be calculated via spectral sequences, first replacing $K(\Q,n)$ with $K(\Z,n)$ since $\Z\hookrightarrow\Q$ induces rational homotopy equivalence. Let $z\in\Omega^\bullet(\mathcal{K}_\bullet(A))$ by a cycle representing $x$, and the map $\Omega^\bullet(\mathcal{K}_\bullet(A))\to A$ defined by $z\mapsto v$ is a quasi-isomorphism.\medbreak
 
 \textit{Inductive step.} Let $A$ be a cofibrant object for which the theorem holds. If $B$ is obtained by the pushout of $\Lambda D(m-1)\leftarrow\Lambda S(m)\rightarrow A$, we prove that the theorem also holds for $B$. Apply $\Omega^\bullet\mathcal{K}_\bullet$ to the pushout square to get a cube:
 \[\begin{tikzcd}[column sep=scriptsize]
@@ -764,32 +788,140 @@ The derived adjunction unit is the composition of the normal adjunction unit $\e
 \[S\xrightarrow{\ \eta\ }\mathcal{K}_\bullet(\Omega^\bullet(S))\longrightarrow\mathcal{K}_\bullet(\Omega^\bullet(S)^\textrm{fib})=\mathbf{R}\mathcal{K}_\bullet(\Omega^\bullet(S))=\mathcal{K}_\bullet(M_{\Omega^\bullet(S)}).\]
 In prop 2.14 we've shown that $\Omega^\bullet$ preserves weak equivalences. Hence $\Bar{\eta}$ is a weak equivalence if and only if
 \[\Omega^\bullet(\Bar{\eta}):\Omega^\bullet(S)\to\Omega^\bullet(\mathcal{K}_\bullet(M_{\Omega^\bullet(S)}))\]
-is a quasi-isomorphism. Since $M_{\Omega^\bullet(S)}$ is a minimal algebra, by Proposition 2.17 $\Omega^\bullet(\mathcal{K}_\bullet(M_{\Omega^\bullet(S)}))\simeq M_{\Omega^\bullet(S)}$. Finally, $M_{\Omega^\bullet(S)}\simeq\Omega^\bullet(S)$ by definition of minimal model. Hence $\Omega^\bullet(\Bar{\eta})$ is a quasi-isomorphism.
+is a quasi-isomorphism. Since $M_{\Omega^\bullet(S)}$ is a minimal algebra, by Proposition 2.50 $\Omega^\bullet(\mathcal{K}_\bullet(M_{\Omega^\bullet(S)}))\simeq M_{\Omega^\bullet(S)}$. Finally, $M_{\Omega^\bullet(S)}\simeq\Omega^\bullet(S)$ by definition of minimal model. Hence $\Omega^\bullet(\Bar{\eta})$ is a quasi-isomorphism.
 \end{proof}
 
 \begin{cor}
 efe
 \end{cor}
 
-\begin{remark}
+\begin{rem}
 We only restrict
-\end{remark}
+\end{rem}
 
 %\section{Rational Homotopy Theory: A Higher Perspective}
 
 \section{Realizing polynomial cohomology rings}
 
+\textcolor{red}{Warning: this section is unfinished}
+
+\subsection{Prime completion of finite loop spaces}
+
+A principal $G$-bundle $p:E\to B$ where $G$ acts trivially on $B$ satisfies the local triviality condition: for a well chosen cover $\mathcal{U}$ of $B$ there is a $G$-homeomorphism $\varphi_U:p^{-1}(U)\to U\times G$ for any $U\in\mathcal{U}$ such that the diagram on the left commutes.
+\[\begin{tikzcd}
+p^{-1}(U)\arrow[d,"p"']\arrow[r,"\varphi_U"]&U\times G\arrow[dl]\\
+U
+\end{tikzcd}\]
+In other words, a principal $G$-bundle $E\to B$ consists of a locally trivial free $G$-space $E$ with orbit space $B$.
+
+There exists a universal $G$-bundle $EG\to B$ such that for any space $X$ there is an isomorphism $\varphi:[X,B]\to P_G$ by $f\mapsto f^\ast EG$ where $P_GX$ is the isomorphism class of principal $G$-bundles over $X$. Such $B$ is called the classifying space of $G$ and denoted $\B G$.
+
+Under mild conditions (such as paracompactness or countability) $G\to EG\to\B G$ is a fibration, and from
+\[\begin{tikzcd}
+G\arrow[r]\arrow[d]&EG\arrow[r]\arrow[d]&\B G\arrow[d]\\
+\Omega\B G\arrow[r]&\mathcal{P}\B G\arrow[r]&\B G
+\end{tikzcd}\]
+we see that $G$ is weak homotopy equivalent to $\Omega\B G$, taking $EG$ to be contractible.
+
+A finite loop space consists of a space $X$ and its classifying space $\B X$ such that $X$ is homotopy equivalence to $\Omega\B X$. A $p$-compact group $X$ is a finite loop space such that\begin{enumerate}[(a)]
+    \item $\B X$ is $\mathrm{F_p}$-local
+    \item $H^i(X,\F_p)$ is finite for all $i$
+\end{enumerate}
+taking $\mathrm{F_p}$ to be the class of $\F_p$-equivalences.
+
+\subsection{The arithmetic fracture theorem: from local to global}
+
+\begin{prop}
+Let $R$ be a commutative Noetherian ring of finite Krull dimension and $p\in R$ a non-unit prime. If $H^\ast(X;R)$ is a polynomial $R$-algebra of finite type, then $H^\ast(X;\F_p)$ is a polynomial $\F_p$-algebra of the same type.
+\end{prop}
+\begin{proof}
+The key identity of the proof is
+\begin{equation}\label{key} H^\ast(X;R)\otimes_R (R/pR)\cong H^\ast(X;R/p)\cong H^\ast(X;\F_p)\otimes_{\F_p}(R/pR).
+\end{equation}
+Assume (\ref{key}) is correct, \medbreak
+
+The first identity of (\ref{key}) is ring-theoretical. Apply universal coefficient theorem to both sides, the $\mathrm{Ext}$-terms vanish since $H^\ast(X;R)$ is free over $R$
+\end{proof}
+
+
+\begin{prop}
+Let $I$ be a set of primes and $J$ the set of primes not in $I$. If for each $p\in I$ there is a space $B_p$ such that $H^\ast(B_p;\F_p)$ is a polynomial $\F_p$-algebra of finite even type, then there exists a $1$-connected space $Y$ of finite type such that $H^\ast(Y;\Z[J^{-1}])$ is a polynomial $\Z[J^{-1}]$-algebra of the same type.
+\end{prop}
+
+Let $B_p$ be $\F_p$-complete and $H^\ast(B_p;\Z_p)$ be a polynomial algebra over $\Z_p$ with generators of degrees $2d_1,2d_2,\cdots,2d_r$, where $\Z_p$ is the ring of $p$-adic integers. If $p>\max\{d_1,\cdots,d_r\}$, then
+\[\pi_n(B_p)\cong\pi_{n-1}\left((S^{2d_1-1}\times\cdots\times S^{2d_r-1})_p^\wedge\right)\]\medbreak
+
+\noindent Let $P$ be a set of primes and $Y$ be the homotopy pullback of in the following:
+\[\begin{tikzcd}
+Y\arrow[r]\arrow[d]&\prod_{p\in P}B_p\arrow[d]\\
+K\arrow[r,"f"]&(\prod_{p\in P}B_p)_\Q
+\end{tikzcd}\]
+where $B_p$ is $\F_p$-complete, $K=K(\Z[P^{-1}],2d_1)\times\cdots\times K(\Z[P^{-1}],2d_r)$, and $f$ is induced by $\Z[P^{-1}]\to\Q\to(\prod_{p\in P}\Z_p)\otimes\Q$. We want to find a description of $Y$ using Mayer-Vietoris sequence of homotopy.\medbreak
+
+\noindent The correct answer: $\pi_n(Y)=(\bigoplus_{i,2d_i=n}\Z)\oplus(\bigoplus_{p\in P}\Tor(\Q/\Z,\pi_n(B_p)))$.\medbreak
+
+\noindent My attempt: apply Mayer-Vietoris sequence to the pullback square, we have the following long exact sequence:
+\[\begin{tikzcd}[column sep=small]
+\cdots\arrow[r]&\pi_{n+1}((\prod_{p\in P}B_p)_\Q)\arrow[r]&\pi_n(Y)\arrow[r,"h"]&\pi_n(K)\times\pi_n(\prod_{p\in P}B_p)\arrow[r]&\pi_n((\prod_{p\in P}B_p)_\Q)\arrow[r]&\cdots
+\end{tikzcd}\]
+We also know from a previous result that $\pi_n((\prod_{p\in P}B_p)_\Q)$ is only nonzero for even $n$. If $h$ is an isomorphism, then
+\[\textstyle{\pi_n(Y)=(\bigoplus_{i,2d_i=n}\Z[P^{-1}])\oplus(\bigoplus_{p\in P}\pi_n(B_p))}\]
+which is similar to the correct answer. The difference is $\Z$ instead of $\Z[P^{-1}]$ and the Tor group.
+
+%\subsection{Classification of $p$-compact groups}
+
+\section{Final Remarks}
+
 \section*{Acknowledgments}
 
-It is a pleasure to thank my mentor, Danny Xiaolin Shi, for blah. Big thanks to Peter for not only organizing this event but also recommending me I also thank blah for helping me understand blah.
+It is a pleasure to thank my mentor, Danny Xiaolin Shi, for his constant encouragement. I also thank Professor Peter May for organizing this event and recommending me useful literatures. Finally, I thank Yuqin Kewang and Professor Yifei Zhu for they answering my queries.
 
-\begin{thebibliography}{99}
+\newpage
+\begin{thebibliography}{9}
 
 \bibitem{Andersen-Grodal}
 Andersen, K. K., \& Grodal, J. (2008). \textit{The Steenrod problem of realizing polynomial cohomology rings}. Journal of Topology, 1(4), 747–760. https://doi.org/10.1112/jtopol/jtn021 
 
+\bibitem{Avramov}
+Avramov, L. L., Christensen, J. D., Dwyer, W. G., Mandell, M. A., \& Shipley, B. E. (2007). \textit{Interactions between homotopy theory and algebra}. American Mathematical Society.
+
+\bibitem{Behrens-Rezk}
+Behrens, M., \& Rezk, C. (2020). \textit{Spectral Algebra Models of Unstable $v_n$-Periodic Homotopy Theory}. https://doi.org/10.1007/978-981-15-1588-0\_10 
+
+\bibitem{Berglund}
+Berglund, A. (2012). \textit{Rational homotopy theory}. University of Copenhagen lecture notes.
+
+\bibitem{Bousfield-Gugenheim}
+
+\bibitem{Felix}
+Félix, Y., Halperin, S., Thomas, J.-C.. \textit{Rational homotopy theory}. Graduate Texts in Mathematics, vol. 205. Springer-Verlag, 2001.
+
+\bibitem{Gelfand-Manin}
+
+\bibitem{Hirschhorn}
+Hirschhorn, P. S. (2019). \textit{The Quillen model category of topological spaces}. Expositiones Mathematicae, 37(1), 2–24. https://doi.org/10.1016/j.exmath.2017.10.004 
+
+\bibitem{Hess}
+Hess, K. (2007). \textit{Rational homotopy theory: a brief introduction}. Interactions between Homotopy Theory and Algebra, 175–202. https://doi.org/10.1090/conm/436/08409
+
 \bibitem{May} 
 May, J. P., \& Ponto, K.. \textit{More Concise Algebraic Topology}. 2011.
+
+\bibitem{Moerman} lah
+
+\bibitem{Murillo} Murillo, Ancieto. (2017). \textit{Quillen rational homotopy theory revisited}
+
+\bibitem{Quillen1} Quillen, D.
+
+\bibitem{Quillen2} Quillen, Dan. Rational Homotopy Theory
+
+\bibitem{Serre}
+Serre, J.-P. (1953). Groupes D'Homotopie Et Classes De Groupes Abeliens. The Annals of Mathematics, 58(2), 258. https://doi.org/10.2307/1969789 
+
+\bibitem{Steenrod}
+Steenrod. N. E. (1962). \textit{The cohomology algebra of a space}. Enseignement Math, (2)7:153–178.
+
+\bibitem{Sullivan} ewf
 
 \end{thebibliography}
 
