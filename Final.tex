@@ -133,7 +133,7 @@
 
 \begin{abstract}
 
-This is an expository paper written during the $\textrm{\smash{2021 REU}}$ program at the University of Chicago. In this paper we address the following question: which graded-commutative $R$-algebras can be realized as the cohomology ring of a space with coefficients in $R$? We discuss two solved cases: for $R=\Q$, and for polynomial algebras over $\Z$ or $\Z_p$ for prime $p$. We develop simplic and mod Model categories play an important role in our discussion.
+This is an expository paper written during the $\textrm{\smash{2021 REU}}$ program at the University of Chicago. In this paper we address the following question: which graded-commutative $R$-algebras can be realized as the cohomology ring of a space with coefficients in $R$? We discuss two solved cases: for $R=\Q$, and for polynomial algebras over $\Z$ or $\Z_p$ for odd prime $p$. Key concepts incude model categories, simplicial methods, localizations, and $p$-compact groups.
 
 \end{abstract}
 
@@ -151,20 +151,20 @@ Which graded-commutative $R$-algebra can be realized as the cohomology ring $H^\
 
 When $R=\Q$, the problem was solved in rational homotopy theory, which was developed by Daniel Quillen and Dennis Sullivan.
 
-In 1967 Quillen introduced in \cite{Quillen1} the concept a model category, which is an axiomatic and homotopy-theoretical setting for homotopy theory. Later he applied this framework in his seminal paper \cite{Quillen2} in which he constructed and proved the equivalence of homotopy theories of an algebraic category and a topology category. As a consequence, every differential graded Lie algebra over $\Q$ can be realized as the rational cohomology ring of a space. However, Quillen's Lie algebra model has the disadvantage of being impossible to perform actual calculations upon.
+In 1967 Quillen introduced in \cite{Quillen1} the concept a model category, which is an axiomatic and homotopy-theoretical setting for homotopy theory. Later he applied this framework in his seminal paper \cite{Quillen2} in which he constructed and proved the equivalence of homotopy theories of an algebraic category and a topological category. As a consequence, every differential graded Lie algebra over $\Q$ can be realized as the rational cohomology ring of a space. However, Quillen's Lie algebra model has the disadvantage of being impossible to perform actual calculations upon.
 
-Sullivan bridged the calculability gap in the 1970s using differential graded-commutative algebras as his algebraic model. He also generalized the idea of de Rham complex and associated it with rational, singular cohomology. Sullivan's model has interesting applications to Kähler manifold as well. In 1976 Bousfield and Gugenheim reappraoched Sullivan's work in \cite{Bousfield-Gugenheim} by applying Quillen's model categories as well as the notion of Bousefield localization. It is their approach that we survey in Section 2 of this paper.\medbreak
+Sullivan bridged the calculability gap in the 1970s using differential graded-commutative algebras as his algebraic model. He also generalized the idea of a de Rham complex and associated it with rational, singular cohomology. Sullivan's model has interesting applications to Kähler manifold as well. In 1976 Bousfield and Gugenheim reapproached Sullivan's work in \cite{Bousfield-Gugenheim} applying Quillen's model categories as well as the notion of Bousefield localization. It is their approach that we survey in \hyperref[Section 2]{Section 2} of this paper.\medbreak
 
-When $H^\ast(X;R)$ is a polynomial algebra over $R$, it is a completely different story. In 1960 N. E. Steenrod attemped to answer this question. He proved in \cite{Steenrod} using Steenrod operations that if $H^\ast(X;R)\cong\Z[x]$, then the degree of $x$ must be $2$ or $4$. Further progress was made by J. F. Adams, C. W. Wilkerson, and W. G. Dwyer. The problem was completely solved by Kasper K. S. Andersen and Jesper Grodal in 2008 in \cite{Andersen-Grodal}, in which they reduced the problem to a known case of the classification of $p$-compact groups. We sketch their treatment in Section 3.
+When $H^\ast(X;R)$ is a polynomial algebra over $R$, it is a completely different story. In 1960 N. E. Steenrod attempted to answer this question. He proved in \cite{Steenrod} using Steenrod operations that if $H^\ast(X;R)\cong\Z[x]$, then the degree of $x$ must be $2$ or $4$. Further progress was made by J. F. Adams, C. W. Wilkerson, and W. G. Dwyer. The problem was completely solved by Kasper K. S. Andersen and Jesper Grodal in 2008 in \cite{Andersen-Grodal}, in which they reduced the problem to a known case of the classification of $p$-compact groups. We sketch their treatment in \hyperref[Section 3]{Section 3}.
 
-\section{Rational Homotopy Theory}
+\section{Rational Homotopy Theory}\label{Section 2}
 
-The main gaol of this section is to show, restricting to rational and $1$-connected objects of finite type, an equivalence between homotopy categories:
+The main goal of this section is to show, restricting to rational and $1$-connected objects of finite type, an equivalence between homotopy categories:
 \[\Ho(\Top_{\Q,1,f})\cong\Ho(\sSet_{\Q,1,f})\cong\Ho(\dgcAlg_{\Q,1,f}).\]
 where $\Top$, $\sSet$ and $\dgcAlg$ denote the category of topological spaces, simplicial sets, and differential graded-commutative algebras respectively.
 Therefore, any $1$-connected differential graded-commutative algebra over $\Q$ of finite type can be realized as a rational cohomology ring $H^\ast(X;\Q)$ of some space $X$.
 
-To prove the desired equivalence, we need the concept of model categories, which impose an additional structure on the original categories. We develop this machinery in Section 2.2. We will construct a pair of adjoint functors between $\Top$ and $\sSet$ and prove that they induce equivalence on the respective homotopy categories. In Section 2.3 we describe properties of differential graded-commutative algebras and the model structure on $\dgcAlg$. Finally in Section 2.4 we construct and prove the similar equivalence between $\sSet$ and $\dgcAlg$.
+To prove the desired equivalence, we need the concept of model categories, which impose an additional structure on the original categories. We develop this machinery in \hyperref[Section 2.2]{Section 2.2}. We will construct a pair of adjoint functors between $\Top$ and $\sSet$ and prove that they induce equivalence on the respective homotopy categories. In \hyperref[Section 2.3]{Section 2.3} we describe properties of differential graded-commutative algebras and the model structure on $\dgcAlg$. Finally in \hyperref[Section 2.4]{Section 2.4} we construct and prove the similar equivalence between $\sSet$ and $\dgcAlg$.
 
 \subsection{Rationalization and localization}
 
@@ -281,9 +281,14 @@ Rationalization is equivalent to $\mathrm{Q}$-localization.
 This follows from Proposition 2.9 and Proposition 2.11.
 \end{proof}
 
-\subsection{The first Quillen equivalence}
+\bigskip
 
-We begin by introducing simplicial sets.\medbreak
+\subsection{The first Quillen equivalence}\label{Section 2.2}
+
+We shall prove that the homotopy theory of topological spaces is equivalent to the homotopy theory of simplicial sets:
+\[\Ho(\Top)\cong\Ho(\sSet).\]
+
+We begin by introducing simplicial sets.\smallbreak
 
 Let $\mathbf{\Delta}$ be the category with order sets $[n]=\{0,1,\cdots,n\}$ as objects and order-preserving functions $\varphi:[m]\to[n]$ (that is, functions satisfying $\varphi(i)\leq\varphi(i+1)$ for all $i\in[m]$)
 as morphisms.
@@ -352,7 +357,7 @@ where $\Delta[n]$ are the $n$-simplices of $S$. In plain terms, we associate a t
 We now turn to model categories. Model category abstracts certain common homotopy-theoretical properties that exist in many different categories.
 
 \begin{notn}
-For a class of morphisms $\mathrm{M}$, we write $\mathrm{M}^l$ (resp. $\mathrm{M}^r$) for the class of morphisms that have the left (resp. right) lifting property with respect to morphisms in $\mathrm{M}$.
+For a class of morphisms $\mathrm{M}$, we write $\mathrm{M}^l$ ($\mathrm{M}^r$, respectively) for the class of morphisms that have the left (right, respectively) lifting property with respect to morphisms in $\mathrm{M}$.
 \end{notn}
 
 \begin{defn}
@@ -403,26 +408,28 @@ An Quillen adjunction $\mathcal{F}\dashv\mathcal{G}$ is a \textbf{Quillen equiva
 \end{enumerate}
 \end{defn}
 
-If $\mathcal{F}\dashv\mathcal{G}$ is a Quillen equivalence, then the derived functor $\mathbf{L}\mathcal{F}:\Ho(\mathbf{C})\to\Ho(\mathbf{D})$ is an equivalence on homotopy categories. We omit the details of the proof.
+If $\mathcal{F}\dashv\mathcal{G}$ is a Quillen equivalence, then the derived functor $\mathbf{L}\mathcal{F}:\Ho(\mathbf{C})\to\Ho(\mathbf{D})$ is an equivalence on homotopy categories. This is a consequence of the proof of the $q$-model structure on $\sSet$. Again, We omit the details of the proof and refer to \cite{May-Ponto} for those inclined.
 
 \begin{prop}
 The singular simplicial complex $\mathcal{S}_\bullet$ and the geometric realization functor forms a Quillen equivalence between $\Top$ and $\sSet$.
 \end{prop}
-\begin{proof}
-Again, we only provide a brief sketch. We refer to xxx and xx for details.\medbreak
+%\begin{proof}
+%Again, we only provide a brief sketch. We refer to xxx and xx for details.\medbreak
+%
+%\textit{Quillen adjunction.} Since both $\Top$ and $\sSet$ are cofibrantly generated, by Proposition A.88 we only need to check that $|i|in\Cof_{\Top}$ for $i\in I_{\sSet}$ and $|j|\in\Cof_{\Top}\cap\W_{\Top}$ for $j\in J_{\sSet}$. Both are immediate since $|\partial\Delta[n]|=S^{n-1}$ and $|\Delta[n]|=D^n$.\medbreak
+%
+%\textit{Quillen equivalence.} By Proposition A.87, we only need to check the following:\begin{enumerate}[(i)]
+    %\item if $|f|\in\W_{\Top}$ for cofibrant objects in $\Top$, then $f\in\W_{\sSet}$ for cofibrant objects in $\sSet$;
+    %\item the map $\smash{|\mathcal{S}_\bullet(Y)^{\cof}|\to Y}$ is a weak equivalence in $\Top$ for $Y\in\Fib_\Top$
+%\end{enumerate}
+%(i) is immediate by definition of $\W_{\sSet}$.
+%\end{proof}
 
-\textit{Quillen adjunction.} Since both $\Top$ and $\sSet$ are cofibrantly generated, by Proposition A.88 we only need to check that $|i|in\Cof_{\Top}$ for $i\in I_{\sSet}$ and $|j|\in\Cof_{\Top}\cap\W_{\Top}$ for $j\in J_{\sSet}$. Both are immediate since $|\partial\Delta[n]|=S^{n-1}$ and $|\Delta[n]|=D^n$.\medbreak
+\bigskip
 
-\textit{Quillen equivalence.} By Proposition A.87, we only need to check the following:\begin{enumerate}[(i)]
-    \item if $|f|\in\W_{\Top}$ for cofibrant objects in $\Top$, then $f\in\W_{\sSet}$ for cofibrant objects in $\sSet$;
-    \item the map $\smash{|\mathcal{S}_\bullet(Y)^{\cof}|\to Y}$ is a weak equivalence in $\Top$ for $Y\in\Fib_\Top$
-\end{enumerate}
-(i) is immediate by definition of $\W_{\sSet}$.
-\end{proof}
+\subsection{A model structure on $\dgcAlg_k$}\label{Section 2.3}
 
-\subsection{A model structure on $\dgcAlg_k$}
-
-In this section we describe the algebraic model of our interest. A key result is Proposition 2.33.\medbreak
+In this section we describe the algebraic model of our interest. A key result is Proposition 2.38.\medbreak
 
 In what follows, let $R$ be a ring and $k$ be a field with characteristic $0$.
 
@@ -472,7 +479,7 @@ The object $A$ is \textbf{1-connected} if $A^0=k$ and $A^1=0$.
 
 Chain maps $f$ between differential graded-commutative algebras respect the units $f\eta=\eta$ and products $f\mu=\mu(f\otimes f)$. Write $\dgcAlg_R$ for the category with differential graded-commutative algebras as objects and chain maps as morphisms.\medbreak
 
-Now we describe a model structure on $\dgcAlg_k$. Note that we switch form a ring $R$ to field $k$ of characteristic 0. (Why?)
+Now we describe a model structure on $\dgcAlg_k$. Note that we switch form a ring $R$ to field $k$ of characteristic 0. Think about why.
 
 \begin{prop}
 The following defines a model category structure on $\dgcAlg_k$:\begin{enumerate}[(i)]
@@ -590,9 +597,6 @@ where each $X(n)$ is built as the pushout of $D(V^n)\leftarrow S(V^n)\rightarrow
 \begin{prop}
 In the model category $\dgcAlg_k$, the relative Sullivan algebras are the cofibrations, and Sullivan algebras are cofibrant.
 \end{prop}
-\begin{proof}
-
-\end{proof}
 
 \begin{defn}
 Let $f\in\Hom_{\dgcAlg_k}(A,B)$. A \textbf{Sullivan model} for $f$ is a relative Sullivan algebra $A\hookrightarrow M_B$ together with a quasi-isomorphism $M_B\simeq B$. Diagrammatically,
@@ -603,13 +607,26 @@ A\arrow[dr,hookrightarrow]\arrow[rr,"f"]&&B\\
 \end{defn}
 
 \begin{prop}
-Every $f\in\Hom_{\dgcAlg_k,1}(A,B)$ admits a minimal Sullivan model which is unique up to isomorphism.
+Every $f\in\Hom_{\dgcAlg_{k,1}}(A,B)$ admits a minimal Sullivan model which is unique up to isomorphism.
 \end{prop}
 \begin{proof}
+For the existence part, we build a minimal model $\Lambda V$ for $f$ inductively. For uniqueness, we show that it reduces to showing that any quasi-isomorphism of minimal algebra is an isomorphism.\medbreak
 
+\textit{Existence.} Since $B$ is $1$-connected, let $V^0=V^1=0$. Let $V^2=H^2(B)$, then it defines a map $\Lambda V^{\leq2}\to B$ in $\dgcAlg_{k,1}$. Suppose that $m_n:\Lambda V^{\leq n}\to B$ has already been constructed, then we define $V^{n+1}$ by ``adding generators to kill cocycles":
+\[V^{n+1}=\left(\bigoplus k\cdot v_\alpha\right)\oplus\left(\bigoplus k\cdot v_\beta\right)\]
+where $dv_\alpha=0$ and $dv_\beta\in\ker H(m_n)$. Then we extend to $m_{n+1}:\Lambda V^{\leq n+1}\to B$ by letting $m_{n+1}(v_\alpha),d(m_{n+1}(v_\beta))\in\coker H(m_n)$. This finishes the inductive process. The algebra $\Lambda V$ obtained is naturally a minimal (the minimality is encoded in the fact that we are taking the filtration by degree) algebra. We only need to check that $\Lambda V\simeq B$. We omit the verification.\medbreak
+
+\textit{Uniqueness.} Let $M$ and $M'$ be two minimal models for $f$. We first prove that $M\simeq M'$. This is a consequence of Proposition 2.36:
+\[\begin{tikzcd}[row sep=large]
+A\arrow[d,hookrightarrow]\arrow[r]&M'\arrow[d,"\simeq"]\\
+M\arrow[ur,dashed]\arrow[r,"\simeq"']&B
+\end{tikzcd}.\]
+The dashed arrow $M\to M'$ exists since $A\hookrightarrow M$ is a  cofibration. The lift is unique up to weak equivalence. Next, we wish to show that any quasi-isomorphism of minimal algebra is an isomorphism. For that we will need to develop the notion of homotopy theory between algebras (in terms of path objects). We refer to xxx.
 \end{proof}
 
-\subsection{The second Quillen equivalence}
+\bigskip
+
+\subsection{The second Quillen equivalence}\label{Section 2.4}
 
 In this section we prove the equivalence
 \[\Ho(\sSet_{\Q,1,f})\cong\Ho(\dgcAlg_{\Q,1,f})\]
@@ -802,9 +819,11 @@ efe
 We only restrict
 \end{rem}
 
+\bigskip
+
 %\section{Rational Homotopy Theory: A Higher Perspective}
 
-\section{Realizing polynomial cohomology rings}
+\section{Realizing polynomial cohomology rings}\label{Section 3}
 
 \subsection{Prime completion of finite loop spaces} We introduce in this section the concept of $p$-compact groups.
 
@@ -851,39 +870,80 @@ where $EG\simeq P\B G$ because the path space $P\B G$ is weakly contractible.
 
 Recall the notion of Bousfield localization (Definition 2.8). In rational homotopy theory we localize with respect to rational homotopy equivalences. We now with to localization with respect to the class $\mathrm{F_p}$ of $\F_p$-equivalences.
 
-A map $f:X\to Y$ is an $\F_p$-equivalence if the induced map $f^\ast$ is an isomorphism on $\F_p$-cohomology:
+A map $f:X\to Y$ is an $\F_p$-equivalence if the induced map $f^\ast$ is an isomorphism on $\F_p$-cohomology (mod-$p$ cohomology):
 \[f^\ast:H^\bullet(Y;\F_p)\xrightarrow{\ \cong\ } H^\bullet(X;\F_p).\]
-We write $\F_p$ for the field 
+We write $\F_p$ for the finite field with $p$ elements, and $p$ is an odd prime.
 \bigbreak
 
-With this in mind, we are able to define the main object of our interest.
+With this in mind, we are able to define the central object.
 
 \begin{defn}
 A \textbf{$p$-compact group} $X$ is a finite loop space such that\begin{enumerate}[(i)]
     \item $\B X$ is $\mathrm{F_p}$-local;
-    \item $H^i(X,\F_p)$ is finite for all $i$;
+    \item $H^i(X,\F_p)$ is finite-dimensional for all $i$;
 \end{enumerate}
-where $\mathrm{F_p}$ is the class of $\F_p$ equivalences.
+where $\mathrm{F_p}$ is the class of $\F_p$-equivalences.
 \end{defn}
 
+The concept of a $p$-compact group was introduced by Dwyer and Wilkerson. It behaves similar to compact Lie groups, having concepts like maximal tori and Weyl groups. We will not go in detail of $p$-compact groups and their classifications.
+
+\bigskip
+
 \subsection{The arithmetic fracture theorem: from local to global}
+
+In this section we see how to from $\F_p$-cohomology to integral cohomology and vice versa.\medbreak
+
+First of all, by the \textit{type} of a graded polynomial ring, we mean the information of its generators and their degrees. By an \textit{even type} we mean the that the all generators have even degrees.
 
 \begin{prop}
 Let $R$ be a commutative Noetherian ring of finite Krull dimension and $p\in R$ a non-unit prime. If $H^\ast(X;R)$ is a polynomial $R$-algebra of finite type, then $H^\ast(X;\F_p)$ is a polynomial $\F_p$-algebra of the same type.
 \end{prop}
 \begin{proof}
 The key identity of the proof is
-\begin{equation}\label{key} H^\ast(X;R)\otimes_R (R/pR)\cong H^\ast(X;R/p)\cong H^\ast(X;\F_p)\otimes_{\F_p}(R/pR).
+\begin{equation} H^\ast(X;R)\otimes_R (R/pR)\cong H^\ast(X;R/p)\cong H^\ast(X;\F_p)\otimes_{\F_p}(R/pR).
 \end{equation}
-Assume (\ref{key}) is correct, \medbreak
+Assuming the identity holds, then $H^\ast(X;\F_P)\otimes_{\F_p}(R/pR)$ is a graded polynomial $(R/pR)$-algebra (of the same type as $H^\ast(X;R)$). Since both $H^\ast(X;\F_p)$ and $R/pR$ are also $\F_p$-algebras, by an argument of commutative algebra, $H^\ast(X;\F_p)$ is a graded polynomial $\F_p$-algebra.\medbreak
 
-The first identity of (\ref{key}) is ring-theoretical. Apply universal coefficient theorem to both sides, the $\mathrm{Ext}$-terms vanish since $H^\ast(X;R)$ is free over $R$
+The first identity is ring-theoretical. Note that we already have the equivalence 
+\[C^\ast(X;R)\otimes_R(R/pR)\cong C^\ast(X;R/pR).\]
+on the cochain level
+Apply the universal coefficient theorem to both sides, then the $\mathrm{Ext}$ groups vanish since $H^\ast(X;R)$ is free over $R$. We thus only need to show that
+\[H_\ast(X)\otimes_R(R/pR)\cong H_\ast(X\otimes_R(R/pR)).\]
+Observe that $C^\ast(X;R)$ is a complex of flat modules. We now show that the submodules $d(C^\ast(X;R))$ are also flat. Since $R$ has finite Krull dimension, by a result of Auslander and Buchsbaum, it also has finite finitistic flat dimension (the supremum of flat dimensions of all $R$-modules with finite flat dimension). Consider the short exact sequence
+\[\begin{tikzcd}[column sep=small]
+0\arrow[r]&\ker d_n\arrow[r]& C^n(X;R)\arrow[r]&\im d_n\arrow[r]&0
+\end{tikzcd}\]
+where $\ker d_n$ and $\im d_{n+1}$ has the same flat dimension since $H_n(X)$ is flat. Since $C^n(X;R)$ is flat, either $\ker d_n$ and $\im d_n$ are also flat, or the flat dimension of $\ker d_n$ is larger than the flat dimension of $\im d_n$ by $1$. But the second case is ruled out by the finiteness of finitistic flat dimension of $R$. Finally, since all submodules $d(C^\ast(X;R))$ are flat, the Künneth formula concludes the proof.\medbreak
+
+The second identity is obtained from the following line of identification:
+\begin{align*}
+H^\ast(X;R/p)&=H(\Hom_{\F_p}(C_\ast(X;\F_p),R/pR))\\
+&\cong\Hom_{\F_p}(H_\ast(X;\F_p),R/pR)\\
+&\cong H^\ast(X;\F_p)\otimes_{\F_p}(R/pR).
+\end{align*}
 \end{proof}
 
+\begin{rem}
+finite
+\end{rem}
+
+Write $X_p^\wedge$ for the $p$-completion of space $X$ obtained by localizing with respect to $\F_p$-equivalences. The following proposition relates to $p$-compact groups.
 
 \begin{prop}
-Let $I$ be a set of primes and $J$ the set of primes not in $I$. If for each $p\in I$ there is a space $B_p$ such that $H^\ast(B_p;\F_p)$ is a polynomial $\F_p$-algebra of finite even type, then there exists a $1$-connected space $Y$ of finite type such that $H^\ast(Y;\Z[J^{-1}])$ is a polynomial $\Z[J^{-1}]$-algebra of the same type.
+If $H^\ast(X;\F_p)$ is a polynomial $\F_p$-algebra  of finite type, then $X_p^\wedge\simeq\B Y$ is the classifying space of some $p$-compact group $Y$.
 \end{prop}
+\begin{proof}
+ef
+\end{proof}
+
+In Proposition 3.8 we obtain information about the $\F_p$-cohomology of a space if its $R$-cohomology is known. The following proposition we attempt the converse: if the $\F_p$-cohomology is known, what other cohomologies do we know?
+
+\begin{prop}
+Let $I$ be a set of primes and $J$ the set of primes not in $I$. If for each $p\in I$ there is a space $X_p$ such that $H^\ast(X_p;\F_p)$ is a polynomial $\F_p$-algebra of finite even type, then there exists a $1$-connected space $Y$ of finite type such that $H^\ast(Y;\Z[J^{-1}])$ is a polynomial $\Z[J^{-1}]$-algebra of the same finite even type.
+\end{prop}
+\begin{proof}
+
+\end{proof}
 
 Let $B_p$ be $\F_p$-complete and $H^\ast(B_p;\Z_p)$ be a polynomial algebra over $\Z_p$ with generators of degrees $2d_1,2d_2,\cdots,2d_r$, where $\Z_p$ is the ring of $p$-adic integers. If $p>\max\{d_1,\cdots,d_r\}$, then
 \[\pi_n(B_p)\cong\pi_{n-1}\left((S^{2d_1-1}\times\cdots\times S^{2d_r-1})_p^\wedge\right)\]\medbreak
@@ -905,19 +965,31 @@ We also know from a previous result that $\pi_n((\prod_{p\in P}B_p)_\Q)$ is only
 \[\textstyle{\pi_n(Y)=(\bigoplus_{i,2d_i=n}\Z[P^{-1}])\oplus(\bigoplus_{p\in P}\pi_n(B_p))}\]
 which is similar to the correct answer. The difference is $\Z$ instead of $\Z[P^{-1}]$ and the Tor group.
 
+Finally, the following result reduces the classification of polynomial algebras to the classification of $p$-compact groups.
+
+\begin{prop}
+4.1
+\end{prop}
+
 %\subsection{Classification of $p$-compact groups}
 
 \section{Final Remarks}
 
+Serre class
+Equivariant model
+Unstable homotopy theory, Heut's approach
+Quillen's survey
+Rational homotopy theory
+
 \section*{Acknowledgments}
 
-It is a pleasure to thank my mentor, Danny Xiaolin Shi, for his constant encouragement. I also thank Professor Peter May for organizing this event and recommending me useful literatures. Finally, I thank Yuqin Kewang and Professor Yifei Zhu for they answering my queries.
+It is a pleasure to thank my mentor, Danny Xiaolin Shi, for his constant support. I also thank Professor Peter May for organizing this event, recommending me useful literatures to read, and having fruitful discussions with me. Finally, I thank Yuqin Kewang and Professor Yifei Zhu for they answering my questions.
 
 \newpage
 \begin{thebibliography}{9}
 
 \bibitem{Andersen-Grodal}
-Andersen, K. K., \& Grodal, J. (2008). \textit{The Steenrod problem of realizing polynomial cohomology rings}. Journal of Topology, 1(4), 747–760. https://doi.org/10.1112/jtopol/jtn021 
+Andersen, K. K., \& Grodal, J. (2008). \textit{The Steenrod problem of realizing polynomial cohomology rings}. Journal of Topology, 1(4), 747–760.
 
 \bibitem{Avramov}
 Avramov, L. L., Christensen, J. D., Dwyer, W. G., Mandell, M. A., \& Shipley, B. E. (2007). \textit{Interactions between homotopy theory and algebra}. American Mathematical Society.
@@ -928,7 +1000,7 @@ Behrens, M., \& Rezk, C. (2020). \textit{Spectral Algebra Models of Unstable $v_
 \bibitem{Berglund}
 Berglund, A. (2012). \textit{Rational homotopy theory}. University of Copenhagen lecture notes.
 
-\bibitem{Bousfield-Gugenheim}
+\bibitem{Bousfield-Gugenheim} Bousfield, A. K., \& Gugenheim, V. K. A. M. (1976). \textit{On $PL$ de Rham theory and rational homotopy type}. Memoirs of the American Mathematical Society, 8(179).
 
 \bibitem{Felix}
 Félix, Y., Halperin, S., Thomas, J.-C.. \textit{Rational homotopy theory}. Graduate Texts in Mathematics, vol. 205. Springer-Verlag, 2001.
@@ -941,24 +1013,22 @@ Hirschhorn, P. S. (2019). \textit{The Quillen model category of topological spac
 \bibitem{Hess}
 Hess, K. (2007). \textit{Rational homotopy theory: a brief introduction}. Interactions between Homotopy Theory and Algebra, 175–202. https://doi.org/10.1090/conm/436/08409
 
-\bibitem{May} 
+\bibitem{May-Ponto} 
 May, J. P., \& Ponto, K.. \textit{More Concise Algebraic Topology}. 2011.
 
 \bibitem{Moerman} lah
 
 \bibitem{Murillo} Murillo, Ancieto. (2017). \textit{Quillen rational homotopy theory revisited}
 
-\bibitem{Quillen1} Quillen, D.
+\bibitem{Quillen1} Quillen, D. G. (1967). \textit{Homotopical algebra}. Springer. 
 
-\bibitem{Quillen2} Quillen, Dan. Rational Homotopy Theory
+\bibitem{Quillen2} Quillen, D. G. (1969). \textit{Rational Homotopy Theory}. Annals of Mathematics, 90(2), second series, 205-295.
 
 \bibitem{Serre}
 Serre, J.-P. (1953). Groupes D'Homotopie Et Classes De Groupes Abeliens. The Annals of Mathematics, 58(2), 258. https://doi.org/10.2307/1969789 
 
 \bibitem{Steenrod}
 Steenrod. N. E. (1962). \textit{The cohomology algebra of a space}. Enseignement Math, (2)7:153–178.
-
-\bibitem{Sullivan} ewf
 
 \end{thebibliography}
 
